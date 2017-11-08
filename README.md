@@ -1,1 +1,1 @@
-# warmonger
+# theory of warmonger
