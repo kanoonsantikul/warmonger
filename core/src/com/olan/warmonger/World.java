@@ -19,6 +19,7 @@ public class World extends Stage {
 		super(viewport, batch);
 		this.world = this;
 		this.viewport = viewport;
+		addActor(new Unit(0, 0));
 	}
 
 	public static World instance () {
@@ -28,8 +29,5 @@ public class World extends Stage {
 	@Override
 	public void draw () {
 		super.draw();
-    getBatch().begin();
-    getBatch().draw(image, 0, 0);
-    getBatch().end();
   }
 }
