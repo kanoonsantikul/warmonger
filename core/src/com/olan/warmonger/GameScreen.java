@@ -17,6 +17,8 @@ public class GameScreen extends ScreenAdapter {
 	public GameScreen (SpriteBatch batch) {
 		this.batch = batch;
 
+		Assets.load();
+
 		InputMultiplexer plexInput = new InputMultiplexer();
 		Gdx.input.setInputProcessor(plexInput);
 
@@ -46,5 +48,6 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void dispose () {
 		world.dispose();
+		Assets.dispose();
 	}
 }
