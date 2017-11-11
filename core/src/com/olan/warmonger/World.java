@@ -23,6 +23,7 @@ public class World extends Stage {
 		map = new Map();
 		Unit unit = new Unit(0, 0);
 		map.addUnit(unit);
+		unit.addListener(map);
 
 		addActor(map);
 		for (int i=0; i<Map.WIDTH; i++) {
