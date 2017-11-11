@@ -5,21 +5,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Unit extends GameObject {
-  private int row, collumn;
+  private int row, column;
   private UnitListener listener;
 
   private int moveRange;
   private int attackRange;
 
-  public Unit (int row, int collumn) {
+  public Unit (int row, int column) {
     super(Assets.unit);
 
     this.row = row;
-    this.collumn = collumn;
+    this.column = column;
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
-        listener.onUnitClicked(Unit.this, Unit.this.row, Unit.this.collumn);
+        listener.onUnitClicked(Unit.this, Unit.this.row, Unit.this.column);
       }
     });
   }
@@ -36,12 +36,12 @@ public class Unit extends GameObject {
     this.row = row;
   }
 
-  public int getcollumn () {
-    return this.collumn;
+  public int getcolumn () {
+    return this.column;
   }
 
-  public void setcollumn (int collumn) {
-    this.collumn = collumn;
+  public void setcolumn (int column) {
+    this.column = column;
   }
 
   public int getMoveRange () {
@@ -61,6 +61,6 @@ public class Unit extends GameObject {
   }
 
   public interface UnitListener {
-    public void onUnitClicked (Unit unit, int row, int collumn);
+    public void onUnitClicked (Unit unit, int row, int column);
   }
 }
