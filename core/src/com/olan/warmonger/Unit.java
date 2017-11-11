@@ -12,6 +12,8 @@ public class Unit extends GameObject {
   private int attackRange;
 
   public Unit (int row, int collumn) {
+    super(Assets.unit);
+
     this.row = row;
     this.collumn = collumn;
 
