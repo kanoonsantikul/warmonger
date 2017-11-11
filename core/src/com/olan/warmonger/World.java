@@ -13,8 +13,6 @@ public class World extends Stage {
 	private static World world;
 	private Viewport viewport;
 
-  Texture image = new Texture("badlogic.jpg");
-
 	public World (Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		this.world = this;
