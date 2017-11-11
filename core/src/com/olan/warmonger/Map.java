@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
-public class Map extends GameObject {
+public class Map extends GameObject implements Unit.UnitListener {
   public static final int WIDTH = 6;
   public static final int HEIGHT = 10;
 
@@ -38,5 +38,10 @@ public class Map extends GameObject {
 
   public void addUnit (Unit unit) {
     units.add(unit);
+  }
+
+  @Override
+  public void onUnitClicked (Unit unit, int row, int column) {
+    unit.setTexture(Assets.tile);
   }
 }
