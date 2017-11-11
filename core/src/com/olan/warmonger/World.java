@@ -13,12 +13,21 @@ public class World extends Stage {
 	private static World world;
 	private Viewport viewport;
 
-  Texture image = new Texture("badlogic.jpg");
+	Map map;
 
 	public World (Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		this.world = this;
 		this.viewport = viewport;
+
+		map = new Map();
+
+		addActor(map);
+		for (int i=0; i<Map.WIDTH; i++) {
+			for (int j=0; j<Map.HEIGHT; j++) {
+				addActor(map.getTile(i, j));
+			}
+		}
 	}
 
 	public static World instance () {
@@ -28,8 +37,5 @@ public class World extends Stage {
 	@Override
 	public void draw () {
 		super.draw();
-    getBatch().begin();
-    getBatch().draw(image, 0, 0);
-    getBatch().end();
   }
 }
