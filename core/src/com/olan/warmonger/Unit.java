@@ -19,7 +19,9 @@ public class Unit extends GameObject {
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
-        listener.onUnitClicked(Unit.this, Unit.this.row, Unit.this.column);
+        if (listener != null) {
+          listener.onUnitClicked(Unit.this, Unit.this.row, Unit.this.column);
+        }
       }
     });
   }
