@@ -2,15 +2,17 @@ package com.olan.warmonger;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import java.util.ArrayList;
 
 public class Map extends GameObject {
   public static final int WIDTH = 6;
   public static final int HEIGHT = 10;
 
-  Tile[][] tiles = new Tile[WIDTH][HEIGHT];
+  private Tile[][] tiles = new Tile[WIDTH][HEIGHT];
+  private ArrayList<Unit> units = new ArrayList();
 
   public Map () {
-    super(new TextureRegion(new Texture("images/background.png"), 0, 0, 600, 1000));
+    super(Assets.background);
     initTiles();
   }
 
@@ -30,4 +32,11 @@ public class Map extends GameObject {
     return tiles;
   }
 
+  public ArrayList<Unit> getUnits () {
+    return units;
+  }
+
+  public void addUnit (Unit unit) {
+    units.add(unit);
+  }
 }
