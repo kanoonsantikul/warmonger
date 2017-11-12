@@ -1,5 +1,9 @@
 package com.olan.warmonger;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 public class Tile extends GameObject {
   private int row;
   private int column;
@@ -7,6 +11,7 @@ public class Tile extends GameObject {
   public Tile (int row, int column) {
     setRow(row);
     setColumn(column);
+    setTexture(new TextureRegion(new Texture("tile.png")));
   }
 
   public void setRow (int row) {
@@ -23,5 +28,15 @@ public class Tile extends GameObject {
 
   public int getColumn () {
     return column;
+  }
+
+  public void indexToXY () {
+    setX(row * getWidth());
+    setY(column * getHeight());
+  }
+
+  @Override
+  public void act (float delta) {
+    indexToXY();
   }
 }
