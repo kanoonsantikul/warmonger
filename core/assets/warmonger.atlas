@@ -1,0 +1,27 @@
+
+warmonger.png
+size: 512,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 2, 65
+  size: 306, 612
+  orig: 306, 612
+  offset: 0, 0
+  index: -1
+tile
+  rotate: false
+  xy: 2, 2
+  size: 61, 61
+  orig: 61, 61
+  offset: 0, 0
+  index: -1
+unit
+  rotate: false
+  xy: 310, 625
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
