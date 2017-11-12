@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
 public class Map extends GameObject implements Unit.UnitListener {
-  public static final int WIDTH = 6;
+  public static final int WIDTH = 5;
   public static final int HEIGHT = 10;
 
   private Tile[][] tiles = new Tile[WIDTH][HEIGHT];
