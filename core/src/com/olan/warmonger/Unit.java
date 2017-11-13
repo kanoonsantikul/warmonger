@@ -1,6 +1,5 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
@@ -58,6 +57,16 @@ public class Unit extends GameObject {
     return this.attackRange;
   }
 
+  @Override
+  public void act (float delta) {
+    indexToXY();
+  }
+
+  public void indexToXY () {
+    setX(row * getWidth());
+    setY(column * getHeight());
+  }
+  
   public void setAttackRange (int attackRange) {
     this.attackRange = attackRange;
   }
