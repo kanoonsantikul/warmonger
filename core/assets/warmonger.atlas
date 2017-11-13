@@ -6,21 +6,35 @@ filter: Nearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 2, 65
+  xy: 2, 119
   size: 306, 612
   orig: 306, 612
   offset: 0, 0
   index: -1
+selected-unit
+  rotate: false
+  xy: 65, 65
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
 tile
   rotate: false
-  xy: 2, 2
+  xy: 2, 56
+  size: 61, 61
+  orig: 61, 61
+  offset: 0, 0
+  index: -1
+transparent-tile
+  rotate: false
+  xy: 310, 670
   size: 61, 61
   orig: 61, 61
   offset: 0, 0
   index: -1
 unit
   rotate: false
-  xy: 310, 625
+  xy: 2, 2
   size: 52, 52
   orig: 52, 52
   offset: 0, 0

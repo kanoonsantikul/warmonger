@@ -42,6 +42,6 @@ public class Map extends GameObject implements Unit.UnitListener {
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    unit.setTexture(Assets.tile);
+    unit.setTexture(Assets.selectedUnit);
   }
 }
