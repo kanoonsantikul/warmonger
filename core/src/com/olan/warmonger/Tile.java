@@ -11,7 +11,7 @@ public class Tile extends GameObject {
   public Tile (int row, int column) {
     setRow(row);
     setColumn(column);
-    setTexture(new TextureRegion(new Texture("tile.png")));
+    setTexture(Assets.transparentTile);
   }
 
   public void setRow (int row) {
