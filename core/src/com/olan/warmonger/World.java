@@ -21,7 +21,7 @@ public class World extends Stage {
 		this.viewport = viewport;
 
 		map = new Map();
-		Unit unit = new Unit(0, 0);
+		Unit unit = new Unit(3, 3);
 		map.addUnit(unit);
 		unit.addListener(map);
 
@@ -29,6 +29,7 @@ public class World extends Stage {
 		for (int i=0; i<Map.WIDTH; i++) {
 			for (int j=0; j<Map.HEIGHT; j++) {
 				addActor(map.getTile(i, j));
+				map.getTile(i, j).addListener(map);
 			}
 		}
 
