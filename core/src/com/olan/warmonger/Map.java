@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
 public class Map extends GameObject implements Unit.UnitListener, Tile.TileListener {
-  public static final int WIDTH = 5;
-  public static final int HEIGHT = 8;
+  public static final int ROW = 8;
+  public static final int COLUMN = 5;
 
-  private float sizeX = Assets.blockWidth * WIDTH;
-  private float sizeY = Assets.blockHeight * HEIGHT;
+  private float width = Tile.WIDTH * COLUMN;
+  private float height = Tile.HEIGHT * ROW;
 
-  private Tile[][] tiles = new Tile[WIDTH][HEIGHT];
+  private Tile[][] tiles = new Tile[ROW][COLUMN];
   private ArrayList<Unit> units = new ArrayList();
 
   private Unit selectedUnit;
@@ -20,14 +20,14 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
 
   public Map () {
     super(Assets.background);
-    setOffsetX((Gdx.graphics.getWidth() - sizeX) / 2);
-    setOffsetY((Gdx.graphics.getHeight() - sizeY + Assets.blockHeight) / 2);
+    setOffsetX((World.WIDTH - width) / 2);
+    setOffsetY((World.HEIGHT - height) / 2);
     initTiles();
   }
 
   private void initTiles () {
-    for (int i=0; i<WIDTH; i++) {
-      for (int j=0; j<HEIGHT; j++) {
+    for (int i = 0; i < ROW; i++) {
+      for (int j = 0; j < COLUMN; j++) {
         tiles[i][j] = new Tile(i, j);
         tiles[i][j].setOffsetX(getOffsetX());
         tiles[i][j].setOffsetY(getOffsetY());
@@ -54,18 +54,18 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   }
 
   public void update () {
-    for (int i=0; i<WIDTH; i++) {
-      for (int j=0; j<HEIGHT; j++) {
+    for (int i=0; i<ROW; i++) {
+      for (int j=0; j<COLUMN; j++) {
         if (this.isSelectUnit && this.selectedUnit != null) {
           getTile(i, j).setTexture(Assets.tileMark);
-          if (i == selectedUnit.getRow()) {
-            if ((j <= selectedUnit.getColumn() + selectedUnit.getMoveRange())
-              && (j > selectedUnit.getColumn())) {
+          if (j == selectedUnit.getColumn()) {
+            if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
+              && (i > selectedUnit.getRow())) {
                 getTile(i, j).setTexture(Assets.selectionNormal);
             }
           }
         } else {
-          getTile(i, j).setTexture(Assets.tileMark);
+          getTile(i, j).setTexture(Assets.tile);
         }
       }
     }
