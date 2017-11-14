@@ -61,7 +61,7 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
           if (i == selectedUnit.getRow()) {
             if ((j <= selectedUnit.getColumn() + selectedUnit.getMoveRange())
               && (j > selectedUnit.getColumn())) {
-                getTile(i, j).setTexture(Assets.selectionNornal);
+                getTile(i, j).setTexture(Assets.selectionNormal);
             }
           }
         } else {
