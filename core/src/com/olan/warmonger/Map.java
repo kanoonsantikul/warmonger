@@ -1,18 +1,24 @@
 package com.olan.warmonger;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
 public class Map extends GameObject implements Unit.UnitListener, Tile.TileListener {
   public static final int WIDTH = 5;
-  public static final int HEIGHT = 10;
+  public static final int HEIGHT = 8;
+
+  private float sizeX = Assets.blockWidth * WIDTH;
+  private float sizeY = Assets.blockHeight * HEIGHT;
 
   private Tile[][] tiles = new Tile[WIDTH][HEIGHT];
   private ArrayList<Unit> units = new ArrayList();
 
   public Map () {
     super(Assets.background);
+    setOffsetX((Gdx.graphics.getWidth() - sizeX) / 2);
+    setOffsetY((Gdx.graphics.getHeight() - sizeY + Assets.blockHeight) / 2);
     initTiles();
   }
 
@@ -20,6 +26,9 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
     for (int i=0; i<WIDTH; i++) {
       for (int j=0; j<HEIGHT; j++) {
         tiles[i][j] = new Tile(i, j);
+        tiles[i][j].setOffsetX(getOffsetX());
+        tiles[i][j].setOffsetY(getOffsetY());
+        System.out.println(getOffsetY());
       }
     }
   }
@@ -37,6 +46,8 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   }
 
   public void addUnit (Unit unit) {
+    unit.setOffsetX(getOffsetX());
+    unit.setOffsetY(getOffsetY());
     units.add(unit);
   }
 

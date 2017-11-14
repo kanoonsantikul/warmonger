@@ -43,8 +43,8 @@ public class Tile extends GameObject {
   }
 
   public void indexToXY () {
-    setX((row * 64) + ((64 - getWidth()) / 2));
-    setY((column * 64) + ((64 - getHeight()) / 2));
+    setX((row * Assets.blockWidth) + ((Assets.blockWidth - getWidth()) / 2));
+    setY((column * Assets.blockWidth) + ((Assets.blockWidth - getHeight()) / 2));
   }
 
   @Override
