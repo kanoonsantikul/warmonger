@@ -1,6 +1,5 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
@@ -12,7 +11,7 @@ public class Unit extends GameObject {
   private int attackRange;
 
   public Unit (int row, int column) {
-    super(Assets.unit);
+    super(Assets.pikemanBack);
 
     this.row = row;
     this.column = column;

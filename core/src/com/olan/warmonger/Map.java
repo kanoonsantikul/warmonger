@@ -1,10 +1,8 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
-public class Map extends GameObject implements Unit.UnitListener {
+public class Map implements Unit.UnitListener {
   public static final int WIDTH = 6;
   public static final int HEIGHT = 10;
 
@@ -12,7 +10,6 @@ public class Map extends GameObject implements Unit.UnitListener {
   private ArrayList<Unit> units = new ArrayList();
 
   public Map () {
-    super(Assets.background);
     initTiles();
   }
 
@@ -42,6 +39,5 @@ public class Map extends GameObject implements Unit.UnitListener {
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    unit.setTexture(Assets.tile);
   }
 }

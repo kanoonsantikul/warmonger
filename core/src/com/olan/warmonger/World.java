@@ -13,6 +13,7 @@ public class World extends Stage {
 	private static World world;
 	private Viewport viewport;
 
+	GameObject background;
 	Map map;
 
 	public World (Viewport viewport, SpriteBatch batch) {
@@ -20,12 +21,14 @@ public class World extends Stage {
 		this.world = this;
 		this.viewport = viewport;
 
+		background = new GameObject(Assets.background);
+		addActor(background);
+
 		map = new Map();
 		Unit unit = new Unit(0, 0);
 		map.addUnit(unit);
 		unit.addListener(map);
 
-		addActor(map);
 		for (int i=0; i<Map.WIDTH; i++) {
 			for (int j=0; j<Map.HEIGHT; j++) {
 				addActor(map.getTile(i, j));
