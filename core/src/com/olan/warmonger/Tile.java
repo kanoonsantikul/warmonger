@@ -1,17 +1,22 @@
 package com.olan.warmonger;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Tile extends GameObject {
+  public static final int WIDTH = Assets.tile.getRegionWidth();
+  public static final int HEIGHT = Assets.tile.getRegionHeight();
+
   private int row;
   private int column;
   private TileListener listener;
 
   public Tile (int row, int column) {
+    super(Assets.tile);
+
     setRow(row);
     setColumn(column);
-    setTexture(Assets.tileMark);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -43,8 +48,8 @@ public class Tile extends GameObject {
   }
 
   public void indexToXY () {
-    setX((row * Assets.blockWidth) + ((Assets.blockWidth - getWidth()) / 2));
-    setY((column * Assets.blockWidth) + ((Assets.blockWidth - getHeight()) / 2));
+    setX((column * Tile.WIDTH) + ((Tile.WIDTH - getWidth()) / 2));
+    setY((row * Tile.HEIGHT) + ((Tile.HEIGHT - getHeight()) / 2));
   }
 
   @Override

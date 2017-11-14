@@ -4,7 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Unit extends GameObject {
-  private int row, column;
+  private int row;
+  private int column;
   private UnitListener listener;
 
   private int moveRange = 2;
@@ -57,18 +58,18 @@ public class Unit extends GameObject {
     return this.attackRange;
   }
 
+  public void setAttackRange (int attackRange) {
+    this.attackRange = attackRange;
+  }
+
   @Override
   public void act (float delta) {
     indexToXY();
   }
 
   public void indexToXY () {
-    setX((row * Assets.blockWidth) + ((Assets.blockWidth - getWidth()) / 2));
-    setY((column * Assets.blockWidth) + ((Assets.blockWidth - getHeight()) / 2));
-  }
-
-  public void setAttackRange (int attackRange) {
-    this.attackRange = attackRange;
+    setX((column * Tile.WIDTH) + ((Tile.WIDTH - getWidth()) / 2));
+    setY((row * Tile.HEIGHT) + ((Tile.HEIGHT - getHeight()) / 2));
   }
 
   public interface UnitListener {
