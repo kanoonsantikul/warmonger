@@ -48,8 +48,8 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   }
 
   public void addUnit (Unit unit) {
-    unit.setOffsetX(getOffsetX());
-    unit.setOffsetY(getOffsetY());
+    unit.setOffsetX(getOffsetX() + Unit.manualOffsetX);
+    unit.setOffsetY(getOffsetY() + Unit.manualOffsetY);
     units.add(unit);
   }
 
@@ -80,8 +80,11 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    this.selectedUnit = unit;
-    this.isSelectUnit = !this.isSelectUnit;
+    if (unit != selectedUnit) {
+      this.selectedUnit = unit;
+    } else {
+      this.isSelectUnit = !this.isSelectUnit;
+    }
     update();
   }
 }
