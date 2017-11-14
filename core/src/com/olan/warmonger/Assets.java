@@ -1,14 +1,17 @@
 package com.olan.warmonger;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 public class Assets {
+  private static Texture backgroundTexture;
   public static TextureAtlas sprite;
 
-  public static AtlasRegion background;
+  public static TextureRegion background;
   public static AtlasRegion tile;
-  public static AtlasRegion unit;
+  public static AtlasRegion pikemanBack;
 
   public static void load () {
     loadTexture();
@@ -20,13 +23,15 @@ public class Assets {
 
   public static void loadTexture () {
     sprite = new TextureAtlas("warmonger.atlas");
+    backgroundTexture = new Texture("background.png");
+    background = new TextureRegion(backgroundTexture);
 
-    background = loadTexture("background");
     tile = loadTexture("tile");
-    unit = loadTexture("unit");
+    pikemanBack = loadTexture("pikeman-back");
   }
 
   public static void dispose () {
     sprite.dispose();
+    backgroundTexture.dispose();
   }
 }
