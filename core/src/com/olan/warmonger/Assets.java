@@ -10,13 +10,10 @@ public class Assets {
   public static AtlasRegion tile;
   public static AtlasRegion tileMark;
   public static AtlasRegion unit;
-  public static AtlasRegion selectionNornal;
+  public static AtlasRegion selectionNormal;
   public static AtlasRegion selectionCombat;
   public static AtlasRegion castleBlue;
   public static AtlasRegion castleRed;
-
-  public static float blockWidth;
-  public static float blockHeight;
 
   public static void load () {
     loadTexture();
@@ -33,13 +30,10 @@ public class Assets {
     tile = loadTexture("tile");
     tileMark = loadTexture("tile-mark");
     unit = loadTexture("unit");
-    selectionNornal = loadTexture("selection-normal");
+    selectionNormal = loadTexture("selection-normal");
     selectionCombat = loadTexture("selection-combat");
     castleBlue = loadTexture("castle-blue");
     castleRed = loadTexture("castle-red");
-
-    blockWidth = Assets.castleRed.getRegionWidth();
-    blockHeight = Assets.castleRed.getRegionHeight();
   }
 
   public static void dispose () {
