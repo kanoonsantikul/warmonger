@@ -26,8 +26,8 @@ public class World extends Stage {
 		unit.addListener(map);
 
 		addActor(map);
-		for (int i=0; i<Map.WIDTH; i++) {
-			for (int j=0; j<Map.HEIGHT; j++) {
+		for (int i = 0; i < Map.ROW; i++) {
+			for (int j = 0; j < Map.COLUMN; j++) {
 				addActor(map.getTile(i, j));
 				map.getTile(i, j).addListener(map);
 			}

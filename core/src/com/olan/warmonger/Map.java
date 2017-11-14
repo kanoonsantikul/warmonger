@@ -6,29 +6,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
 public class Map extends GameObject implements Unit.UnitListener, Tile.TileListener {
-  public static final int WIDTH = 5;
-  public static final int HEIGHT = 8;
+  public static final int ROW = 10;
+  public static final int COLUMN = 5;
 
-  private float sizeX = Assets.blockWidth * WIDTH;
-  private float sizeY = Assets.blockHeight * HEIGHT;
+  private float width = Tile.WIDTH * COLUMN;
+  private float height = Tile.HEIGHT * ROW;
 
-  private Tile[][] tiles = new Tile[WIDTH][HEIGHT];
+  private Tile[][] tiles = new Tile[ROW][COLUMN];
   private ArrayList<Unit> units = new ArrayList();
 
   public Map () {
     super(Assets.background);
-    setOffsetX((Gdx.graphics.getWidth() - sizeX) / 2);
-    setOffsetY((Gdx.graphics.getHeight() - sizeY + Assets.blockHeight) / 2);
+    setOffsetX((World.WIDTH - width) / 2);
+    setOffsetY((World.HEIGHT - height) / 2);
     initTiles();
   }
 
   private void initTiles () {
-    for (int i=0; i<WIDTH; i++) {
-      for (int j=0; j<HEIGHT; j++) {
+    for (int i = 0; i < ROW; i++) {
+      for (int j = 0; j < COLUMN; j++) {
         tiles[i][j] = new Tile(i, j);
         tiles[i][j].setOffsetX(getOffsetX());
         tiles[i][j].setOffsetY(getOffsetY());
-        System.out.println(getOffsetY());
       }
     }
   }
@@ -57,12 +56,12 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    for (int i=0; i<WIDTH; i++) {
-      for (int j=0; j<HEIGHT; j++) {
+    for (int i = 0; i < ROW; i++) {
+      for (int j = 0; j < COLUMN; j++) {
         getTile(i, j).setTexture(Assets.tileMark);
-        if (i == row) {
-          if ((j <= column + unit.getMoveRange()) && (j > column)) {
-            getTile(i, j).setTexture(Assets.selectionNornal);
+        if (j == column) {
+          if ((i <= row + unit.getMoveRange()) && (i > row)) {
+            getTile(i, j).setTexture(Assets.selectionNormal);
           }
         }
       }
