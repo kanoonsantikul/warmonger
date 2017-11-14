@@ -15,6 +15,9 @@ public class Assets {
   public static AtlasRegion castleBlue;
   public static AtlasRegion castleRed;
 
+  public static float blockWidth;
+  public static float blockHeight;
+
   public static void load () {
     loadTexture();
   }
@@ -32,6 +35,11 @@ public class Assets {
     unit = loadTexture("unit");
     selectionNornal = loadTexture("selection-normal");
     selectionCombat = loadTexture("selection-combat");
+    castleBlue = loadTexture("castle-blue");
+    castleRed = loadTexture("castle-red");
+
+    blockWidth = Assets.castleRed.getRegionWidth();
+    blockHeight = Assets.castleRed.getRegionHeight();
   }
 
   public static void dispose () {
