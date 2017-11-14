@@ -11,6 +11,9 @@ public class Unit extends GameObject {
   private int moveRange = 2;
   private int attackRange;
 
+  public static float manualOffsetX = 5.0f;
+  public static float manualOffsetY = 15.0f;
+
   public Unit (int row, int column) {
     super(Assets.pikemanBack);
 
