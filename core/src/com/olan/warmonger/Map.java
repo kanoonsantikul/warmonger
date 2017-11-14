@@ -15,6 +15,9 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   private Tile[][] tiles = new Tile[WIDTH][HEIGHT];
   private ArrayList<Unit> units = new ArrayList();
 
+  private Unit selectedUnit;
+  private boolean isSelectUnit = false;
+
   public Map () {
     super(Assets.background);
     setOffsetX((Gdx.graphics.getWidth() - sizeX) / 2);
@@ -28,7 +31,6 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
         tiles[i][j] = new Tile(i, j);
         tiles[i][j].setOffsetX(getOffsetX());
         tiles[i][j].setOffsetY(getOffsetY());
-        System.out.println(getOffsetY());
       }
     }
   }
@@ -51,21 +53,35 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
     units.add(unit);
   }
 
+  public void update () {
+    for (int i=0; i<WIDTH; i++) {
+      for (int j=0; j<HEIGHT; j++) {
+        if (this.isSelectUnit && this.selectedUnit != null) {
+          getTile(i, j).setTexture(Assets.tileMark);
+          if (i == selectedUnit.getRow()) {
+            if ((j <= selectedUnit.getColumn() + selectedUnit.getMoveRange())
+              && (j > selectedUnit.getColumn())) {
+                getTile(i, j).setTexture(Assets.selectionNornal);
+            }
+          }
+        } else {
+          getTile(i, j).setTexture(Assets.tileMark);
+        }
+      }
+    }
+  }
+
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
+    this.selectedUnit = null;
+    this.isSelectUnit = true;
+    update();
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    for (int i=0; i<WIDTH; i++) {
-      for (int j=0; j<HEIGHT; j++) {
-        getTile(i, j).setTexture(Assets.tileMark);
-        if (i == row) {
-          if ((j <= column + unit.getMoveRange()) && (j > column)) {
-            getTile(i, j).setTexture(Assets.selectionNornal);
-          }
-        }
-      }
-    }
+    this.selectedUnit = unit;
+    this.isSelectUnit = !this.isSelectUnit;
+    update();
   }
 }

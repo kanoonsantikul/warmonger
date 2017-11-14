@@ -11,7 +11,7 @@ public class Tile extends GameObject {
   public Tile (int row, int column) {
     setRow(row);
     setColumn(column);
-    setTexture(Assets.tile);
+    setTexture(Assets.tileMark);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
