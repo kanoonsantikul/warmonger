@@ -8,9 +8,12 @@ public class Assets {
 
   public static AtlasRegion background;
   public static AtlasRegion tile;
-  public static AtlasRegion transparentTile;
+  public static AtlasRegion tileMark;
   public static AtlasRegion unit;
-  public static AtlasRegion selectedUnit;
+  public static AtlasRegion selectionNornal;
+  public static AtlasRegion selectionCombat;
+  public static AtlasRegion castleBlue;
+  public static AtlasRegion castleRed;
 
   public static void load () {
     loadTexture();
@@ -25,9 +28,10 @@ public class Assets {
 
     background = loadTexture("background");
     tile = loadTexture("tile");
-    transparentTile = loadTexture("transparent-tile");
+    tileMark = loadTexture("tile-mark");
     unit = loadTexture("unit");
-    selectedUnit = loadTexture("selected-unit");
+    selectionNornal = loadTexture("selection-normal");
+    selectionCombat = loadTexture("selection-combat");
   }
 
   public static void dispose () {
