@@ -42,11 +42,19 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
 
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
-    tile.setTexture(Assets.tile);
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    unit.setTexture(Assets.selectedUnit);
+    for (int i=0; i<WIDTH; i++) {
+      for (int j=0; j<HEIGHT; j++) {
+        getTile(i, j).setTexture(Assets.tileMark);
+        if (i == row) {
+          if ((j <= column + unit.getMoveRange()) && (j > column)) {
+            getTile(i, j).setTexture(Assets.selectionNornal);
+          }
+        }
+      }
+    }
   }
 }

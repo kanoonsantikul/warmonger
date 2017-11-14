@@ -7,7 +7,7 @@ public class Unit extends GameObject {
   private int row, column;
   private UnitListener listener;
 
-  private int moveRange;
+  private int moveRange = 2;
   private int attackRange;
 
   public Unit (int row, int column) {
@@ -37,11 +37,11 @@ public class Unit extends GameObject {
     this.row = row;
   }
 
-  public int getcolumn () {
+  public int getColumn () {
     return this.column;
   }
 
-  public void setcolumn (int column) {
+  public void setColumn (int column) {
     this.column = column;
   }
 
@@ -63,10 +63,10 @@ public class Unit extends GameObject {
   }
 
   public void indexToXY () {
-    setX(row * getWidth());
-    setY(column * getHeight());
+    setX((row * 64) + ((64 - getWidth()) / 2));
+    setY((column * 64) + ((64 - getHeight()) / 2));
   }
-  
+
   public void setAttackRange (int attackRange) {
     this.attackRange = attackRange;
   }

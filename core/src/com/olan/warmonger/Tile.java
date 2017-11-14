@@ -11,7 +11,7 @@ public class Tile extends GameObject {
   public Tile (int row, int column) {
     setRow(row);
     setColumn(column);
-    setTexture(Assets.transparentTile);
+    setTexture(Assets.tile);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -43,8 +43,8 @@ public class Tile extends GameObject {
   }
 
   public void indexToXY () {
-    setX(row * getWidth());
-    setY(column * getHeight());
+    setX((row * 64) + ((64 - getWidth()) / 2));
+    setY((column * 64) + ((64 - getHeight()) / 2));
   }
 
   @Override
