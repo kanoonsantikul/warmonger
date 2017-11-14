@@ -11,7 +11,13 @@ public class Assets {
 
   public static TextureRegion background;
   public static AtlasRegion tile;
+
   public static AtlasRegion pikemanBack;
+  public static AtlasRegion tileMark;
+  public static AtlasRegion selectionNormal;
+  public static AtlasRegion selectionCombat;
+  public static AtlasRegion castleBlue;
+  public static AtlasRegion castleRed;
 
   public static void load () {
     loadTexture();
@@ -28,6 +34,11 @@ public class Assets {
 
     tile = loadTexture("tile");
     pikemanBack = loadTexture("pikeman-back");
+    tileMark = loadTexture("tile-mark");
+    selectionNormal = loadTexture("selection-normal");
+    selectionCombat = loadTexture("selection-combat");
+    castleBlue = loadTexture("castle-blue");
+    castleRed = loadTexture("castle-red");
   }
 
   public static void dispose () {
