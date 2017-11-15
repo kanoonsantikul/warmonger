@@ -1,11 +1,11 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import java.util.ArrayList;
 
-public class Map implements Unit.UnitListener, Tile.TileListener {
+public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   public static final int ROW = 10;
   public static final int COLUMN = 5;
 
@@ -16,7 +16,8 @@ public class Map implements Unit.UnitListener, Tile.TileListener {
   private float offsetY;
 
   private Tile[][] tiles = new Tile[ROW][COLUMN];
-  private ArrayList<Unit> units = new ArrayList();
+  private ArrayList<Castle> castles = new ArrayList<Castle>();
+  private ArrayList<Unit> units = new ArrayList<Unit>();
 
   private Unit selectedUnit;
   private boolean isSelectUnit = false;
@@ -28,37 +29,37 @@ public class Map implements Unit.UnitListener, Tile.TileListener {
     offsetX = (World.WIDTH - width) / 2;
     offsetY = (World.HEIGHT - height) / 2;
     initTiles();
+    initCastles();
   }
 
   private void initTiles () {
+    Tile tile;
     for (int i = 0; i < ROW; i++) {
       for (int j = 0; j < COLUMN; j++) {
-        Tile tile = new Tile(i, j);
+        tile = new Tile(i, j);
         tile.addListener(this);
         tile.setPosition(
             offsetX + Tile.WIDTH * j,
             offsetY + Tile.HEIGHT * i);
         tiles[i][j] = tile;
+        addActor(tile);
       }
     }
   }
 
-  public Tile getTile (int row, int column) {
-    return tiles[row][column];
-  }
+  private void initCastles () {
+    Castle castle;
+    for (int column = 0; column < 5; column++) {
+      castle = new Castle(0, column);
+      castle.setOnTile(tiles[0][column]);
+      castles.add(castle);
+      addActor(castle);
 
-  public Tile[][] getTiles () {
-    return tiles;
-  }
-
-  public ArrayList<Unit> getUnits () {
-    return units;
-  }
-
-  public void addUnit (Unit unit) {
-    units.add(unit);
-    unit.addListener(this);
-    unit.setOnTile(tiles[unit.getRow()][unit.getColumn()]);
+      castle = new Castle(ROW - 1, column);
+      castle.setOnTile(tiles[ROW - 1][column]);
+      castles.add(castle);
+      addActor(castle);
+    }
   }
 
   @Override
@@ -77,6 +78,34 @@ public class Map implements Unit.UnitListener, Tile.TileListener {
     } else {
       this.isSelectUnit = !this.isSelectUnit;
     }
+  }
+
+
+  public Tile getTile (int row, int column) {
+    return tiles[row][column];
+  }
+
+  public Tile[][] getTiles () {
+    return tiles;
+  }
+
+  public ArrayList<Unit> getUnits () {
+    return units;
+  }
+
+  public void addUnit (Unit unit) {
+    unit.addListener(this);
+    unit.setOnTile(tiles[unit.getRow()][unit.getColumn()]);
+    units.add(unit);
+    addActor(unit);
+  }
+
+  public float getOffsetX () {
+    return this.offsetX;
+  }
+
+  public float getOffsetY () {
+    return this.offsetY;
   }
 
   public void act () {
@@ -100,14 +129,6 @@ public class Map implements Unit.UnitListener, Tile.TileListener {
         }
       }
     }
-  }
-
-  public float getOffsetX () {
-    return this.offsetX;
-  }
-
-  public float getOffsetY () {
-    return this.offsetY;
   }
 
   public void showTileMark (int i, int j) {
