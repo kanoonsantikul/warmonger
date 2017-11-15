@@ -18,6 +18,9 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   private Unit selectedUnit;
   private boolean isSelectUnit = false;
 
+  private Tile selectedTile;
+  private boolean isSelectTile = false;
+
   public Map () {
     super(Assets.background);
     setOffsetX((World.WIDTH - width) / 2);
@@ -28,9 +31,7 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   private void initTiles () {
     for (int i = 0; i < ROW; i++) {
       for (int j = 0; j < COLUMN; j++) {
-        tiles[i][j] = new Tile(i, j);
-        tiles[i][j].setOffsetX(getOffsetX());
-        tiles[i][j].setOffsetY(getOffsetY());
+        tiles[i][j] = new Tile(i, j, this);
       }
     }
   }
@@ -48,21 +49,23 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   }
 
   public void addUnit (Unit unit) {
-    unit.setOffsetX(getOffsetX() + Unit.manualOffsetX);
-    unit.setOffsetY(getOffsetY() + Unit.manualOffsetY);
     units.add(unit);
   }
 
   public void update () {
     for (int i=0; i<ROW; i++) {
       for (int j=0; j<COLUMN; j++) {
-        if (this.isSelectUnit && this.selectedUnit != null) {
-          getTile(i, j).setTexture(Assets.tileMark);
-          if (j == selectedUnit.getColumn()) {
-            if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
-              && (i > selectedUnit.getRow())) {
-                getTile(i, j).setTexture(Assets.selectionNormal);
+        if (isSelectUnit) {
+          if (!isSelectTile) {
+            showTileMark(i, j);
+          } else {
+            if (selectedUnit.canMove(selectedTile.getRow(), selectedTile.getColumn())) {
+              selectedUnit.move(selectedTile.getRow(), selectedTile.getColumn());
             }
+            isSelectUnit = false;
+            isSelectTile = false;
+            selectedUnit = null;
+            selectedTile = null;
           }
         } else {
           getTile(i, j).setTexture(Assets.tile);
@@ -73,18 +76,39 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
 
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
-    this.selectedUnit = null;
-    this.isSelectUnit = true;
-    update();
+    if (isSelectUnit) {
+      this.selectedTile = tile;
+      this.isSelectTile = true;
+    }
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
     if (unit != selectedUnit) {
       this.selectedUnit = unit;
+      this.isSelectUnit = true;
     } else {
       this.isSelectUnit = !this.isSelectUnit;
     }
+  }
+
+  @Override
+  public void act (float delta) {
     update();
+  }
+
+  public void showTileMark (int i, int j) {
+    getTile(i, j).setTexture(Assets.tileMark);
+
+    if (j == selectedUnit.getColumn()) {
+      if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
+        && (i > selectedUnit.getRow())) {
+          showMoveRage(i, j);
+      }
+    }
+  }
+
+  public void showMoveRage (int i, int j) {
+    getTile(i, j).setTexture(Assets.selectionNormal);
   }
 }

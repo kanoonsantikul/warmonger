@@ -81,11 +81,19 @@ public class GameObject extends Actor {
 
   @Override
   public void setX (float x) {
-    super.setX(x + getOffsetX());
+    if (getOffsetX() == 0) {
+      super.setX(x + getOffsetX());
+    } else {
+      super.setX(x);
+    }
   }
 
   @Override
   public void setY (float y) {
-    super.setY(y + getOffsetY());
+    if (getOffsetY() == 0){
+      super.setY(y + getOffsetY());
+    } else {
+      super.setY(y);
+    }
   }
 }
