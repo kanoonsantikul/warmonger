@@ -11,11 +11,20 @@ public class Unit extends GameObject {
   private int moveRange = 2;
   private int attackRange;
 
-  public Unit (int row, int column) {
+  public static float manualOffsetX = 5.0f;
+  public static float manualOffsetY = 15.0f;
+
+  public Unit (int row, int column, Map map) {
     super(Assets.pikemanBack);
 
     this.row = row;
     this.column = column;
+
+    setOffsetX(map.getOffsetX() + 5);
+    setOffsetY(map.getOffsetY() + 15);
+    indexToXY();
+
+    addListener(map);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -62,14 +71,21 @@ public class Unit extends GameObject {
     this.attackRange = attackRange;
   }
 
-  @Override
-  public void act (float delta) {
-    indexToXY();
+  public void indexToXY () {
+    setX((column * Tile.WIDTH) + ((Tile.WIDTH - getWidth()) / 2) + getOffsetX());
+    setY((row * Tile.HEIGHT) + ((Tile.HEIGHT - getHeight()) / 2) + getOffsetY());
   }
 
-  public void indexToXY () {
-    setX((column * Tile.WIDTH) + ((Tile.WIDTH - getWidth()) / 2));
-    setY((row * Tile.HEIGHT) + ((Tile.HEIGHT - getHeight()) / 2));
+  public boolean canMove (int row, int column) {
+    return (row > getRow())
+        && (getRow() + getMoveRange() >= row)
+        && (getColumn() == column);
+  }
+
+  public void move(int row, int column) {
+    setRow(row);
+    setColumn(column);
+    indexToXY();
   }
 
   public interface UnitListener {

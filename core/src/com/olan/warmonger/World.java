@@ -25,15 +25,22 @@ public class World extends Stage {
 		addActor(background);
 
 		map = new Map();
-		Unit unit = new Unit(3, 3);
-		map.addUnit(unit);
-		unit.addListener(map);
-
 		addActor(map);
+
+		for (int i=1; i<4; i++) {
+			Unit unit = new Unit(1, i, map);
+			map.addUnit(unit);
+		}
+
+		for (int i=1; i<4; i++) {
+			Unit unit = new Unit(2, i, map);
+			map.addUnit(unit);
+			unit.addListener(map);
+		}
+
 		for (int i = 0; i < Map.ROW; i++) {
 			for (int j = 0; j < Map.COLUMN; j++) {
 				addActor(map.getTile(i, j));
-				map.getTile(i, j).addListener(map);
 			}
 		}
 
