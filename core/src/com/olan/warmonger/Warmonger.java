@@ -11,7 +11,7 @@ public class Warmonger extends Game {
 
 	@Override
 	public void create () {
-		Gdx.graphics.setContinuousRendering(false);
+		Gdx.graphics.setContinuousRendering(true);
 		batch = new SpriteBatch();
 		gameScreen = new GameScreen(batch);
 		setScreen(gameScreen);

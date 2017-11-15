@@ -20,6 +20,7 @@ public class Map implements Unit.UnitListener, Tile.TileListener {
 
   private Unit selectedUnit;
   private boolean isSelectUnit = false;
+  private boolean isUnitMoving = false;
 
   private Tile selectedTile;
   private boolean isSelectTile = false;
@@ -63,41 +64,52 @@ public class Map implements Unit.UnitListener, Tile.TileListener {
 
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
-    if (isSelectUnit) {
-      this.selectedTile = tile;
-      this.isSelectTile = true;
+    if (!isUnitMoving) {
+      if (isSelectUnit) {
+        this.selectedTile = tile;
+        this.isSelectTile = true;
+      }
     }
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    if (unit != selectedUnit) {
-      this.selectedUnit = unit;
-      this.isSelectUnit = true;
-    } else {
-      this.isSelectUnit = !this.isSelectUnit;
+    if (!isUnitMoving) {
+      if (selectedUnit == unit) {
+        this.isSelectUnit = !this.isSelectUnit;
+      } else {
+        this.selectedUnit = unit;
+        this.isSelectUnit = true;
+      }
     }
   }
 
   public void act () {
     for (int i = 0; i < ROW; i++) {
       for (int j = 0; j < COLUMN; j++) {
-        if (isSelectUnit) {
-          if (!isSelectTile) {
-            showTileMark(i, j);
-          } else {
-            if (selectedUnit.canMove(selectedTile.getRow(), selectedTile.getColumn())) {
-              selectedUnit.move(selectedTile.getRow(), selectedTile.getColumn());
-              selectedUnit.setOnTile(selectedTile);
-            }
-            isSelectUnit = false;
-            isSelectTile = false;
-            selectedUnit = null;
-            selectedTile = null;
-          }
-        } else {
+        if (!isSelectUnit) {
           getTile(i, j).setTexture(Assets.tile);
         }
+        if (isSelectUnit && !isSelectTile) {
+          showTileMark(i, j);
+        }
+      }
+    }
+
+    if (isSelectUnit && isSelectTile) {
+      if (selectedUnit.canMoveTo(selectedTile)) {
+        if (selectedUnit.isMovingTo(selectedTile)) {
+          isUnitMoving = true;
+        } else {
+          isUnitMoving = false;
+          selectedUnit.setOnTile(selectedTile);
+        }
+
+      } else {
+        isSelectUnit = false;
+        isSelectTile = false;
+        selectedUnit = null;
+        selectedTile = null;
       }
     }
   }

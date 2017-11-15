@@ -10,6 +10,8 @@ public class World extends Stage {
 	public static final int WIDTH = Gdx.graphics.getWidth();
 	public static final int HEIGHT = Gdx.graphics.getHeight();
 
+	public static final float MOVE_SPEED = 3.0f; 
+
 	private static World world;
 	private Viewport viewport;
 
