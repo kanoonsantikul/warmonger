@@ -25,32 +25,32 @@ public class World extends Stage {
 		addActor(background);
 
 		map = new Map();
-		addActor(map);
-
-		for (int i=1; i<4; i++) {
-			Unit unit = new Unit(1, i, map);
-			map.addUnit(unit);
-		}
-
-		for (int i=1; i<4; i++) {
-			Unit unit = new Unit(2, i, map);
-			map.addUnit(unit);
-			unit.addListener(map);
-		}
-
 		for (int i = 0; i < Map.ROW; i++) {
 			for (int j = 0; j < Map.COLUMN; j++) {
 				addActor(map.getTile(i, j));
 			}
 		}
 
-		for (Unit u : map.getUnits()) {
-			addActor(u);
+		for (int i = 1; i < 4; i++) {
+			Unit unit = new Unit(1, i);
+			map.addUnit(unit);
+			addActor(unit);
+		}
+
+		for (int i = 1; i < 4; i++) {
+			Unit unit = new Unit(2, i);
+			map.addUnit(unit);
+			addActor(unit);
 		}
 	}
 
 	public static World instance () {
 		return world;
+	}
+
+	@Override
+	public void	act (float delta) {
+		map.act();
 	}
 
 	@Override

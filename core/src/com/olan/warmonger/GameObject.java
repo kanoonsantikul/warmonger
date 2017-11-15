@@ -8,9 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class GameObject extends Actor {
   private TextureRegion texture;
 
-  private float offsetX;
-  private float offsetY;
-
   public GameObject () {
     this(null);
   }
@@ -61,39 +58,5 @@ public class GameObject extends Actor {
 
   public void setCenter (Vector2 center) {
     setCenter(center.x, center.y);
-  }
-
-  public void setOffsetX (float offset) {
-    this.offsetX = offset;
-  }
-
-  public float getOffsetX () {
-    return this.offsetX;
-  }
-
-  public void setOffsetY (float offset) {
-    this.offsetY = offset;
-  }
-
-  public float getOffsetY () {
-    return this.offsetY;
-  }
-
-  @Override
-  public void setX (float x) {
-    if (getOffsetX() == 0) {
-      super.setX(x + getOffsetX());
-    } else {
-      super.setX(x);
-    }
-  }
-
-  @Override
-  public void setY (float y) {
-    if (getOffsetY() == 0){
-      super.setY(y + getOffsetY());
-    } else {
-      super.setY(y);
-    }
   }
 }
