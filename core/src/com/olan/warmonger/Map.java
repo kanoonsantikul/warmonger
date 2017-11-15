@@ -5,12 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
-public class Map extends GameObject implements Unit.UnitListener, Tile.TileListener {
-  public static final int ROW = 8;
+public class Map implements Unit.UnitListener, Tile.TileListener {
+  public static final int ROW = 10;
   public static final int COLUMN = 5;
 
   private float width = Tile.WIDTH * COLUMN;
   private float height = Tile.HEIGHT * ROW;
+
+  private float offsetX;
+  private float offsetY;
 
   private Tile[][] tiles = new Tile[ROW][COLUMN];
   private ArrayList<Unit> units = new ArrayList();
@@ -22,16 +25,20 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
   private boolean isSelectTile = false;
 
   public Map () {
-    super(Assets.background);
-    setOffsetX((World.WIDTH - width) / 2);
-    setOffsetY((World.HEIGHT - height) / 2);
+    offsetX = (World.WIDTH - width) / 2;
+    offsetY = (World.HEIGHT - height) / 2;
     initTiles();
   }
 
   private void initTiles () {
     for (int i = 0; i < ROW; i++) {
       for (int j = 0; j < COLUMN; j++) {
-        tiles[i][j] = new Tile(i, j, this);
+        Tile tile = new Tile(i, j);
+        tile.addListener(this);
+        tile.setPosition(
+            offsetX + Tile.WIDTH * j,
+            offsetY + Tile.HEIGHT * i);
+        tiles[i][j] = tile;
       }
     }
   }
@@ -50,28 +57,8 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
 
   public void addUnit (Unit unit) {
     units.add(unit);
-  }
-
-  public void update () {
-    for (int i=0; i<ROW; i++) {
-      for (int j=0; j<COLUMN; j++) {
-        if (isSelectUnit) {
-          if (!isSelectTile) {
-            showTileMark(i, j);
-          } else {
-            if (selectedUnit.canMove(selectedTile.getRow(), selectedTile.getColumn())) {
-              selectedUnit.move(selectedTile.getRow(), selectedTile.getColumn());
-            }
-            isSelectUnit = false;
-            isSelectTile = false;
-            selectedUnit = null;
-            selectedTile = null;
-          }
-        } else {
-          getTile(i, j).setTexture(Assets.tile);
-        }
-      }
-    }
+    unit.addListener(this);
+    unit.setOnTile(tiles[unit.getRow()][unit.getColumn()]);
   }
 
   @Override
@@ -92,9 +79,35 @@ public class Map extends GameObject implements Unit.UnitListener, Tile.TileListe
     }
   }
 
-  @Override
-  public void act (float delta) {
-    update();
+  public void act () {
+    for (int i = 0; i < ROW; i++) {
+      for (int j = 0; j < COLUMN; j++) {
+        if (isSelectUnit) {
+          if (!isSelectTile) {
+            showTileMark(i, j);
+          } else {
+            if (selectedUnit.canMove(selectedTile.getRow(), selectedTile.getColumn())) {
+              selectedUnit.move(selectedTile.getRow(), selectedTile.getColumn());
+              selectedUnit.setOnTile(selectedTile);
+            }
+            isSelectUnit = false;
+            isSelectTile = false;
+            selectedUnit = null;
+            selectedTile = null;
+          }
+        } else {
+          getTile(i, j).setTexture(Assets.tile);
+        }
+      }
+    }
+  }
+
+  public float getOffsetX () {
+    return this.offsetX;
+  }
+
+  public float getOffsetY () {
+    return this.offsetY;
   }
 
   public void showTileMark (int i, int j) {

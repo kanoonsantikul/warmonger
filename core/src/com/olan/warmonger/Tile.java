@@ -12,17 +12,11 @@ public class Tile extends GameObject {
   private int column;
   private TileListener listener;
 
-  public Tile (int row, int column, Map map) {
+  public Tile (int row, int column) {
     super(Assets.tile);
 
     setRow(row);
     setColumn(column);
-
-    setOffsetX(map.getOffsetX());
-    setOffsetY(map.getOffsetY());
-    indexToXY();
-
-    addListener(map);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -51,11 +45,6 @@ public class Tile extends GameObject {
 
   public int getColumn () {
     return column;
-  }
-
-  public void indexToXY () {
-    setX((column * Tile.WIDTH) + ((Tile.WIDTH - getWidth()) / 2) + getOffsetX());
-    setY((row * Tile.HEIGHT) + ((Tile.HEIGHT - getHeight()) / 2) + getOffsetY());
   }
 
   public interface TileListener {
