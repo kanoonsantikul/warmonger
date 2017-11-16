@@ -29,16 +29,17 @@ public class Tile extends GameObject {
     });
 
     resourceText = new Text(Assets.worldFont);
-    setResource(15);
   }
 
   @Override
   public void draw (Batch batch, float parentAlpha) {
     super.draw(batch, parentAlpha);
-    batch.draw(Assets.corn,
-        getCenterX() - Assets.corn.getRegionWidth() / 2,
-        getCenterY() - Assets.corn.getRegionHeight() / 2);
-    resourceText.draw(batch);
+    if (getResource() != 0) {
+      batch.draw(Assets.corn,
+          getCenterX() - Assets.corn.getRegionWidth() / 2,
+          getCenterY() - Assets.corn.getRegionHeight() / 2);
+      resourceText.draw(batch);
+    }
   }
 
   @Override

@@ -1,7 +1,8 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     offsetX = (World.WIDTH - width) / 2;
     offsetY = (World.HEIGHT - height) / 2;
     initTiles();
+    initResources();
     initCastles();
   }
 
@@ -45,6 +47,30 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
         addActor(tile);
       }
     }
+  }
+
+  private void initResources () {
+    Tile tile;
+    (tile = findEmptyTile()).setResource(3);
+    tiles[ROW - tile.getRow() - 1][COLUMN - tile.getColumn() - 1].setResource(3);
+    for (int i = 0; i < 2; i++) {
+      (tile = findEmptyTile()).setResource(2);
+      tiles[ROW - tile.getRow() - 1][COLUMN - tile.getColumn() - 1].setResource(2);
+    }
+    for (int i = 0; i < 4; i++) {
+      (tile = findEmptyTile()).setResource(1);
+      tiles[ROW - tile.getRow() - 1][COLUMN - tile.getColumn() - 1].setResource(1);
+    }
+  }
+
+  private Tile findEmptyTile () {
+    Tile tile;
+    do {
+      int row = MathUtils.random(2, (ROW / 2) - 1);
+      int column = MathUtils.random(0, COLUMN - 1);
+      tile = tiles[row][column];
+    } while(tile == null || tile.getResource() != 0);
+    return tile;
   }
 
   private void initCastles () {
