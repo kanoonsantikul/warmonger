@@ -12,12 +12,14 @@ public class Tile extends GameObject {
   private int column;
   private TileListener listener;
 
+  private int resource;
+  private Text resourceText;
+
   public Tile (int row, int column) {
     super(Assets.tile);
 
     setRow(row);
     setColumn(column);
-
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
         if (listener != null) {
@@ -25,6 +27,23 @@ public class Tile extends GameObject {
         }
       }
     });
+
+    resourceText = new Text(Assets.worldFont);
+    setResource(15);
+  }
+
+  @Override
+  public void draw (Batch batch, float parentAlpha) {
+    super.draw(batch, parentAlpha);
+    batch.draw(Assets.corn,
+        getCenterX() - Assets.corn.getRegionWidth() / 2,
+        getCenterY() - Assets.corn.getRegionHeight() / 2);
+    resourceText.draw(batch);
+  }
+
+  @Override
+  protected void	positionChanged () {
+    resourceText.setCenter(getCenterX(), getCenterY() - 15);
   }
 
   public void addListener (TileListener listerner) {
@@ -40,11 +59,20 @@ public class Tile extends GameObject {
   }
 
   public int getRow () {
-    return row;
+    return this.row;
   }
 
   public int getColumn () {
-    return column;
+    return this.column;
+  }
+
+  public int getResource () {
+    return this.resource;
+  }
+
+  public void setResource (int resource) {
+    this.resource = resource;
+    resourceText.setText(resource + "");
   }
 
   public interface TileListener {
