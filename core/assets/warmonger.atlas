@@ -6,14 +6,14 @@ filter: Nearest,Nearest
 repeat: none
 archer-back
   rotate: false
-  xy: 477, 64
+  xy: 357, 64
   size: 67, 62
   orig: 67, 62
   offset: 0, 0
   index: -1
 archer-front
   rotate: false
-  xy: 546, 64
+  xy: 426, 64
   size: 66, 62
   orig: 66, 62
   offset: 0, 0
@@ -34,56 +34,63 @@ castle-red
   index: -1
 cavalry-back
   rotate: false
-  xy: 2, 40
+  xy: 76, 40
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
 cavalry-front
   rotate: false
-  xy: 76, 40
+  xy: 2, 40
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
+corn
+  rotate: false
+  xy: 494, 85
+  size: 41, 41
+  orig: 41, 41
+  offset: 0, 0
+  index: -1
 pikeman-back
   rotate: false
-  xy: 348, 48
+  xy: 603, 48
   size: 58, 78
   orig: 58, 78
   offset: 0, 0
   index: -1
 pikeman-front
   rotate: false
-  xy: 288, 48
+  xy: 543, 48
   size: 58, 78
   orig: 58, 78
   offset: 0, 0
   index: -1
 selection-combat
   rotate: false
-  xy: 601, 2
+  xy: 481, 2
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 selection-normal
   rotate: false
-  xy: 477, 2
+  xy: 357, 2
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 tile
   rotate: false
-  xy: 408, 59
+  xy: 288, 59
   size: 67, 67
   orig: 67, 67
   offset: 0, 0
   index: -1
 tile-mark
   rotate: false
-  xy: 539, 2
+  xy: 419, 2
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

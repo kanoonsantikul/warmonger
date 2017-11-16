@@ -1,6 +1,9 @@
 package com.olan.warmonger;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -18,13 +21,24 @@ public class Assets {
   public static AtlasRegion selectionCombat;
   public static AtlasRegion castleBlue;
   public static AtlasRegion castleRed;
+  public static AtlasRegion corn;
+
+  public static BitmapFont worldFont;
 
   public static void load () {
     loadTexture();
+    loadFont();
   }
 
   public static AtlasRegion loadTexture (String name) {
     return sprite.findRegion(name);
+  }
+
+  public static BitmapFont loadFont (String name) {
+    return new BitmapFont(
+        Gdx.files.internal(name + ".fnt"),
+        Gdx.files.internal(name + ".png"),
+        false);
   }
 
   public static void loadTexture () {
@@ -39,9 +53,16 @@ public class Assets {
     selectionCombat = loadTexture("selection-combat");
     castleBlue = loadTexture("castle-blue");
     castleRed = loadTexture("castle-red");
+    corn = loadTexture("corn");
+  }
+
+  public static void loadFont () {
+    worldFont = loadFont("world-font");
+    worldFont.setColor(Color.WHITE);
   }
 
   public static void dispose () {
+    worldFont.dispose();
     sprite.dispose();
     backgroundTexture.dispose();
   }
