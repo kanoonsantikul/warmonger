@@ -46,15 +46,20 @@ public class Unit extends TileObject {
     this.attackRange = attackRange;
   }
 
-  public boolean canMove (int row, int column) {
-    return (row > getRow())
-        && (getRow() + getMoveRange() >= row)
-        && (getColumn() == column);
+  public boolean canMoveTo (Tile tile) {
+    return (tile.getRow() > getRow())
+        && (getRow() + getMoveRange() >= tile.getRow())
+        && (getColumn() == tile.getColumn());
   }
 
-  public void move(int row, int column) {
-    setRow(row);
-    setColumn(column);
+  public boolean isMovingTo (Tile tile) {
+    if (getCenterY() - getOffsetY() <= tile.getCenterY()) {
+      this.moveBy(0.0f, World.MOVE_SPEED);
+      return true;
+    }
+    setRow(tile.getRow());
+    setColumn(tile.getColumn());
+    return false;
   }
 
   public interface UnitListener {
