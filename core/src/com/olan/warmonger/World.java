@@ -31,7 +31,6 @@ public class World extends Stage {
 
 		for (int i = 1; i < 4; i++) {
 			map.addUnit(new Unit(1, i));
-			map.addUnit(new Unit(2, i));
 		}
 	}
 
