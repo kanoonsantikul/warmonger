@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Unit extends TileObject {
+  private static final float MOVE_SPEED = 4.5f;
+
   private UnitListener listener;
 
   private int moveRange = 2;
@@ -54,7 +56,7 @@ public class Unit extends TileObject {
 
   public boolean isMovingTo (Tile tile) {
     if (getCenterY() - getOffsetY() <= tile.getCenterY()) {
-      this.moveBy(0.0f, World.MOVE_SPEED);
+      this.moveBy(0.0f, Unit.MOVE_SPEED);
       return true;
     }
     setRow(tile.getRow());
