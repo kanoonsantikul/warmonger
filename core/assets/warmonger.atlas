@@ -48,9 +48,9 @@ cavalry-front
   index: -1
 corn
   rotate: false
-  xy: 494, 85
-  size: 41, 41
-  orig: 41, 41
+  xy: 2, 3
+  size: 35, 35
+  orig: 35, 35
   offset: 0, 0
   index: -1
 pikeman-back
