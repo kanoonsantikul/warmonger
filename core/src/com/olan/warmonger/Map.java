@@ -27,8 +27,14 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   private Tile selectedTile;
   private boolean isSelectTile = false;
 
+  private Unit selectedEnemy;
+  private boolean isSelectEnemy = false;
+
+  private Team currentTeam = Team.RED;
+
   Player redPlayer = new Player(Team.RED);
   Player bluePlayer = new Player(Team.BLUE);
+
 
   public Map () {
     offsetX = (World.WIDTH - width) / 2;
@@ -124,8 +130,13 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   public void onTileClicked (Tile tile, int row, int column) {
     if (!isUnitMoving) {
       if (isSelectUnit) {
-        this.selectedTile = tile;
-        this.isSelectTile = true;
+        selectedTile = tile;
+        isSelectTile = true;
+      }
+
+      if (isSelectEnemy) {
+        selectedEnemy = null;
+        isSelectEnemy = false;
       }
     }
   }
@@ -133,11 +144,19 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
     if (!isUnitMoving) {
-      if (selectedUnit == unit) {
-        this.isSelectUnit = !this.isSelectUnit;
+      if (isSelectUnit) {
+        if (selectedUnit.getTeam() == unit.getTeam()) {
+          selectedUnit = unit;
+          isSelectUnit = true;
+        } else {
+          selectedEnemy = unit;
+          isSelectEnemy = true;
+        }
       } else {
-        this.selectedUnit = unit;
-        this.isSelectUnit = true;
+        if (currentTeam == unit.getTeam()) {
+          selectedUnit = unit;
+          isSelectUnit = true;
+        }
       }
     }
   }
@@ -161,6 +180,12 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
         } else {
           isUnitMoving = false;
           selectedUnit.setOnTile(selectedTile);
+
+          if (currentTeam == Team.RED) {
+            currentTeam = Team.BLUE;
+          } else {
+            currentTeam = Team.RED;
+          }
         }
 
       } else {
@@ -176,10 +201,19 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     getTile(i, j).setTexture(Assets.tileMark);
 
     if (j == selectedUnit.getColumn()) {
-      if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
+
+      if (selectedUnit.getTeam() == Team.BLUE) {
+        if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
         && (i > selectedUnit.getRow())) {
           showMoveRage(i, j);
+        }
+      } else {
+        if ((i >= selectedUnit.getRow() - selectedUnit.getMoveRange())
+        && (i < selectedUnit.getRow())) {
+          showMoveRage(i, j);
+        }
       }
+
     }
   }
 

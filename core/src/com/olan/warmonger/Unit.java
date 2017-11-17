@@ -54,15 +54,28 @@ public class Unit extends TileObject {
   }
 
   public boolean canMoveTo (Tile tile) {
-    return (tile.getRow() > getRow())
-        && (getRow() + getMoveRange() >= tile.getRow())
-        && (getColumn() == tile.getColumn());
+    if (getTeam() == Team.RED) {
+      return (tile.getRow() < getRow())
+          && (getRow() - getMoveRange() <= tile.getRow())
+          && (getColumn() == tile.getColumn());
+    } else {
+      return (tile.getRow() > getRow())
+          && (getRow() + getMoveRange() >= tile.getRow())
+          && (getColumn() == tile.getColumn());
+    }
   }
 
   public boolean isMovingTo (Tile tile) {
-    if (getCenterY() - getOffsetY() <= tile.getCenterY()) {
-      this.moveBy(0.0f, World.MOVE_SPEED);
-      return true;
+    if (getTeam() == Team.RED) {
+      if (getCenterY() - getOffsetY() > tile.getCenterY()) {
+        this.moveBy(0.0f, -World.MOVE_SPEED);
+        return true;
+      }
+    } else {
+      if (getCenterY() - getOffsetY() < tile.getCenterY()) {
+        this.moveBy(0.0f, World.MOVE_SPEED);
+        return true;
+      }
     }
     setRow(tile.getRow());
     setColumn(tile.getColumn());
