@@ -12,10 +12,17 @@ public class Unit extends TileObject {
   public static float manualOffsetX = 5.0f;
   public static float manualOffsetY = 15.0f;
 
-  public Unit (int row, int column) {
-    super(Assets.pikemanBack, row, column);
+  public Unit (Team team, int row, int column) {
+    super(row, column);
     setOffsetX(manualOffsetX);
     setOffsetY(manualOffsetY);
+    setTeam(team);
+
+    if (team == Team.RED) {
+      setTexture(Assets.pikemanFront);
+    } else {
+      setTexture(Assets.pikemanBack);
+    }
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {

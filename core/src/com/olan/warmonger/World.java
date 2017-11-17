@@ -10,7 +10,7 @@ public class World extends Stage {
 	public static final int WIDTH = Gdx.graphics.getWidth();
 	public static final int HEIGHT = Gdx.graphics.getHeight();
 
-	public static final float MOVE_SPEED = 3.0f; 
+	public static final float MOVE_SPEED = 3.0f;
 
 	private static World world;
 	private Viewport viewport;
@@ -30,7 +30,8 @@ public class World extends Stage {
 		addActor(map);
 
 		for (int i = 1; i < 4; i++) {
-			map.addUnit(new Unit(1, i));
+			map.addUnit(new Unit(Team.RED, Map.ROW - 2, i));
+			map.addUnit(new Unit(Team.BLUE, 1, i));
 		}
 	}
 

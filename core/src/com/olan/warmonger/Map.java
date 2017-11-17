@@ -27,6 +27,9 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   private Tile selectedTile;
   private boolean isSelectTile = false;
 
+  Player redPlayer = new Player(Team.RED);
+  Player bluePlayer = new Player(Team.BLUE);
+
   public Map () {
     offsetX = (World.WIDTH - width) / 2;
     offsetY = (World.HEIGHT - height) / 2;
@@ -77,13 +80,12 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   private void initCastles () {
     Castle castle;
     for (int column = 0; column < 5; column++) {
-      castle = new Castle(0, column);
+      castle = new Castle(Team.BLUE, 0, column);
       castle.setOnTile(tiles[0][column]);
       castles.add(castle);
       addActor(castle);
 
-      castle = new Castle(ROW - 1, column);
-      castle.setTexture(Assets.castleRed);
+      castle = new Castle(Team.RED, ROW - 1, column);
       castle.setOnTile(tiles[ROW - 1][column]);
       castles.add(castle);
       addActor(castle);
