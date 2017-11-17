@@ -12,7 +12,14 @@ public class Castle extends TileObject {
   public static float manualOffsetX = 5.0f;
   public static float manualOffsetY = 15.0f;
 
-  public Castle (int row, int column) {
-    super(Assets.castleBlue, row, column);
+  public Castle (Team team, int row, int column) {
+    super(row, column);
+    setTeam(team);
+
+    if (team == Team.RED) {
+      setTexture(Assets.castleRed);
+    } else {
+      setTexture(Assets.castleBlue);
+    }
   }
 }
