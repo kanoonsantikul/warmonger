@@ -12,8 +12,17 @@ public class Unit extends TileObject {
   public static float manualOffsetX = 5.0f;
   public static float manualOffsetY = 15.0f;
 
-  public Unit (int row, int column) {
-    super(Assets.pikemanBack, row, column);
+  public Unit (Team team, int row, int column) {
+    super(row, column);
+    setTeam(team);
+
+    if (team == Team.RED) {
+      setTexture(Assets.pikemanFront);
+      this.manualOffsetX = -manualOffsetX;
+    } else {
+      setTexture(Assets.pikemanBack);
+    }
+
     setOffsetX(manualOffsetX);
     setOffsetY(manualOffsetY);
 
@@ -47,15 +56,28 @@ public class Unit extends TileObject {
   }
 
   public boolean canMoveTo (Tile tile) {
-    return (tile.getRow() > getRow())
-        && (getRow() + getMoveRange() >= tile.getRow())
-        && (getColumn() == tile.getColumn());
+    if (getTeam() == Team.RED) {
+      return (tile.getRow() < getRow())
+          && (getRow() - getMoveRange() <= tile.getRow())
+          && (getColumn() == tile.getColumn());
+    } else {
+      return (tile.getRow() > getRow())
+          && (getRow() + getMoveRange() >= tile.getRow())
+          && (getColumn() == tile.getColumn());
+    }
   }
 
   public boolean isMovingTo (Tile tile) {
-    if (getCenterY() - getOffsetY() <= tile.getCenterY()) {
-      this.moveBy(0.0f, World.MOVE_SPEED);
-      return true;
+    if (getTeam() == Team.RED) {
+      if (getCenterY() - getOffsetY() > tile.getCenterY()) {
+        this.moveBy(0.0f, -World.MOVE_SPEED);
+        return true;
+      }
+    } else {
+      if (getCenterY() - getOffsetY() < tile.getCenterY()) {
+        this.moveBy(0.0f, World.MOVE_SPEED);
+        return true;
+      }
     }
     setRow(tile.getRow());
     setColumn(tile.getColumn());
