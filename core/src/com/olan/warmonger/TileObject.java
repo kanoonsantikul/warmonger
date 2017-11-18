@@ -9,6 +9,8 @@ public class TileObject extends GameObject {
   private float offsetX;
   private float offsetY;
 
+  private Team team;
+
   public TileObject (int row, int column) {
     this(null, row, column);
   }
@@ -55,5 +57,13 @@ public class TileObject extends GameObject {
   public void setOnTile (Tile tile) {
     setCenter(tile.getCenterX() + getOffsetX(),
         tile.getCenterY() + getOffsetY());
+  }
+
+  public void setTeam (Team team) {
+    this.team = team;
+  }
+
+  public Team getTeam () {
+    return this.team;
   }
 }
