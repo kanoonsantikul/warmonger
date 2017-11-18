@@ -4,15 +4,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Unit extends TileObject {
+  private static final float MANUAL_OFFSET_X = 15.0f;
+  private static final float MANUAL_OFFSET_Y = 5.0f;
   private static final float MOVE_SPEED = 4.5f;
 
   private UnitListener listener;
 
   private int moveRange = 2;
-  private int attackRange;
-
-  public static float manualOffsetX = 5.0f;
-  public static float manualOffsetY = 15.0f;
+  private int attackRange = 1;
+  private int attackPoint = 2;
+  private int healthPoint = 4;
 
   public Unit (Team team, int row, int column) {
     super(row, column);
@@ -20,13 +21,13 @@ public class Unit extends TileObject {
 
     if (team == Team.RED) {
       setTexture(Assets.pikemanFront);
-      this.manualOffsetX = -manualOffsetX;
+      setOffsetX(-MANUAL_OFFSET_X);
     } else {
       setTexture(Assets.pikemanBack);
+      setOffsetX(MANUAL_OFFSET_X);
     }
 
-    setOffsetX(manualOffsetX);
-    setOffsetY(manualOffsetY);
+    setOffsetY(MANUAL_OFFSET_Y);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -55,6 +56,22 @@ public class Unit extends TileObject {
 
   public void setAttackRange (int attackRange) {
     this.attackRange = attackRange;
+  }
+
+  public int getAttackPoint () {
+    return this.attackPoint;
+  }
+
+  public void setAttackPoint (int attackPoint) {
+    this.attackPoint = attackPoint;
+  }
+
+  public int getHealthPoint () {
+    return this.healthPoint;
+  }
+
+  public void setHealthPoint (int healthPoint) {
+    this.healthPoint = healthPoint;
   }
 
   public boolean canMoveTo (Tile tile) {
