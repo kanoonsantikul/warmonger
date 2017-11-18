@@ -27,6 +27,15 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   private Tile selectedTile;
   private boolean isSelectTile = false;
 
+  private Unit selectedEnemy;
+  private boolean isSelectEnemy = false;
+
+  private Team currentTeam = Team.RED;
+
+  Player redPlayer = new Player(Team.RED);
+  Player bluePlayer = new Player(Team.BLUE);
+
+
   public Map () {
     offsetX = (World.WIDTH - width) / 2;
     offsetY = (World.HEIGHT - height) / 2;
@@ -77,13 +86,12 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   private void initCastles () {
     Castle castle;
     for (int column = 0; column < 5; column++) {
-      castle = new Castle(0, column);
+      castle = new Castle(Team.BLUE, 0, column);
       castle.setOnTile(tiles[0][column]);
       castles.add(castle);
       addActor(castle);
 
-      castle = new Castle(ROW - 1, column);
-      castle.setTexture(Assets.castleRed);
+      castle = new Castle(Team.RED, ROW - 1, column);
       castle.setOnTile(tiles[ROW - 1][column]);
       castles.add(castle);
       addActor(castle);
@@ -122,8 +130,13 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   public void onTileClicked (Tile tile, int row, int column) {
     if (!isUnitMoving) {
       if (isSelectUnit) {
-        this.selectedTile = tile;
-        this.isSelectTile = true;
+        selectedTile = tile;
+        isSelectTile = true;
+      }
+
+      if (isSelectEnemy) {
+        selectedEnemy = null;
+        isSelectEnemy = false;
       }
     }
   }
@@ -131,11 +144,19 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
     if (!isUnitMoving) {
-      if (selectedUnit == unit) {
-        this.isSelectUnit = !this.isSelectUnit;
+      if (isSelectUnit) {
+        if (selectedUnit.getTeam() == unit.getTeam()) {
+          selectedUnit = unit;
+          isSelectUnit = true;
+        } else {
+          selectedEnemy = unit;
+          isSelectEnemy = true;
+        }
       } else {
-        this.selectedUnit = unit;
-        this.isSelectUnit = true;
+        if (currentTeam == unit.getTeam()) {
+          selectedUnit = unit;
+          isSelectUnit = true;
+        }
       }
     }
   }
@@ -159,6 +180,12 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
         } else {
           isUnitMoving = false;
           selectedUnit.setOnTile(selectedTile);
+
+          if (currentTeam == Team.RED) {
+            currentTeam = Team.BLUE;
+          } else {
+            currentTeam = Team.RED;
+          }
         }
 
       } else {
@@ -174,14 +201,47 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     getTile(i, j).setTexture(Assets.tileMark);
 
     if (j == selectedUnit.getColumn()) {
-      if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
+
+      if (selectedUnit.getTeam() == Team.BLUE) {
+        if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
         && (i > selectedUnit.getRow())) {
           showMoveRage(i, j);
+        }
+      } else {
+        if ((i >= selectedUnit.getRow() - selectedUnit.getMoveRange())
+        && (i < selectedUnit.getRow())) {
+          showMoveRage(i, j);
+        }
       }
+
     }
   }
 
   public void showMoveRage (int i, int j) {
-    getTile(i, j).setTexture(Assets.selectionNormal);
+    if (hasUnitOn(i, j)) {
+      if (getUnitOn(i, j).getTeam() == selectedUnit.getTeam()) {
+        getTile(i, j).setTexture(Assets.tileMark);
+      } else {
+        getTile(i, j).setTexture(Assets.selectionCombat);
+      }
+    } else {
+      getTile(i, j).setTexture(Assets.selectionNormal);
+    }
+  }
+
+  public Unit getUnitOn (int row, int column) {
+    for (Unit unit : units) {
+      if (unit.getRow() == row && unit.getColumn() == column) {
+        return unit;
+      }
+    }
+    return null;
+  }
+
+  public boolean hasUnitOn(int row, int column) {
+    if (getUnitOn(row, column) != null) {
+      return true;
+    }
+    return false;
   }
 }

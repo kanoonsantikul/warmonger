@@ -16,6 +16,7 @@ public class Assets {
   public static AtlasRegion tile;
 
   public static AtlasRegion pikemanBack;
+  public static AtlasRegion pikemanFront;
   public static AtlasRegion tileMark;
   public static AtlasRegion selectionNormal;
   public static AtlasRegion selectionCombat;
@@ -48,6 +49,7 @@ public class Assets {
 
     tile = loadTexture("tile");
     pikemanBack = loadTexture("pikeman-back");
+    pikemanFront = loadTexture("pikeman-front");
     tileMark = loadTexture("tile-mark");
     selectionNormal = loadTexture("selection-normal");
     selectionCombat = loadTexture("selection-combat");
