@@ -14,15 +14,17 @@ public class Unit extends TileObject {
 
   public Unit (Team team, int row, int column) {
     super(row, column);
-    setOffsetX(manualOffsetX);
-    setOffsetY(manualOffsetY);
     setTeam(team);
 
     if (team == Team.RED) {
       setTexture(Assets.pikemanFront);
+      this.manualOffsetX = -manualOffsetX;
     } else {
       setTexture(Assets.pikemanBack);
     }
+
+    setOffsetX(manualOffsetX);
+    setOffsetY(manualOffsetY);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
