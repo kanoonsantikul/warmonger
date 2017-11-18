@@ -218,6 +218,30 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   }
 
   public void showMoveRage (int i, int j) {
-    getTile(i, j).setTexture(Assets.selectionNormal);
+    if (hasUnitOn(i, j)) {
+      if (getUnitOn(i, j).getTeam() == selectedUnit.getTeam()) {
+        getTile(i, j).setTexture(Assets.tileMark);
+      } else {
+        getTile(i, j).setTexture(Assets.selectionCombat);
+      }
+    } else {
+      getTile(i, j).setTexture(Assets.selectionNormal);
+    }
+  }
+
+  public Unit getUnitOn (int row, int column) {
+    for (Unit unit : units) {
+      if (unit.getRow() == row && unit.getColumn() == column) {
+        return unit;
+      }
+    }
+    return null;
+  }
+
+  public boolean hasUnitOn(int row, int column) {
+    if (getUnitOn(row, column) != null) {
+      return true;
+    }
+    return false;
   }
 }
