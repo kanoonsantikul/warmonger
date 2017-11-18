@@ -28,7 +28,8 @@ public class World extends Stage {
 		addActor(map);
 
 		for (int i = 1; i < 4; i++) {
-			map.addUnit(new Unit(1, i));
+			map.addUnit(new Unit(Team.RED, Map.ROW - 2, i));
+			map.addUnit(new Unit(Team.BLUE, 1, i));
 		}
 	}
 
