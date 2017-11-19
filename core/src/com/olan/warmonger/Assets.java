@@ -60,7 +60,7 @@ public class Assets {
 
   public static void loadFont () {
     worldFont = loadFont("world-font");
-    worldFont.setColor(Color.WHITE);
+    worldFont.setColor(Color.BLACK);
   }
 
   public static void dispose () {
