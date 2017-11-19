@@ -21,27 +21,25 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   private ArrayList<Unit> units = new ArrayList<Unit>();
 
   private Unit selectedUnit;
-  private boolean isSelectUnit = false;
-  private boolean isUnitMoving = false;
+  private Team currentTeam;
 
-  private Tile selectedTile;
-  private boolean isSelectTile = false;
+  private Player redPlayer = new Player(Team.RED);
+  private Player bluePlayer = new Player(Team.BLUE);
 
-  private Unit selectedEnemy;
-  private boolean isSelectEnemy = false;
-
-  private Team currentTeam = Team.RED;
-
-  Player redPlayer = new Player(Team.RED);
-  Player bluePlayer = new Player(Team.BLUE);
-
+  private MapState mapState;
 
   public Map () {
     offsetX = (World.WIDTH - width) / 2;
     offsetY = (World.HEIGHT - height) / 2;
+
     initTiles();
     initResources();
     initCastles();
+
+    currentTeam = Team.BLUE;
+
+    mapState = new MapState();
+    mapState.set(new StateIdle((this)));
   }
 
   private void initTiles () {
@@ -85,7 +83,7 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
 
   private void initCastles () {
     Castle castle;
-    for (int column = 0; column < 5; column++) {
+    for (int column = 0; column < COLUMN; column++) {
       castle = new Castle(Team.BLUE, 0, column);
       castle.setOnTile(tiles[0][column]);
       castles.add(castle);
@@ -111,11 +109,28 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     return units;
   }
 
+  public Unit getUnit (int row, int column) {
+    for (Unit unit : units) {
+      if (unit.getRow() == row && unit.getColumn() == column) {
+        return unit;
+      }
+    }
+    return null;
+  }
+
   public void addUnit (Unit unit) {
     unit.addListener(this);
     unit.setOnTile(tiles[unit.getRow()][unit.getColumn()]);
     units.add(unit);
     addActor(unit);
+  }
+
+  public Unit getSelectedUnit () {
+    return this.selectedUnit;
+  }
+
+  public void selectUnit (Unit selectedUnit) {
+    this.selectedUnit = selectedUnit;
   }
 
   public float getOffsetX () {
@@ -126,122 +141,35 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     return this.offsetY;
   }
 
+  public void setState (MapState.State state) {
+    mapState.set(state);
+  }
+
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
-    if (!isUnitMoving) {
-      if (isSelectUnit) {
-        selectedTile = tile;
-        isSelectTile = true;
-      }
-
-      if (isSelectEnemy) {
-        selectedEnemy = null;
-        isSelectEnemy = false;
+    if (mapState.is(StateUnitSelected.class)) {
+      if (getSelectedUnit().canMoveTo(tile)) {
+        mapState.set(new StateUnitMove(this, getSelectedUnit(), tile));
+      } else {
+        mapState.set(new StateIdle(this));
       }
     }
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    if (!isUnitMoving) {
-      if (isSelectUnit) {
-        if (selectedUnit.getTeam() == unit.getTeam()) {
-          selectedUnit = unit;
-          isSelectUnit = true;
-        } else {
-          selectedEnemy = unit;
-          isSelectEnemy = true;
-        }
+    if (mapState.is(StateIdle.class)) {
+      mapState.set(new StateUnitSelected(this, unit));
+    } else if (mapState.is(StateUnitSelected.class)) {
+      if (unit.getTeam() == getSelectedUnit().getTeam()) {
+        mapState.set(new StateUnitSelected(this, unit));
       } else {
-        if (currentTeam == unit.getTeam()) {
-          selectedUnit = unit;
-          isSelectUnit = true;
-        }
+
       }
     }
   }
 
   public void act () {
-    for (int i = 0; i < ROW; i++) {
-      for (int j = 0; j < COLUMN; j++) {
-        if (!isSelectUnit) {
-          getTile(i, j).setTexture(Assets.tile);
-        }
-        if (isSelectUnit && !isSelectTile) {
-          showTileMark(i, j);
-        }
-      }
-    }
-
-    if (isSelectUnit && isSelectTile) {
-      if (selectedUnit.canMoveTo(selectedTile)) {
-        if (selectedUnit.isMovingTo(selectedTile)) {
-          isUnitMoving = true;
-        } else {
-          isUnitMoving = false;
-          selectedUnit.setOnTile(selectedTile);
-
-          if (currentTeam == Team.RED) {
-            currentTeam = Team.BLUE;
-          } else {
-            currentTeam = Team.RED;
-          }
-        }
-
-      } else {
-        isSelectUnit = false;
-        isSelectTile = false;
-        selectedUnit = null;
-        selectedTile = null;
-      }
-    }
-  }
-
-  public void showTileMark (int i, int j) {
-    getTile(i, j).setTexture(Assets.tileMark);
-
-    if (j == selectedUnit.getColumn()) {
-
-      if (selectedUnit.getTeam() == Team.BLUE) {
-        if ((i <= selectedUnit.getRow() + selectedUnit.getMoveRange())
-        && (i > selectedUnit.getRow())) {
-          showMoveRage(i, j);
-        }
-      } else {
-        if ((i >= selectedUnit.getRow() - selectedUnit.getMoveRange())
-        && (i < selectedUnit.getRow())) {
-          showMoveRage(i, j);
-        }
-      }
-
-    }
-  }
-
-  public void showMoveRage (int i, int j) {
-    if (hasUnitOn(i, j)) {
-      if (getUnitOn(i, j).getTeam() == selectedUnit.getTeam()) {
-        getTile(i, j).setTexture(Assets.tileMark);
-      } else {
-        getTile(i, j).setTexture(Assets.selectionCombat);
-      }
-    } else {
-      getTile(i, j).setTexture(Assets.selectionNormal);
-    }
-  }
-
-  public Unit getUnitOn (int row, int column) {
-    for (Unit unit : units) {
-      if (unit.getRow() == row && unit.getColumn() == column) {
-        return unit;
-      }
-    }
-    return null;
-  }
-
-  public boolean hasUnitOn(int row, int column) {
-    if (getUnitOn(row, column) != null) {
-      return true;
-    }
-    return false;
+    mapState.run();
   }
 }

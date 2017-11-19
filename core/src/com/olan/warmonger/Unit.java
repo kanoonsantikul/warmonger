@@ -100,6 +100,7 @@ public class Unit extends TileObject {
     }
     setRow(tile.getRow());
     setColumn(tile.getColumn());
+    setOnTile(tile);
     return false;
   }
 
