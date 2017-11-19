@@ -4,13 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Castle extends TileObject {
-  private int row;
-  private int column;
+  private static final float MANUAL_OFFSET_Y = 15.0f;
 
-  private int health;
-
-  public static float manualOffsetX = 5.0f;
-  public static float manualOffsetY = 15.0f;
+  private int healthPoint = 10;
 
   public Castle (Team team, int row, int column) {
     super(row, column);
@@ -21,5 +17,15 @@ public class Castle extends TileObject {
     } else {
       setTexture(Assets.castleBlue);
     }
+
+    setOffsetY(MANUAL_OFFSET_Y);
+  }
+
+  public int getHealthPoint () {
+    return this.healthPoint;
+  }
+
+  public void setHealthPoint (int healthPoint) {
+    this.healthPoint = healthPoint;
   }
 }
