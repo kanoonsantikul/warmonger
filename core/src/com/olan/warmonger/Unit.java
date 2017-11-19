@@ -4,9 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Unit extends TileObject {
-  private static final float MANUAL_OFFSET_X = 15.0f;
-  private static final float MANUAL_OFFSET_Y = 5.0f;
-  private static final float MOVE_SPEED = 4.5f;
+  private static final float MANUAL_OFFSET_X = 6f;
+  private static final float MANUAL_OFFSET_Y = 15.0f;
+  private static final float MOVE_SPEED = 5f;
 
   private UnitListener listener;
 
