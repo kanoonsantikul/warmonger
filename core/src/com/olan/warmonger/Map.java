@@ -13,9 +13,6 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   private float width = Tile.WIDTH * COLUMN;
   private float height = Tile.HEIGHT * ROW;
 
-  private float offsetX;
-  private float offsetY;
-
   private Tile[][] tiles = new Tile[ROW][COLUMN];
   private ArrayList<Castle> castles = new ArrayList<Castle>();
   private ArrayList<Unit> units = new ArrayList<Unit>();
@@ -29,9 +26,6 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
 
 
   public Map () {
-    offsetX = (World.WIDTH - width) / 2;
-    offsetY = (World.HEIGHT - height) / 2;
-
     initTiles();
     initResources();
     initCastles();
@@ -39,10 +33,13 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     currentTeam = Team.BLUE;
 
     mapState = new MapState();
-    mapState.set(new StateIdle((this)));
+    setState(new StateIdle((this)));
   }
 
   private void initTiles () {
+    float offsetX = (World.WIDTH - width) / 2;
+    float offsetY = (World.HEIGHT - height) / 2;
+
     Tile tile;
     for (int i = 0; i < ROW; i++) {
       for (int j = 0; j < COLUMN; j++) {
@@ -133,14 +130,6 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     this.selectedUnit = selectedUnit;
   }
 
-  public float getOffsetX () {
-    return this.offsetX;
-  }
-
-  public float getOffsetY () {
-    return this.offsetY;
-  }
-
   public void setState (MapState.State state) {
     mapState.set(state);
   }
@@ -148,10 +137,10 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (mapState.is(StateUnitSelected.class)) {
-      if (getSelectedUnit().canMoveTo(tile)) {
-        mapState.set(new StateUnitMove(this, getSelectedUnit(), tile));
+      if (tile.isSelectionVisible()) {
+        setState(new StateUnitMove(this, getSelectedUnit(), tile));
       } else {
-        mapState.set(new StateIdle(this));
+        setState(new StateIdle(this));
       }
     }
   }
@@ -159,12 +148,12 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
     if (mapState.is(StateIdle.class)) {
-      mapState.set(new StateUnitSelected(this, unit));
+      setState(new StateUnitSelected(this, unit));
     } else if (mapState.is(StateUnitSelected.class)) {
       if (unit.getTeam() == getSelectedUnit().getTeam()) {
-        mapState.set(new StateUnitSelected(this, unit));
+        setState(new StateUnitSelected(this, unit));
       } else {
-
+        setState(new StateUnitCombat(this, getSelectedUnit(), unit));
       }
     }
   }
