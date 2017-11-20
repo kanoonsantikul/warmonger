@@ -22,11 +22,11 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
 
   private Unit selectedUnit;
   private Team currentTeam;
+  private MapState mapState;
 
   private Player redPlayer = new Player(Team.RED);
   private Player bluePlayer = new Player(Team.BLUE);
 
-  private MapState mapState;
 
   public Map () {
     offsetX = (World.WIDTH - width) / 2;

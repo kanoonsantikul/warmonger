@@ -17,7 +17,6 @@ public class Castle extends TileObject {
     } else {
       setTexture(Assets.castleBlue);
     }
-
     setOffsetY(MANUAL_OFFSET_Y);
   }
 

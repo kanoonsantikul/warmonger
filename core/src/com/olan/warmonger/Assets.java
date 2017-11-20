@@ -13,16 +13,20 @@ public class Assets {
   public static TextureAtlas sprite;
 
   public static TextureRegion background;
+
   public static AtlasRegion tile;
+  public static AtlasRegion tileMark;
+  public static AtlasRegion selectionCombat;
+  public static AtlasRegion selectionNormal;
 
   public static AtlasRegion pikemanBack;
   public static AtlasRegion pikemanFront;
-  public static AtlasRegion tileMark;
-  public static AtlasRegion selectionNormal;
-  public static AtlasRegion selectionCombat;
+
   public static AtlasRegion castleBlue;
   public static AtlasRegion castleRed;
+
   public static AtlasRegion corn;
+  public static AtlasRegion hearth;
 
   public static BitmapFont worldFont;
 
@@ -48,14 +52,18 @@ public class Assets {
     background = new TextureRegion(backgroundTexture);
 
     tile = loadTexture("tile");
+    tileMark = loadTexture("tile-mark");
+    selectionCombat = loadTexture("selection-combat");
+    selectionNormal = loadTexture("selection-normal");
+
     pikemanBack = loadTexture("pikeman-back");
     pikemanFront = loadTexture("pikeman-front");
-    tileMark = loadTexture("tile-mark");
-    selectionNormal = loadTexture("selection-normal");
-    selectionCombat = loadTexture("selection-combat");
+
     castleBlue = loadTexture("castle-blue");
     castleRed = loadTexture("castle-red");
+
     corn = loadTexture("corn");
+    hearth = loadTexture("hearth");
   }
 
   public static void loadFont () {

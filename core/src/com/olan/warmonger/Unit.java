@@ -1,5 +1,6 @@
 package com.olan.warmonger;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
@@ -14,6 +15,7 @@ public class Unit extends TileObject {
   private int attackRange = 1;
   private int attackPoint = 2;
   private int healthPoint = 4;
+  private Text healthText;
 
   public Unit (Team team, int row, int column) {
     super(row, column);
@@ -26,7 +28,6 @@ public class Unit extends TileObject {
       setTexture(Assets.pikemanBack);
       setOffsetX(MANUAL_OFFSET_X);
     }
-
     setOffsetY(MANUAL_OFFSET_Y);
 
     addListener(new ClickListener () {
@@ -36,6 +37,24 @@ public class Unit extends TileObject {
         }
       }
     });
+
+    healthText = new Text(Assets.worldFont);
+    setHealthPoint(healthPoint);
+  }
+
+  @Override
+  public void draw (Batch batch, float parentAlpha) {
+    super.draw(batch, parentAlpha);
+
+    batch.draw(Assets.hearth,
+        getX() + getWidth() - Assets.hearth.getRegionWidth() / 2,
+        getY() - Assets.hearth.getRegionHeight() / 2);
+    healthText.draw(batch);
+  }
+
+  @Override
+  protected void	positionChanged () {
+    healthText.setCenter(getX() + getWidth(), getY());
   }
 
   public void addListener (UnitListener listerner) {
@@ -72,6 +91,7 @@ public class Unit extends TileObject {
 
   public void setHealthPoint (int healthPoint) {
     this.healthPoint = healthPoint;
+    healthText.setText(healthPoint + "");
   }
 
   public boolean canMoveTo (Tile tile) {
