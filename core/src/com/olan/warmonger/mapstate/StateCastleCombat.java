@@ -1,12 +1,12 @@
 package com.olan.warmonger;
 
-public class StateUnitCombat implements MapState.State {
+public class StateCastleCombat implements MapState.State {
   private Map map;
   private Unit actor;
-  private Unit target;
+  private Castle target;
   private Tile targetTile;
 
-  public StateUnitCombat (Map map, Unit actor, Unit target) {
+  public StateCastleCombat (Map map, Unit actor, Castle target) {
     this.map = map;
     this.actor = actor;
     this.target = target;
@@ -25,7 +25,7 @@ public class StateUnitCombat implements MapState.State {
   public void exit () {
     int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
     if (remainHealth <= 0) {
-      map.getUnits().remove(target);
+      map.getCastles().remove(target);
       target.remove();
     } else {
       target.setHealthPoint(remainHealth);

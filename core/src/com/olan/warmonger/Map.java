@@ -6,7 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 
 import java.util.ArrayList;
 
-public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
+public class Map extends Group implements Unit.UnitListener,
+    Tile.TileListener,
+    Castle.CastleListener {
   public static final int ROW = 10;
   public static final int COLUMN = 5;
 
@@ -82,11 +84,13 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     Castle castle;
     for (int column = 0; column < COLUMN; column++) {
       castle = new Castle(Team.BLUE, 0, column);
+      castle.addListener(this);
       castle.setOnTile(tiles[0][column]);
       castles.add(castle);
       addActor(castle);
 
       castle = new Castle(Team.RED, ROW - 1, column);
+      castle.addListener(this);
       castle.setOnTile(tiles[ROW - 1][column]);
       castles.add(castle);
       addActor(castle);
@@ -100,6 +104,19 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
 
   public Tile[][] getTiles () {
     return tiles;
+  }
+
+  public ArrayList<Castle> getCastles () {
+    return castles;
+  }
+
+  public Castle getCastle (int row, int column) {
+    for (Castle castle : castles) {
+      if (castle.getRow() == row && castle.getColumn() == column) {
+        return castle;
+      }
+    }
+    return null;
   }
 
   public ArrayList<Unit> getUnits () {
@@ -152,8 +169,19 @@ public class Map extends Group implements Unit.UnitListener, Tile.TileListener {
     } else if (mapState.is(StateUnitSelected.class)) {
       if (unit.getTeam() == getSelectedUnit().getTeam()) {
         setState(new StateUnitSelected(this, unit));
-      } else {
+      } else if (getTile(unit.getRow(), unit.getColumn()).isSelectionVisible()) {
         setState(new StateUnitCombat(this, getSelectedUnit(), unit));
+      }
+    }
+  }
+
+  @Override
+  public void onCastleClicked (Castle castle, int row, int column) {
+    if (mapState.is(StateUnitSelected.class)) {
+      if (castle.getTeam() == getSelectedUnit().getTeam()) {
+        setState(new StateIdle(this));
+      } else {
+        setState(new StateCastleCombat(this, getSelectedUnit(), castle));
       }
     }
   }

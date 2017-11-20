@@ -20,26 +20,31 @@ public class StateUnitSelected implements MapState.State {
       }
     }
 
-    Unit other;
     boolean foundEnemy = false;
-    int row = unit.getRow();
+    int row;
     int column = unit.getColumn();
-    if (unit.getTeam() == Team.BLUE) {
-      for (int i = row; i <= row + unit.getMoveRange(); i++) {
-        tile = map.getTile(i, column);
-        other = map.getUnit(i, column);
-        if (other != null && unit.getTeam() != other.getTeam()) {
-          tile.selectionCombatVisible(true);
-          foundEnemy = true;
-        } else if (!foundEnemy) {
-          tile.selectionVisible(true);
-        }
+    Castle otherCastle;
+    Unit otherUnit;
+
+    for (int i = 0; i <= unit.getMoveRange(); i++) {
+      row = unit.getRow();
+      if (unit.getTeam() == Team.BLUE) {
+        row += i;
+      } else {
+        row -= i;
       }
-    } else {
-      for (int i = row; i >= row - unit.getMoveRange(); i--) {
-        tile = map.getTile(i, column);
-        other = map.getUnit(i, column);
-        if (other != null && unit.getTeam() != other.getTeam()) {
+      if (row >= Map.ROW || row < 0) {
+        continue;
+      }
+
+      tile = map.getTile(row, column);
+      otherUnit = map.getUnit(row, column);
+      if (otherUnit != null && unit.getTeam() != otherUnit.getTeam()) {
+        tile.selectionCombatVisible(true);
+        foundEnemy = true;
+      } else {
+        otherCastle = map.getCastle(row, column);
+        if (otherCastle != null && unit.getTeam() != otherCastle.getTeam()) {
           tile.selectionCombatVisible(true);
           foundEnemy = true;
         } else if (!foundEnemy) {
