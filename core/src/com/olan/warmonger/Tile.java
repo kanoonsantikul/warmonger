@@ -108,6 +108,10 @@ public class Tile extends GameObject {
     selectionTexture = Assets.selectionNormal;
   }
 
+  public boolean isSelectionVisible () {
+    return this.selectionVisible;
+  }
+
   public interface TileListener {
     public void onTileClicked (Tile tile, int row, int column);
   }
