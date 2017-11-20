@@ -17,14 +17,33 @@ public class StateUnitSelected implements MapState.State {
       for (int j = 0; j < Map.COLUMN; j++) {
         tile = map.getTile(i, j);
         tile.markVisible(true);
+      }
+    }
 
-        if (unit.canMoveTo(tile)) {
-          Unit other = map.getUnit(tile.getRow(), tile.getColumn());
-          if (other != null && unit.getTeam() != other.getTeam()) {
-            tile.selectionCombatVisible(true);
-          } else {
-            tile.selectionVisible(true);
-          }
+    Unit other;
+    boolean foundEnemy = false;
+    int row = unit.getRow();
+    int column = unit.getColumn();
+    if (unit.getTeam() == Team.BLUE) {
+      for (int i = row; i <= row + unit.getMoveRange(); i++) {
+        tile = map.getTile(i, column);
+        other = map.getUnit(i, column);
+        if (other != null && unit.getTeam() != other.getTeam()) {
+          tile.selectionCombatVisible(true);
+          foundEnemy = true;
+        } else if (!foundEnemy) {
+          tile.selectionVisible(true);
+        }
+      }
+    } else {
+      for (int i = row; i >= row - unit.getMoveRange(); i--) {
+        tile = map.getTile(i, column);
+        other = map.getUnit(i, column);
+        if (other != null && unit.getTeam() != other.getTeam()) {
+          tile.selectionCombatVisible(true);
+          foundEnemy = true;
+        } else if (!foundEnemy) {
+          tile.selectionVisible(true);
         }
       }
     }
