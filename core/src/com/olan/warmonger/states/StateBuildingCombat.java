@@ -1,12 +1,12 @@
 package com.olan.warmonger;
 
-public class StateUnitCombat implements MapState.State {
+public class StateBuildingCombat implements GameDriven.State {
   private Map map;
   private Unit actor;
-  private Unit target;
+  private Building target;
   private Tile targetTile;
 
-  public StateUnitCombat (Map map, Unit actor, Unit target) {
+  public StateBuildingCombat (Map map, Unit actor, Building target) {
     this.map = map;
     this.actor = actor;
     this.target = target;
@@ -25,7 +25,7 @@ public class StateUnitCombat implements MapState.State {
   public void exit () {
     int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
     if (remainHealth <= 0) {
-      map.getUnits().remove(target);
+      map.getBuildings().remove(target);
       target.remove();
     } else {
       target.setHealthPoint(remainHealth);
@@ -37,5 +37,20 @@ public class StateUnitCombat implements MapState.State {
     if (!actor.isMovingTo(targetTile)) {
       map.setState(new StateIdle(map));
     }
+  }
+
+  @Override
+  public void onTileClicked (Tile tile, int row, int column) {
+
+  }
+
+  @Override
+  public void onUnitClicked (Unit unit, int row, int column) {
+
+  }
+
+  @Override
+  public void onBuildingClicked (Building building, int row, int column) {
+
   }
 }
