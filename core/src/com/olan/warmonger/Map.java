@@ -1,14 +1,13 @@
 package com.olan.warmonger;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import java.util.ArrayList;
 
 public class Map extends Group implements Unit.UnitListener,
     Tile.TileListener,
-    Castle.CastleListener {
+    Building.BuildingListener {
   public static final int ROW = 10;
   public static final int COLUMN = 5;
 
@@ -16,7 +15,7 @@ public class Map extends Group implements Unit.UnitListener,
   private float height = Tile.HEIGHT * ROW;
 
   private Tile[][] tiles = new Tile[ROW][COLUMN];
-  private ArrayList<Castle> castles = new ArrayList<Castle>();
+  private ArrayList<Building> buildings = new ArrayList<Building>();
   private ArrayList<Unit> units = new ArrayList<Unit>();
 
   private Unit selectedUnit;
@@ -28,92 +27,37 @@ public class Map extends Group implements Unit.UnitListener,
 
 
   public Map () {
-    initTiles();
-    initResources();
-    initCastles();
-
     currentTeam = Team.BLUE;
-
     mapState = new MapState();
     setState(new StateIdle((this)));
   }
 
-  private void initTiles () {
-    float offsetX = (World.WIDTH - width) / 2;
-    float offsetY = (World.HEIGHT - height) / 2;
-
-    Tile tile;
-    for (int i = 0; i < ROW; i++) {
-      for (int j = 0; j < COLUMN; j++) {
-        tile = new Tile(i, j);
-        tile.addListener(this);
-        tile.setPosition(
-            offsetX + Tile.WIDTH * j,
-            offsetY + Tile.HEIGHT * i);
-        tiles[i][j] = tile;
-        addActor(tile);
-      }
-    }
+  @Override
+  public float getWidth () {
+    return this.width;
   }
 
-  private void initResources () {
-    Tile tile;
-    (tile = findEmptyTile()).setResource(3);
-    tiles[ROW - tile.getRow() - 1][COLUMN - tile.getColumn() - 1].setResource(3);
-    for (int i = 0; i < 2; i++) {
-      (tile = findEmptyTile()).setResource(2);
-      tiles[ROW - tile.getRow() - 1][COLUMN - tile.getColumn() - 1].setResource(2);
-    }
-    for (int i = 0; i < 4; i++) {
-      (tile = findEmptyTile()).setResource(1);
-      tiles[ROW - tile.getRow() - 1][COLUMN - tile.getColumn() - 1].setResource(1);
-    }
-  }
-
-  private Tile findEmptyTile () {
-    Tile tile;
-    do {
-      int row = MathUtils.random(2, (ROW / 2) - 1);
-      int column = MathUtils.random(0, COLUMN - 1);
-      tile = tiles[row][column];
-    } while(tile == null || tile.getResource() != 0);
-    return tile;
-  }
-
-  private void initCastles () {
-    Castle castle;
-    for (int column = 0; column < COLUMN; column++) {
-      castle = new Castle(Team.BLUE, 0, column);
-      castle.addListener(this);
-      castle.setOnTile(tiles[0][column]);
-      castles.add(castle);
-      addActor(castle);
-
-      castle = new Castle(Team.RED, ROW - 1, column);
-      castle.addListener(this);
-      castle.setOnTile(tiles[ROW - 1][column]);
-      castles.add(castle);
-      addActor(castle);
-    }
-  }
-
-
-  public Tile getTile (int row, int column) {
-    return tiles[row][column];
+  @Override
+  public float getHeight () {
+    return this.height;
   }
 
   public Tile[][] getTiles () {
     return tiles;
   }
-
-  public ArrayList<Castle> getCastles () {
-    return castles;
+  
+  public Tile getTile (int row, int column) {
+    return tiles[row][column];
   }
 
-  public Castle getCastle (int row, int column) {
-    for (Castle castle : castles) {
-      if (castle.getRow() == row && castle.getColumn() == column) {
-        return castle;
+  public ArrayList<Building> getBuildings () {
+    return buildings;
+  }
+
+  public Building getBuilding (int row, int column) {
+    for (Building building : buildings) {
+      if (building.getRow() == row && building.getColumn() == column) {
+        return building;
       }
     }
     return null;
@@ -176,12 +120,12 @@ public class Map extends Group implements Unit.UnitListener,
   }
 
   @Override
-  public void onCastleClicked (Castle castle, int row, int column) {
+  public void onBuildingClicked (Building building, int row, int column) {
     if (mapState.is(StateUnitSelected.class)) {
-      if (castle.getTeam() == getSelectedUnit().getTeam()) {
+      if (building.getTeam() == getSelectedUnit().getTeam()) {
         setState(new StateIdle(this));
       } else {
-        setState(new StateCastleCombat(this, getSelectedUnit(), castle));
+        setState(new StateBuildingCombat(this, getSelectedUnit(), building));
       }
     }
   }

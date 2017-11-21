@@ -38,8 +38,6 @@ public class Tile extends GameObject {
 
   @Override
   public void draw (Batch batch, float parentAlpha) {
-    // super.draw(batch, parentAlpha);
-
     if (markVisible) {
       batch.draw(Assets.tileMark,
           getCenterX() - Assets.tileMark.getRegionWidth() / 2,
@@ -69,20 +67,20 @@ public class Tile extends GameObject {
       this.listener = listerner;
   }
 
-  public void setRow (int row) {
-    this.row = row;
-  }
-
-  public void setColumn (int column) {
-    this.column = column;
-  }
-
   public int getRow () {
     return this.row;
   }
 
+  public void setRow (int row) {
+    this.row = row;
+  }
+
   public int getColumn () {
     return this.column;
+  }
+
+  public void setColumn (int column) {
+    this.column = column;
   }
 
   public int getResource () {
