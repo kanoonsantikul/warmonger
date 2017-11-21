@@ -157,10 +157,28 @@ public class Map extends Group implements Unit.UnitListener,
 
   public void endTurn () {
     if (currentTeam == Team.RED) {
+      redResourceRate = calculateResourceRate();
+      redResourceAmount += redResourceRate;
+
       currentTeam = Team.BLUE;
     } else {
+      blueResourceRate = calculateResourceRate();
+      blueResourceAmount += blueResourceRate;
+
       currentTeam = Team.RED;
     }
+  }
+
+  public int calculateResourceRate () {
+    int resourceRate = 0;
+
+    for (Unit unit : units) {
+      if (unit.getTeam() == currentTeam) {
+        resourceRate += getTile(unit.getRow(), unit.getColumn()).getResource();
+      }
+    }
+
+    return resourceRate;
   }
 
   @Override
