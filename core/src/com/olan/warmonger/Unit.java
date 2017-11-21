@@ -1,6 +1,5 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
@@ -8,14 +7,13 @@ public class Unit extends TileObject {
   private static final float MANUAL_OFFSET_X = 6f;
   private static final float MANUAL_OFFSET_Y = 15.0f;
   private static final float MOVE_SPEED = 5f;
+  private static final int HEALTH_POINT = 4;
 
   private UnitListener listener;
 
   private int moveRange = 2;
   private int attackRange = 1;
   private int attackPoint = 2;
-  private int healthPoint = 4;
-  private Text healthText;
 
   public Unit (Team team, int row, int column) {
     super(row, column);
@@ -38,23 +36,7 @@ public class Unit extends TileObject {
       }
     });
 
-    healthText = new Text(Assets.worldFont);
-    setHealthPoint(healthPoint);
-  }
-
-  @Override
-  public void draw (Batch batch, float parentAlpha) {
-    super.draw(batch, parentAlpha);
-
-    batch.draw(Assets.hearth,
-        getX() + getWidth() - Assets.hearth.getRegionWidth() / 2,
-        getY() - Assets.hearth.getRegionHeight() / 2);
-    healthText.draw(batch);
-  }
-
-  @Override
-  protected void	positionChanged () {
-    healthText.setCenter(getX() + getWidth(), getY());
+    setHealthPoint(HEALTH_POINT);
   }
 
   public void addListener (UnitListener listerner) {
@@ -83,15 +65,6 @@ public class Unit extends TileObject {
 
   public void setAttackPoint (int attackPoint) {
     this.attackPoint = attackPoint;
-  }
-
-  public int getHealthPoint () {
-    return this.healthPoint;
-  }
-
-  public void setHealthPoint (int healthPoint) {
-    this.healthPoint = healthPoint;
-    healthText.setText(healthPoint + "");
   }
 
   public boolean canMoveTo (Tile tile) {
