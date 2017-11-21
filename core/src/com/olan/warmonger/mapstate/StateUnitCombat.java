@@ -31,6 +31,7 @@ public class StateUnitCombat implements MapState.State {
       target.setHealthPoint(remainHealth);
     }
     map.selectUnit(null);
+    map.endTurn();
   }
 
   public void run () {
