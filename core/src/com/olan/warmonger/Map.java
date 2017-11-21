@@ -25,7 +25,6 @@ public class Map extends Group implements Unit.UnitListener,
   private Player redPlayer = new Player(Team.RED);
   private Player bluePlayer = new Player(Team.BLUE);
 
-
   public Map () {
     currentTeam = Team.BLUE;
     mapState = new MapState();
@@ -45,7 +44,7 @@ public class Map extends Group implements Unit.UnitListener,
   public Tile[][] getTiles () {
     return tiles;
   }
-  
+
   public Tile getTile (int row, int column) {
     return tiles[row][column];
   }
