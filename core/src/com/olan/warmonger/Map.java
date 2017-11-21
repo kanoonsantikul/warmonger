@@ -18,16 +18,16 @@ public class Map extends Group implements Unit.UnitListener,
   private ArrayList<Building> buildings = new ArrayList<Building>();
   private ArrayList<Unit> units = new ArrayList<Unit>();
 
+  private GameDriven.State state;
   private Unit selectedUnit;
   private Team currentTeam;
-  private MapState mapState;
 
   private Player redPlayer = new Player(Team.RED);
   private Player bluePlayer = new Player(Team.BLUE);
 
+
   public Map () {
     currentTeam = Team.BLUE;
-    mapState = new MapState();
     setState(new StateIdle((this)));
   }
 
@@ -90,46 +90,32 @@ public class Map extends Group implements Unit.UnitListener,
     this.selectedUnit = selectedUnit;
   }
 
-  public void setState (MapState.State state) {
-    mapState.set(state);
+  public void setState (GameDriven.State state) {
+    if (this.state != null) {
+      this.state.exit();
+    }
+    this.state = state;
+    if (this.state != null) {
+      this.state.enter();
+    }
   }
 
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
-    if (mapState.is(StateUnitSelected.class)) {
-      if (tile.isSelectionVisible()) {
-        setState(new StateUnitMove(this, getSelectedUnit(), tile));
-      } else {
-        setState(new StateIdle(this));
-      }
-    }
+    state.onTileClicked(tile, row, column);
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    if (mapState.is(StateIdle.class)) {
-      setState(new StateUnitSelected(this, unit));
-    } else if (mapState.is(StateUnitSelected.class)) {
-      if (unit.getTeam() == getSelectedUnit().getTeam()) {
-        setState(new StateUnitSelected(this, unit));
-      } else if (getTile(unit.getRow(), unit.getColumn()).isSelectionVisible()) {
-        setState(new StateUnitCombat(this, getSelectedUnit(), unit));
-      }
-    }
+    state.onUnitClicked(unit, row, column);
   }
 
   @Override
   public void onBuildingClicked (Building building, int row, int column) {
-    if (mapState.is(StateUnitSelected.class)) {
-      if (building.getTeam() == getSelectedUnit().getTeam()) {
-        setState(new StateIdle(this));
-      } else {
-        setState(new StateBuildingCombat(this, getSelectedUnit(), building));
-      }
-    }
+    state.onBuildingClicked(building, row, column);
   }
 
   public void act () {
-    mapState.run();
+    state.run();
   }
 }
