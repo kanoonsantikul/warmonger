@@ -26,6 +26,10 @@ public class Map extends Group implements Unit.UnitListener,
   private Player redPlayer = new Player(Team.RED);
   private Player bluePlayer = new Player(Team.BLUE);
 
+  private int redResourceAmount;
+  private int blueResourceAmount;
+  private int redResourceRate;
+  private int blueResourceRate;
 
   public Map () {
     initTiles();
@@ -151,6 +155,14 @@ public class Map extends Group implements Unit.UnitListener,
     mapState.set(state);
   }
 
+  public void endTurn () {
+    if (currentTeam == Team.RED) {
+      currentTeam = Team.BLUE;
+    } else {
+      currentTeam = Team.RED;
+    }
+  }
+
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (mapState.is(StateUnitSelected.class)) {
@@ -164,10 +176,10 @@ public class Map extends Group implements Unit.UnitListener,
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    if (mapState.is(StateIdle.class)) {
+    if (mapState.is(StateIdle.class) && unit.getTeam() == currentTeam) {
       setState(new StateUnitSelected(this, unit));
     } else if (mapState.is(StateUnitSelected.class)) {
-      if (unit.getTeam() == getSelectedUnit().getTeam()) {
+      if (unit.getTeam() == currentTeam) {
         setState(new StateUnitSelected(this, unit));
       } else if (getTile(unit.getRow(), unit.getColumn()).isSelectionVisible()) {
         setState(new StateUnitCombat(this, getSelectedUnit(), unit));

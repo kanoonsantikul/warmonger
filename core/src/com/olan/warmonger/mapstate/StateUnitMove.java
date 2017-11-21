@@ -17,6 +17,7 @@ public class StateUnitMove implements MapState.State {
 
   public void exit () {
     map.selectUnit(null);
+    map.endTurn();
   }
 
   public void run () {
