@@ -23,8 +23,7 @@ public class StateUnitSelected implements MapState.State {
     boolean foundEnemy = false;
     int row;
     int column = unit.getColumn();
-    Building otherBuilding;
-    Unit otherUnit;
+    TileObject other;
 
     for (int i = 0; i <= unit.getMoveRange(); i++) {
       row = unit.getRow();
@@ -38,18 +37,18 @@ public class StateUnitSelected implements MapState.State {
       }
 
       tile = map.getTile(row, column);
-      otherUnit = map.getUnit(row, column);
-      if (otherUnit != null && unit.getTeam() != otherUnit.getTeam()) {
-        tile.selectionCombatVisible(true);
-        foundEnemy = true;
-      } else {
-        otherBuilding = map.getBuilding(row, column);
-        if (otherBuilding != null && unit.getTeam() != otherBuilding.getTeam()) {
+      other = map.getUnit(row, column);
+      if (other == null) {
+        other = map.getBuilding(row, column);
+      }
+
+      if (other != null) {
+        if (unit.getTeam() != other.getTeam()) {
           tile.selectionCombatVisible(true);
           foundEnemy = true;
-        } else if (!foundEnemy) {
-          tile.selectionVisible(true);
         }
+      } else if (!foundEnemy) {
+        tile.selectionVisible(true);
       }
     }
   }
