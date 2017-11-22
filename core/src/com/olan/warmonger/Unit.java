@@ -21,11 +21,11 @@ public class Unit extends TileObject {
     super(row, column);
     setTeam(team);
 
-    if (team == Team.RED) {
-      setTexture(Assets.pikemanFront);
+    if (team == Team.BLUE) {
+      setTexture(Assets.pikemanBack);
       setOffsetX(-MANUAL_OFFSET_X);
     } else {
-      setTexture(Assets.pikemanBack);
+      setTexture(Assets.pikemanFront);
       setOffsetX(MANUAL_OFFSET_X);
     }
     setOffsetY(MANUAL_OFFSET_Y);
@@ -57,8 +57,8 @@ public class Unit extends TileObject {
     healthText.setCenter(getX() + getWidth(), getY());
   }
 
-  public void addListener (UnitListener listerner) {
-      this.listener = listerner;
+  public void addListener (UnitListener listener) {
+      this.listener = listener;
   }
 
   public int getMoveRange () {
