@@ -18,7 +18,7 @@ public class Map extends Group implements Unit.UnitListener,
   private ArrayList<Building> buildings = new ArrayList<Building>();
   private ArrayList<Unit> units = new ArrayList<Unit>();
 
-  private GameDriven.State state;
+  private GameDriven gameDriven;
   private Unit selectedUnit;
   private Team currentTeam;
 
@@ -28,6 +28,8 @@ public class Map extends Group implements Unit.UnitListener,
 
   public Map () {
     currentTeam = Team.BLUE;
+
+    gameDriven = new GameDriven();
     setState(new StateIdle((this)));
   }
 
@@ -90,32 +92,32 @@ public class Map extends Group implements Unit.UnitListener,
     this.selectedUnit = selectedUnit;
   }
 
-  public void setState (GameDriven.State state) {
-    if (this.state != null) {
-      this.state.exit();
-    }
-    this.state = state;
-    if (this.state != null) {
-      this.state.enter();
-    }
+  public void setState (GameDriven.Action state) {
+    gameDriven.setState(state);
+  }
+
+  public void act () {
+    gameDriven.run();
   }
 
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
-    state.onTileClicked(tile, row, column);
+    if (gameDriven.getState() != null) {
+      gameDriven.getState().onTileClicked(tile, row, column);
+    }
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    state.onUnitClicked(unit, row, column);
+    if (gameDriven.getState() != null) {
+      gameDriven.getState().onUnitClicked(unit, row, column);
+    }
   }
 
   @Override
   public void onBuildingClicked (Building building, int row, int column) {
-    state.onBuildingClicked(building, row, column);
-  }
-
-  public void act () {
-    state.run();
+    if (gameDriven.getState() != null) {
+      gameDriven.getState().onBuildingClicked(building, row, column);
+    }
   }
 }
