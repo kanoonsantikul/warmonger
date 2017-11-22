@@ -73,7 +73,7 @@ public class StateUnitSelected implements GameDriven.State {
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (tile.isSelectionVisible()) {
-      map.setState(new StateUnitMove(map, map.getSelectedUnit(), tile));
+      map.setState(new ActionUnitMove(map, map.getSelectedUnit(), tile));
     } else {
       map.setState(new StateIdle(map));
     }
@@ -86,7 +86,7 @@ public class StateUnitSelected implements GameDriven.State {
     } else {
       Tile tile = map.getTile(unit.getRow(), unit.getColumn());
       if (tile.isSelectionVisible()) {
-        map.setState(new StateUnitCombat(map, map.getSelectedUnit(), unit));
+        map.setState(new ActionUnitCombat(map, map.getSelectedUnit(), unit));
       }
     }
   }
@@ -96,7 +96,7 @@ public class StateUnitSelected implements GameDriven.State {
     if (building.getTeam() == map.getSelectedUnit().getTeam()) {
       map.setState(new StateIdle(map));
     } else {
-      map.setState(new StateBuildingCombat(map, map.getSelectedUnit(), building));
+      map.setState(new ActionBuildingCombat(map, map.getSelectedUnit(), building));
     }
   }
 }

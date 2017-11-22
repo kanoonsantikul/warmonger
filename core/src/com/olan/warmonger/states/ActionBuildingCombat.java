@@ -1,12 +1,12 @@
 package com.olan.warmonger;
 
-public class StateBuildingCombat implements GameDriven.State {
+public class ActionBuildingCombat implements GameDriven.Action {
   private Map map;
   private Unit actor;
   private Building target;
   private Tile targetTile;
 
-  public StateBuildingCombat (Map map, Unit actor, Building target) {
+  public ActionBuildingCombat (Map map, Unit actor, Building target) {
     this.map = map;
     this.actor = actor;
     this.target = target;
@@ -37,20 +37,5 @@ public class StateBuildingCombat implements GameDriven.State {
     if (!actor.isMovingTo(targetTile)) {
       map.setState(new StateIdle(map));
     }
-  }
-
-  @Override
-  public void onTileClicked (Tile tile, int row, int column) {
-
-  }
-
-  @Override
-  public void onUnitClicked (Unit unit, int row, int column) {
-
-  }
-
-  @Override
-  public void onBuildingClicked (Building building, int row, int column) {
-
   }
 }
