@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class World extends Stage {
 	public static final int WIDTH = Gdx.graphics.getWidth();
-	public static final int HEIGHT = Gdx.graphics.getHeight(); 
+	public static final int HEIGHT = Gdx.graphics.getHeight();
 
 	private static World world;
 	private Viewport viewport;

@@ -50,8 +50,8 @@ public class Castle extends TileObject {
     healthText.setCenter(getX() + getWidth(), getY());
   }
 
-  public void addListener (CastleListener listerner) {
-      this.listener = listerner;
+  public void addListener (CastleListener listener) {
+      this.listener = listener;
   }
 
   public int getHealthPoint () {

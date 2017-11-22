@@ -3,12 +3,15 @@ package com.olan.warmonger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
 public class Map extends Group implements Unit.UnitListener,
     Tile.TileListener,
-    Castle.CastleListener {
+    Castle.CastleListener,
+    UnitFactory.UnitFactoryListener {
   public static final int ROW = 10;
   public static final int COLUMN = 5;
 
@@ -31,6 +34,11 @@ public class Map extends Group implements Unit.UnitListener,
   private int redResourceRate;
   private int blueResourceRate;
 
+
+  private UnitFactory unitFactory;
+  private Unit newUnit;
+  private boolean isCreatingUnit;
+
   public Map () {
     initTiles();
     initResources();
@@ -40,6 +48,10 @@ public class Map extends Group implements Unit.UnitListener,
 
     mapState = new MapState();
     setState(new StateIdle((this)));
+
+    unitFactory = new UnitFactory();
+		addActor(unitFactory);
+		unitFactory.addListener(this);
   }
 
   private void initTiles () {
@@ -216,7 +228,20 @@ public class Map extends Group implements Unit.UnitListener,
     }
   }
 
+  @Override
+	public void onUnitFactoryClicked (Unit unit) {
+		if (newUnit == null) {
+			this.newUnit = unit;
+      this.isCreatingUnit = true;
+			addActor(newUnit);
+		}
+	}
+
   public void act () {
     mapState.run();
+
+    if (newUnit != null) {
+			newUnit.setCenter(new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()));
+		}
   }
 }
