@@ -57,6 +57,9 @@ public class TileObject extends GameObject {
   public void setOnTile (Tile tile) {
     setCenter(tile.getCenterX() + getOffsetX(),
         tile.getCenterY() + getOffsetY());
+
+    setRow(tile.getRow());
+    setColumn(tile.getColumn());
   }
 
   public void setTeam (Team team) {

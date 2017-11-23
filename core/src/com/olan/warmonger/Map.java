@@ -3,12 +3,14 @@ package com.olan.warmonger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import java.util.ArrayList;
 
 public class Map extends Group implements Unit.UnitListener,
     Tile.TileListener,
-    Castle.CastleListener {
+    Castle.CastleListener,
+    UnitFactory.UnitFactoryListener {
   public static final int ROW = 10;
   public static final int COLUMN = 5;
 
@@ -31,6 +33,10 @@ public class Map extends Group implements Unit.UnitListener,
   private int redResourceRate;
   private int blueResourceRate;
 
+
+  private UnitFactory unitFactory;
+  private Unit createdUnit;
+
   public Map () {
     initTiles();
     initResources();
@@ -40,6 +46,10 @@ public class Map extends Group implements Unit.UnitListener,
 
     mapState = new MapState();
     setState(new StateIdle((this)));
+
+    unitFactory = new UnitFactory(Unit.class);
+		addActor(unitFactory);
+		unitFactory.addListener(this);
   }
 
   private void initTiles () {
@@ -181,12 +191,32 @@ public class Map extends Group implements Unit.UnitListener,
     return resourceRate;
   }
 
+  public void setCreatedUnit (Unit unit) {
+    this.createdUnit = unit;
+  }
+
+  public Unit getCreatedUnit () {
+    return this.createdUnit;
+  }
+
+  public Team getCurrentTeam () {
+    return this.currentTeam;
+  }
+
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (mapState.is(StateUnitSelected.class)) {
       if (tile.isSelectionVisible()) {
         setState(new StateUnitMove(this, getSelectedUnit(), tile));
       } else {
+        setState(new StateIdle(this));
+      }
+    } else if (mapState.is(StateUnitCreated.class)) {
+      if (tile.isSelectionVisible()) {
+        getCreatedUnit().setOnTile(tile);
+        addUnit(getCreatedUnit());
+        getCreatedUnit().setTouchable(Touchable.enabled);
+        endTurn();
         setState(new StateIdle(this));
       }
     }
@@ -198,7 +228,11 @@ public class Map extends Group implements Unit.UnitListener,
       setState(new StateUnitSelected(this, unit));
     } else if (mapState.is(StateUnitSelected.class)) {
       if (unit.getTeam() == currentTeam) {
-        setState(new StateUnitSelected(this, unit));
+        if (unit == getSelectedUnit()) {
+          setState(new StateIdle(this));
+        } else {
+          setState(new StateUnitSelected(this, unit));
+        }
       } else if (getTile(unit.getRow(), unit.getColumn()).isSelectionVisible()) {
         setState(new StateUnitCombat(this, getSelectedUnit(), unit));
       }
@@ -215,6 +249,14 @@ public class Map extends Group implements Unit.UnitListener,
       }
     }
   }
+
+  @Override
+	public void onUnitFactoryClicked (Unit unit) {
+    if (mapState.is(StateIdle.class)) {
+      unit.setTeam(currentTeam);
+      setState(new StateUnitCreated(this, unit));
+    }
+	}
 
   public void act () {
     mapState.run();
