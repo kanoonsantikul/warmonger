@@ -47,7 +47,7 @@ public class Map extends Group implements Unit.UnitListener,
     mapState = new MapState();
     setState(new StateIdle((this)));
 
-    unitFactory = new UnitFactory();
+    unitFactory = new UnitFactory(Unit.class);
 		addActor(unitFactory);
 		unitFactory.addListener(this);
   }
@@ -216,6 +216,7 @@ public class Map extends Group implements Unit.UnitListener,
         getCreatedUnit().setOnTile(tile);
         addUnit(getCreatedUnit());
         getCreatedUnit().setTouchable(Touchable.enabled);
+        endTurn();
         setState(new StateIdle(this));
       }
     }

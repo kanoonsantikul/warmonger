@@ -15,11 +15,8 @@ public class StateUnitCreated implements MapState.State {
   }
 
   public void enter () {
-    map.setCreatedUnit(unit);
-    map.addActor(map.getCreatedUnit());
-    map.getCreatedUnit().setTouchable(Touchable.disabled);
-
     Tile tile;
+    int availableTileCount = 0;
     for (int i = 0; i < Map.ROW; i++) {
       for (int j = 0; j < Map.COLUMN; j++) {
         tile = map.getTile(i, j);
@@ -28,14 +25,22 @@ public class StateUnitCreated implements MapState.State {
         if (map.getUnit(i, j) == null) {
           if ((map.getCurrentTeam() == Team.RED) && (i == Map.ROW - 2)) {
             tile.selectionVisible(true);
+            availableTileCount++;
           } else if ((map.getCurrentTeam() == Team.BLUE) && (i == 1)) {
             tile.selectionVisible(true);
+            availableTileCount++;
           }
         }
       }
     }
 
-
+    if (availableTileCount != 0) {
+      map.setCreatedUnit(unit);
+      map.addActor(map.getCreatedUnit());
+      map.getCreatedUnit().setTouchable(Touchable.disabled);
+    } else {
+      map.setState(new StateIdle(map));
+    }
   }
 
   public void exit () {
@@ -49,7 +54,6 @@ public class StateUnitCreated implements MapState.State {
     }
 
     map.setCreatedUnit(null);
-    map.endTurn();
   }
 
   public void run () {
