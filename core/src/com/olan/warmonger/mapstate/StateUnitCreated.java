@@ -18,9 +18,36 @@ public class StateUnitCreated implements MapState.State {
     map.setCreatedUnit(unit);
     map.addActor(map.getCreatedUnit());
     map.getCreatedUnit().setTouchable(Touchable.disabled);
+
+    Tile tile;
+    for (int i = 0; i < Map.ROW; i++) {
+      for (int j = 0; j < Map.COLUMN; j++) {
+        tile = map.getTile(i, j);
+        tile.markVisible(true);
+
+        if (map.getUnit(i, j) == null) {
+          if ((map.getCurrentTeam() == Team.RED) && (i == Map.ROW - 2)) {
+            tile.selectionVisible(true);
+          } else if ((map.getCurrentTeam() == Team.BLUE) && (i == 1)) {
+            tile.selectionVisible(true);
+          }
+        }
+      }
+    }
+
+
   }
 
   public void exit () {
+    Tile tile;
+    for (int i = 0; i < Map.ROW; i++) {
+      for (int j = 0; j < Map.COLUMN; j++) {
+        tile = map.getTile(i, j);
+        tile.markVisible(false);
+        tile.selectionVisible(false);
+      }
+    }
+
     map.setCreatedUnit(null);
     map.endTurn();
   }

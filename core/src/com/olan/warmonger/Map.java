@@ -199,6 +199,10 @@ public class Map extends Group implements Unit.UnitListener,
     return this.createdUnit;
   }
 
+  public Team getCurrentTeam () {
+    return this.currentTeam;
+  }
+
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (mapState.is(StateUnitSelected.class)) {
@@ -208,10 +212,12 @@ public class Map extends Group implements Unit.UnitListener,
         setState(new StateIdle(this));
       }
     } else if (mapState.is(StateUnitCreated.class)) {
-      getCreatedUnit().setOnTile(tile);
-      addUnit(getCreatedUnit());
-      getCreatedUnit().setTouchable(Touchable.enabled);
-      setState(new StateIdle(this));
+      if (tile.isSelectionVisible()) {
+        getCreatedUnit().setOnTile(tile);
+        addUnit(getCreatedUnit());
+        getCreatedUnit().setTouchable(Touchable.enabled);
+        setState(new StateIdle(this));
+      }
     }
   }
 
