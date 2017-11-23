@@ -35,7 +35,7 @@ public class ActionUnitCombat implements GameDriven.Action {
 
   public void run () {
     if (!actor.isMovingTo(targetTile)) {
-      map.setState(new StateIdle(map));
+      map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
     }
   }
 }
