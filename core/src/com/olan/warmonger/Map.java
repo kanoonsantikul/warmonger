@@ -3,8 +3,7 @@ package com.olan.warmonger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import java.util.ArrayList;
 
@@ -36,8 +35,7 @@ public class Map extends Group implements Unit.UnitListener,
 
 
   private UnitFactory unitFactory;
-  private Unit newUnit;
-  private boolean isCreatingUnit;
+  private Unit createdUnit;
 
   public Map () {
     initTiles();
@@ -193,6 +191,14 @@ public class Map extends Group implements Unit.UnitListener,
     return resourceRate;
   }
 
+  public void setCreatedUnit (Unit unit) {
+    this.createdUnit = unit;
+  }
+
+  public Unit getCreatedUnit () {
+    return this.createdUnit;
+  }
+
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (mapState.is(StateUnitSelected.class)) {
@@ -201,6 +207,11 @@ public class Map extends Group implements Unit.UnitListener,
       } else {
         setState(new StateIdle(this));
       }
+    } else if (mapState.is(StateUnitCreated.class)) {
+      getCreatedUnit().setOnTile(tile);
+      addUnit(getCreatedUnit());
+      getCreatedUnit().setTouchable(Touchable.enabled);
+      setState(new StateIdle(this));
     }
   }
 
@@ -210,7 +221,11 @@ public class Map extends Group implements Unit.UnitListener,
       setState(new StateUnitSelected(this, unit));
     } else if (mapState.is(StateUnitSelected.class)) {
       if (unit.getTeam() == currentTeam) {
-        setState(new StateUnitSelected(this, unit));
+        if (unit == getSelectedUnit()) {
+          setState(new StateIdle(this));
+        } else {
+          setState(new StateUnitSelected(this, unit));
+        }
       } else if (getTile(unit.getRow(), unit.getColumn()).isSelectionVisible()) {
         setState(new StateUnitCombat(this, getSelectedUnit(), unit));
       }
@@ -230,18 +245,13 @@ public class Map extends Group implements Unit.UnitListener,
 
   @Override
 	public void onUnitFactoryClicked (Unit unit) {
-		if (newUnit == null) {
-			this.newUnit = unit;
-      this.isCreatingUnit = true;
-			addActor(newUnit);
-		}
+    if (mapState.is(StateIdle.class)) {
+      unit.setTeam(currentTeam);
+      setState(new StateUnitCreated(this, unit));
+    }
 	}
 
   public void act () {
     mapState.run();
-
-    if (newUnit != null) {
-			newUnit.setCenter(new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()));
-		}
   }
 }

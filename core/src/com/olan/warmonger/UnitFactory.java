@@ -13,7 +13,7 @@ public class UnitFactory extends GameObject {
 
     setTexture(Assets.pikemanFront);
 
-    setPosition(100.0f, 100.0f);
+    setPosition(1000f, 600f);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
