@@ -27,7 +27,9 @@ public class StateIdle implements GameDriven.State {
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    map.setState(new StateUnitSelected(map, unit));
+    if (unit.getTeam() == map.getCurrentTeam()) {
+      map.setState(new StateUnitSelected(map, unit));
+    }
   }
 
   @Override

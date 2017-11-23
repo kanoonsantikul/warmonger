@@ -25,6 +25,8 @@ public class Map extends Group implements Unit.UnitListener,
   private Player redPlayer = new Player(Team.RED);
   private Player bluePlayer = new Player(Team.BLUE);
 
+  private int redResources;
+  private int blueResources;
 
   public Map () {
     currentTeam = Team.BLUE;
@@ -90,6 +92,30 @@ public class Map extends Group implements Unit.UnitListener,
 
   public void selectUnit (Unit selectedUnit) {
     this.selectedUnit = selectedUnit;
+  }
+
+  public int getBlueResources () {
+    return blueResources;
+  }
+
+  public void setBlueResources (int resources) {
+    this.blueResources = resources;
+  }
+
+  public int getRedResources() {
+    return redResources;
+  }
+
+  public void setRedResources (int resources) {
+    this.redResources = resources;
+  }
+
+  public Team getCurrentTeam () {
+    return this.currentTeam;
+  }
+
+  public void setCurrentTeam (Team currentTeam) {
+    this.currentTeam = currentTeam;
   }
 
   public void setState (GameDriven.Action state) {
