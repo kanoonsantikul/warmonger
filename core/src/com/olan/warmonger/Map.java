@@ -28,8 +28,7 @@ public class Map extends Group implements Unit.UnitListener,
   private Player bluePlayer = new Player(Team.BLUE);
 
   private UnitFactory unitFactory;
-  private Unit createdUnit;
-
+  
   public Map () {
     currentTeam = Team.BLUE;
 
@@ -121,14 +120,6 @@ public class Map extends Group implements Unit.UnitListener,
 
   public void setState (GameDriven.Action state) {
     gameDriven.setState(state);
-  }
-
-  public void setCreatedUnit (Unit unit) {
-    this.createdUnit = unit;
-  }
-
-  public Unit getCreatedUnit () {
-    return this.createdUnit;
   }
 
   @Override
