@@ -30,6 +30,7 @@ public class GameDriven {
   public interface State extends Action,
       Unit.UnitListener,
       Building.BuildingListener,
-      Tile.TileListener {
+      Tile.TileListener,
+      UnitFactory.UnitFactoryListener {
   }
 }

@@ -2,12 +2,14 @@ package com.olan.warmonger;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import java.util.ArrayList;
 
 public class Map extends Group implements Unit.UnitListener,
     Tile.TileListener,
-    Building.BuildingListener {
+    Building.BuildingListener,
+    UnitFactory.UnitFactoryListener {
   public static final int ROW = 10;
   public static final int COLUMN = 5;
 
@@ -25,14 +27,21 @@ public class Map extends Group implements Unit.UnitListener,
   private Player redPlayer = new Player(Team.RED);
   private Player bluePlayer = new Player(Team.BLUE);
 
+  private UnitFactory unitFactory;
+  private Unit createdUnit;
+
   public Map () {
     currentTeam = Team.BLUE;
 
     addActor(redPlayer);
     addActor(bluePlayer);
-    
+
     gameDriven = new GameDriven();
     setState(new StateIdle((this)));
+
+    unitFactory = new UnitFactory(Unit.class);
+		addActor(unitFactory);
+		unitFactory.addListener(this);
   }
 
   @Override
@@ -94,16 +103,16 @@ public class Map extends Group implements Unit.UnitListener,
     this.selectedUnit = selectedUnit;
   }
 
-  public Team getCurrentTeam () {
-    return this.currentTeam;
-  }
-
   public Player getBluePlayer () {
     return this.bluePlayer;
   }
 
   public Player getRedPlayer () {
     return this.redPlayer;
+  }
+
+  public Team getCurrentTeam () {
+    return this.currentTeam;
   }
 
   public void setCurrentTeam (Team currentTeam) {
@@ -114,8 +123,12 @@ public class Map extends Group implements Unit.UnitListener,
     gameDriven.setState(state);
   }
 
-  public void act () {
-    gameDriven.run();
+  public void setCreatedUnit (Unit unit) {
+    this.createdUnit = unit;
+  }
+
+  public Unit getCreatedUnit () {
+    return this.createdUnit;
   }
 
   @Override
@@ -137,5 +150,16 @@ public class Map extends Group implements Unit.UnitListener,
     if (gameDriven.getState() != null) {
       gameDriven.getState().onBuildingClicked(building, row, column);
     }
+  }
+
+  @Override
+	public void onUnitFactoryClicked (Unit unit) {
+    if (gameDriven.getState() != null) {
+      gameDriven.getState().onUnitFactoryClicked(unit);
+    }
+	}
+
+  public void act () {
+    gameDriven.run();
   }
 }

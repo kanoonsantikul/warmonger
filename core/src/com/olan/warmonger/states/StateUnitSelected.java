@@ -99,4 +99,9 @@ public class StateUnitSelected implements GameDriven.State {
       map.setState(new ActionBuildingCombat(map, map.getSelectedUnit(), building));
     }
   }
+
+  @Override
+  public void onUnitFactoryClicked (Unit unit) {
+
+  }
 }

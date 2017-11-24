@@ -19,13 +19,6 @@ public class Unit extends TileObject {
     super(row, column);
     setTeam(team);
 
-    if (team == Team.RED) {
-      setTexture(Assets.pikemanFront);
-      setOffsetX(-MANUAL_OFFSET_X);
-    } else {
-      setTexture(Assets.pikemanBack);
-      setOffsetX(MANUAL_OFFSET_X);
-    }
     setOffsetY(MANUAL_OFFSET_Y);
 
     addListener(new ClickListener () {
@@ -39,8 +32,8 @@ public class Unit extends TileObject {
     setHealthPoint(HEALTH_POINT);
   }
 
-  public void addListener (UnitListener listerner) {
-      this.listener = listerner;
+  public void addListener (UnitListener listener) {
+      this.listener = listener;
   }
 
   public int getMoveRange () {
@@ -91,10 +84,22 @@ public class Unit extends TileObject {
         return true;
       }
     }
-    setRow(tile.getRow());
-    setColumn(tile.getColumn());
     setOnTile(tile);
+
     return false;
+  }
+
+  @Override
+  public void setTeam (Team team) {
+    super.setTeam(team);
+
+    if (team == Team.BLUE) {
+      setTexture(Assets.pikemanBack);
+      setOffsetX(MANUAL_OFFSET_X);
+    } else {
+      setTexture(Assets.pikemanFront);
+      setOffsetX(-MANUAL_OFFSET_X);
+    }
   }
 
   public interface UnitListener {
