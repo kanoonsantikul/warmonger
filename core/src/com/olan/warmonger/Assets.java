@@ -27,8 +27,11 @@ public class Assets {
 
   public static AtlasRegion corn;
   public static AtlasRegion hearth;
+  public static AtlasRegion resourceCountBlue;
+  public static AtlasRegion resourceCountRed;
 
   public static BitmapFont worldFont;
+  public static BitmapFont hudFont;
 
   public static void load () {
     loadTexture();
@@ -64,15 +67,20 @@ public class Assets {
 
     corn = loadTexture("corn");
     hearth = loadTexture("hearth");
+    resourceCountBlue = loadTexture("resource-count-blue");
+    resourceCountRed = loadTexture("resource-count-red");
   }
 
   public static void loadFont () {
     worldFont = loadFont("world-font");
     worldFont.setColor(Color.BLACK);
+
+    hudFont = loadFont("hud-font");
   }
 
   public static void dispose () {
     worldFont.dispose();
+    hudFont.dispose();
     sprite.dispose();
     backgroundTexture.dispose();
   }
