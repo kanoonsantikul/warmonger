@@ -10,11 +10,10 @@ public class ActionEndTurn implements GameDriven.Action {
   }
 
   public void enter () {
-
+    endTurn();
   }
 
   public void exit () {
-    endTurn();
   }
 
   public void run () {
@@ -22,14 +21,16 @@ public class ActionEndTurn implements GameDriven.Action {
   }
 
   public void endTurn () {
-    int resourceRate = calculateResourceRate();;
+    int resourceRate = calculateResourceRate();
+    Player currentPlayer;
     if (currentTeam == Team.RED) {
-      map.setRedResources(map.getRedResources() + resourceRate);
+      currentPlayer = map.getRedPlayer();
       map.setCurrentTeam(Team.BLUE);
     } else {
-      map.setBlueResources(map.getBlueResources() + resourceRate);
+      currentPlayer = map.getBluePlayer();
       map.setCurrentTeam(Team.RED);
     }
+    currentPlayer.setResources(currentPlayer.getResources() + resourceRate);
   }
 
   public int calculateResourceRate () {
