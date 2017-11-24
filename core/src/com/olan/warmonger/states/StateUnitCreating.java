@@ -1,22 +1,21 @@
 package com.olan.warmonger;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
-public class StateUnitCreated implements GameDriven.State {
+public class StateUnitCreating implements GameDriven.State {
   private Map map;
   private Unit unit;
   private Tile tile;
 
-  public StateUnitCreated (Map map, Unit unit) {
+  public StateUnitCreating (Map map, Unit unit) {
     this.map = map;
     this.unit = unit;
   }
 
   public void enter () {
     Tile tile;
-    int availableTileCount = 0;
+    boolean tileEmpty = false;
     for (int i = 0; i < Map.ROW; i++) {
       for (int j = 0; j < Map.COLUMN; j++) {
         tile = map.getTile(i, j);
@@ -25,19 +24,18 @@ public class StateUnitCreated implements GameDriven.State {
         if (map.getUnit(i, j) == null) {
           if ((map.getCurrentTeam() == Team.RED) && (i == Map.ROW - 2)) {
             tile.selectionVisible(true);
-            availableTileCount++;
+            tileEmpty = true;
           } else if ((map.getCurrentTeam() == Team.BLUE) && (i == 1)) {
             tile.selectionVisible(true);
-            availableTileCount++;
+            tileEmpty = true;
           }
         }
       }
     }
 
-    if (availableTileCount != 0) {
-      map.setCreatedUnit(unit);
-      map.addActor(map.getCreatedUnit());
-      map.getCreatedUnit().setTouchable(Touchable.disabled);
+    if (tileEmpty) {
+      map.addActor(unit);
+      unit.setTouchable(Touchable.disabled);
     } else {
       map.setState(new StateIdle(map));
     }
@@ -52,23 +50,21 @@ public class StateUnitCreated implements GameDriven.State {
         tile.selectionVisible(false);
       }
     }
-
-    map.setCreatedUnit(null);
   }
 
   public void run () {
-    if (map.getCreatedUnit() != null) {
-      map.getCreatedUnit().setCenter(new Vector2(Gdx.input.getX(),
-      Gdx.graphics.getHeight() - Gdx.input.getY()));
-    }
+    unit.setCenter(
+        Gdx.input.getX(),
+        Gdx.graphics.getHeight() - Gdx.input.getY());
   }
 
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (tile.isSelectionVisible()) {
-      map.getCreatedUnit().setOnTile(tile);
-      map.addUnit(map.getCreatedUnit());
-      map.getCreatedUnit().setTouchable(Touchable.enabled);
+      unit.setOnTile(tile);
+      map.addUnit(unit);
+      unit.setTouchable(Touchable.enabled);
+
       map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
     }
   }

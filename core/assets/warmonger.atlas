@@ -34,14 +34,14 @@ castle-red
   index: -1
 cavalry-back
   rotate: false
-  xy: 250, 40
+  xy: 176, 40
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
 cavalry-front
   rotate: false
-  xy: 176, 40
+  xy: 250, 40
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
