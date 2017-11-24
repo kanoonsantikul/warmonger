@@ -39,7 +39,7 @@ public class Map extends Group implements Unit.UnitListener,
     gameDriven = new GameDriven();
     setState(new StateIdle((this)));
 
-    unitFactory = new UnitFactory(Unit.class);
+    unitFactory = new UnitFactory(PikeMan.class);
 		addActor(unitFactory);
 		unitFactory.addListener(this);
   }
