@@ -7,14 +7,18 @@ public class UnitFactory extends GameObject {
   private Class unitClass;
   UnitFactoryListener listener;
 
-  public UnitFactory (Class unitClass) {
+  public UnitFactory (Class unitClass, float x, float y) {
     this.unitClass = unitClass;
 
     if (unitClass == PikeMan.class) {
       setTexture(Assets.pikemanFront);
+    } else if (unitClass == Cavalry.class) {
+      setTexture(Assets.cavalryFront);
+    } else if (unitClass == Archer.class) {
+      setTexture(Assets.archerFront);
     }
 
-    setPosition(1000f, 600f);
+    setPosition(x, y);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -22,6 +26,10 @@ public class UnitFactory extends GameObject {
           Unit unit = null;
           if (getOuter().getUnitClass() == PikeMan.class) {
             unit = new PikeMan(Team.RED, 0, 0);
+          } else if (getOuter().getUnitClass() == Cavalry.class) {
+            unit = new Cavalry(Team.RED, 0, 0);
+          } else if (getOuter().getUnitClass() == Archer.class) {
+            unit = new Archer(Team.RED, 0, 0);
           }
 
           listener.onUnitFactoryClicked(unit);
