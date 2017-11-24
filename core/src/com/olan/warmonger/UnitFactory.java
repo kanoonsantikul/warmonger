@@ -10,7 +10,7 @@ public class UnitFactory extends GameObject {
   public UnitFactory (Class unitClass) {
     this.unitClass = unitClass;
 
-    if (unitClass == Unit.class) {
+    if (unitClass == PikeMan.class) {
       setTexture(Assets.pikemanFront);
     }
 
@@ -20,8 +20,8 @@ public class UnitFactory extends GameObject {
       public void clicked (InputEvent event, float x, float y) {
         if (listener != null) {
           Unit unit = null;
-          if (getOuter().getUnitClass() == Unit.class) {
-            unit = new Unit(Team.RED, 0, 0);
+          if (getOuter().getUnitClass() == PikeMan.class) {
+            unit = new PikeMan(Team.RED, 0, 0);
           }
 
           listener.onUnitFactoryClicked(unit);
