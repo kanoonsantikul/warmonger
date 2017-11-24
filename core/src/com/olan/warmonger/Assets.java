@@ -22,6 +22,12 @@ public class Assets {
   public static AtlasRegion pikemanBack;
   public static AtlasRegion pikemanFront;
 
+  public static AtlasRegion cavalryBack;
+  public static AtlasRegion cavalryFront;
+
+  public static AtlasRegion archerBack;
+  public static AtlasRegion archerFront;
+
   public static AtlasRegion castleBlue;
   public static AtlasRegion castleRed;
 
@@ -61,6 +67,12 @@ public class Assets {
 
     pikemanBack = loadTexture("pikeman-back");
     pikemanFront = loadTexture("pikeman-front");
+
+    cavalryBack = loadTexture("cavalry-back");
+    cavalryFront = loadTexture("cavalry-front");
+
+    archerBack = loadTexture("archer-back");
+    archerFront = loadTexture("archer-front");
 
     castleBlue = loadTexture("castle-blue");
     castleRed = loadTexture("castle-red");

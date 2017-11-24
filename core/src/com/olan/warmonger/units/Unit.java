@@ -2,6 +2,7 @@ package com.olan.warmonger;
 
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Unit extends TileObject {
   private static final float MANUAL_OFFSET_X = 6f;
@@ -14,6 +15,9 @@ public class Unit extends TileObject {
   private int moveRange = 2;
   private int attackRange = 1;
   private int attackPoint = 2;
+
+  private TextureRegion textureFront;
+  private TextureRegion textureBack;
 
   public Unit (Team team, int row, int column) {
     super(row, column);
@@ -94,12 +98,17 @@ public class Unit extends TileObject {
     super.setTeam(team);
 
     if (team == Team.BLUE) {
-      setTexture(Assets.pikemanBack);
       setOffsetX(MANUAL_OFFSET_X);
-    } else {
-      setTexture(Assets.pikemanFront);
+      setTexture(textureBack);
+    } else if (team == Team.RED){
       setOffsetX(-MANUAL_OFFSET_X);
+      setTexture(textureFront);
     }
+  }
+
+  public void setTextures (TextureRegion front, TextureRegion back) {
+    this.textureFront = front;
+    this.textureBack = back;
   }
 
   public interface UnitListener {
