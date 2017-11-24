@@ -27,7 +27,9 @@ public class Map extends Group implements Unit.UnitListener,
   private Player redPlayer = new Player(Team.RED);
   private Player bluePlayer = new Player(Team.BLUE);
 
-  private UnitFactory unitFactory;
+  private UnitFactory pikemanFactory;
+  private UnitFactory cavalryFactory;
+  private UnitFactory archerFactory;
   private Unit createdUnit;
 
   public Map () {
@@ -39,9 +41,17 @@ public class Map extends Group implements Unit.UnitListener,
     gameDriven = new GameDriven();
     setState(new StateIdle((this)));
 
-    unitFactory = new UnitFactory(PikeMan.class);
-		addActor(unitFactory);
-		unitFactory.addListener(this);
+    pikemanFactory = new UnitFactory(PikeMan.class, 900f, 400f);
+		addActor(pikemanFactory);
+		pikemanFactory.addListener(this);
+
+    cavalryFactory = new UnitFactory(Cavalry.class, 1000f, 400f);
+		addActor(cavalryFactory);
+		cavalryFactory.addListener(this);
+
+    archerFactory = new UnitFactory(Archer.class, 1100f, 400f);
+		addActor(archerFactory);
+		archerFactory.addListener(this);
   }
 
   @Override
