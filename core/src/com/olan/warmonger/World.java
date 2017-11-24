@@ -26,11 +26,6 @@ public class World extends Stage {
 
 		map = new MapBuilder().build();
 		addActor(map);
-
-		for (int i = 1; i < 4; i++) {
-			map.addUnit(new Unit(Team.RED, Map.ROW - 2, i));
-			map.addUnit(new Unit(Team.BLUE, 1, i));
-		}
 	}
 
 	public static World instance () {
