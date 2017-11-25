@@ -12,11 +12,11 @@ public class ActionUnitMove implements GameDriven.Action {
   }
 
   public void enter () {
-    map.selectUnit(unit);
+
   }
 
   public void exit () {
-    map.selectUnit(null);
+
   }
 
   public void run () {

@@ -5,12 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 public class StateUnitCreating implements GameDriven.State {
   private Map map;
-  private Unit unit;
+  private Unit createdUnit;
   private Tile tile;
 
   public StateUnitCreating (Map map, Unit unit) {
     this.map = map;
-    this.unit = unit;
+    this.createdUnit = unit;
   }
 
   public void enter () {
@@ -34,8 +34,8 @@ public class StateUnitCreating implements GameDriven.State {
     }
 
     if (tileEmpty) {
-      map.addActor(unit);
-      unit.setTouchable(Touchable.disabled);
+      map.addActor(createdUnit);
+      createdUnit.setTouchable(Touchable.disabled);
     } else {
       map.setState(new StateIdle(map));
     }
@@ -53,7 +53,7 @@ public class StateUnitCreating implements GameDriven.State {
   }
 
   public void run () {
-    unit.setCenter(
+    createdUnit.setCenter(
         Gdx.input.getX(),
         Gdx.graphics.getHeight() - Gdx.input.getY());
   }
@@ -61,9 +61,9 @@ public class StateUnitCreating implements GameDriven.State {
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (tile.isSelectionVisible()) {
-      unit.setOnTile(tile);
-      map.addUnit(unit);
-      unit.setTouchable(Touchable.enabled);
+      createdUnit.setOnTile(tile);
+      map.addUnit(createdUnit);
+      createdUnit.setTouchable(Touchable.enabled);
 
       map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
     }

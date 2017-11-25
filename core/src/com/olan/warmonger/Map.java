@@ -21,7 +21,6 @@ public class Map extends Group implements Unit.UnitListener,
   private ArrayList<Unit> units = new ArrayList<Unit>();
 
   private GameDriven gameDriven;
-  private Unit selectedUnit;
   private Team currentTeam;
 
   private Player redPlayer = new Player(Team.RED);
@@ -102,14 +101,6 @@ public class Map extends Group implements Unit.UnitListener,
     unit.setOnTile(tiles[unit.getRow()][unit.getColumn()]);
     units.add(unit);
     addActor(unit);
-  }
-
-  public Unit getSelectedUnit () {
-    return this.selectedUnit;
-  }
-
-  public void selectUnit (Unit selectedUnit) {
-    this.selectedUnit = selectedUnit;
   }
 
   public Player getBluePlayer () {
