@@ -13,6 +13,11 @@ public class ActionUnitCombat implements GameDriven.Action {
   }
 
   public void enter () {
+    Tile previousTile = map.getTile(actor.getRow(), actor.getColumn());
+    if (previousTile.isLootMarkVisible()) {
+      previousTile.lootMarkVisible(false);
+    }
+
     if (actor.getTeam() == Team.BLUE) {
       targetTile = map.getTile(target.getRow() - 1, target.getColumn());
     } else {
@@ -21,10 +26,15 @@ public class ActionUnitCombat implements GameDriven.Action {
   }
 
   public void exit () {
+    if (targetTile.getResource() != 0){
+      targetTile.lootMarkVisible(true);
+    }
+
     int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
     if (remainHealth <= 0) {
       map.getUnits().remove(target);
       target.remove();
+      map.getTile(target.getRow(), target.getColumn()).lootMarkVisible(false);
     } else {
       target.setHealthPoint(remainHealth);
     }

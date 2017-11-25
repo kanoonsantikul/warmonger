@@ -14,6 +14,7 @@ public class Tile extends GameObject {
   private TileListener listener;
 
   private boolean markVisible = false;
+  private boolean lootMarkVisible = false;
   private boolean selectionVisible = false;
   private AtlasRegion selectionTexture;
 
@@ -38,6 +39,12 @@ public class Tile extends GameObject {
 
   @Override
   public void draw (Batch batch, float parentAlpha) {
+    if (lootMarkVisible) {
+      batch.draw(Assets.lootMark,
+          getCenterX() - Assets.lootMark.getRegionWidth() / 2,
+          getCenterY() - Assets.lootMark.getRegionHeight() / 2);
+    }
+
     if (markVisible) {
       batch.draw(Assets.tileMark,
           getCenterX() - Assets.tileMark.getRegionWidth() / 2,
@@ -50,7 +57,7 @@ public class Tile extends GameObject {
           getCenterY() - selectionTexture.getRegionHeight() / 2);
     }
 
-    if (getResource() != 0) {
+    if (getResource() != 0 && !lootMarkVisible) {
       batch.draw(Assets.corn,
           getCenterX() - Assets.corn.getRegionWidth() / 2,
           getCenterY() - Assets.corn.getRegionHeight() / 2);
@@ -94,6 +101,14 @@ public class Tile extends GameObject {
 
   public void markVisible (boolean visible) {
     this.markVisible = visible;
+  }
+
+  public void lootMarkVisible (boolean visible) {
+    this.lootMarkVisible = visible;
+  }
+
+  public boolean isLootMarkVisible () {
+    return lootMarkVisible;
   }
 
   public void selectionCombatVisible (boolean visible) {

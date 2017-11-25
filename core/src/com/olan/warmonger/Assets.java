@@ -16,6 +16,7 @@ public class Assets {
 
   public static AtlasRegion tile;
   public static AtlasRegion tileMark;
+  public static AtlasRegion lootMark;
   public static AtlasRegion selectionCombat;
   public static AtlasRegion selectionNormal;
 
@@ -62,6 +63,7 @@ public class Assets {
 
     tile = loadTexture("tile");
     tileMark = loadTexture("tile-mark");
+    lootMark = loadTexture("loot-mark");
     selectionCombat = loadTexture("selection-combat");
     selectionNormal = loadTexture("selection-normal");
 

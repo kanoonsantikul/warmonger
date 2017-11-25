@@ -12,11 +12,16 @@ public class ActionUnitMove implements GameDriven.Action {
   }
 
   public void enter () {
-
+    Tile previousTile = map.getTile(unit.getRow(), unit.getColumn());
+    if (previousTile.isLootMarkVisible()) {
+      previousTile.lootMarkVisible(false);
+    }
   }
 
   public void exit () {
-
+    if (tile.getResource() != 0) {
+      tile.lootMarkVisible(true);
+    }
   }
 
   public void run () {
