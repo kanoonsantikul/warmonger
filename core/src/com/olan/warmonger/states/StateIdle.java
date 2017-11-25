@@ -5,7 +5,6 @@ public class StateIdle implements GameDriven.State {
 
   public StateIdle (Map map) {
     this.map = map;
-    map.selectUnit(null);
   }
 
   public void enter () {

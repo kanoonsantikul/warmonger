@@ -2,16 +2,14 @@ package com.olan.warmonger;
 
 public class StateUnitSelected implements GameDriven.State {
   private Map map;
-  private Unit unit;
+  private Unit selectedUnit;
 
   public StateUnitSelected (Map map, Unit unit) {
     this.map = map;
-    this.unit = unit;
+    this.selectedUnit = unit;
   }
 
   public void enter () {
-    map.selectUnit(unit);
-
     Tile tile;
     for (int i = 0; i < Map.ROW; i++) {
       for (int j = 0; j < Map.COLUMN; j++) {
@@ -22,12 +20,12 @@ public class StateUnitSelected implements GameDriven.State {
 
     boolean foundEnemy = false;
     int row;
-    int column = unit.getColumn();
+    int column = selectedUnit.getColumn();
     TileObject other;
 
-    for (int i = 0; i <= unit.getMoveRange(); i++) {
-      row = unit.getRow();
-      if (unit.getTeam() == Team.BLUE) {
+    for (int i = 0; i <= selectedUnit.getMoveRange(); i++) {
+      row = selectedUnit.getRow();
+      if (selectedUnit.getTeam() == Team.BLUE) {
         row += i;
       } else {
         row -= i;
@@ -43,7 +41,7 @@ public class StateUnitSelected implements GameDriven.State {
       }
 
       if (other != null) {
-        if (unit.getTeam() != other.getTeam()) {
+        if (selectedUnit.getTeam() != other.getTeam()) {
           tile.selectionCombatVisible(true);
           foundEnemy = true;
         }
@@ -62,8 +60,6 @@ public class StateUnitSelected implements GameDriven.State {
         tile.selectionVisible(false);
       }
     }
-
-    map.selectUnit(null);
   }
 
   public void run () {
@@ -73,7 +69,7 @@ public class StateUnitSelected implements GameDriven.State {
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (tile.isSelectionVisible()) {
-      map.setState(new ActionUnitMove(map, map.getSelectedUnit(), tile));
+      map.setState(new ActionUnitMove(map, selectedUnit, tile));
     } else {
       map.setState(new StateIdle(map));
     }
@@ -81,22 +77,22 @@ public class StateUnitSelected implements GameDriven.State {
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    if (unit.getTeam() == map.getSelectedUnit().getTeam()) {
+    if (unit.getTeam() == selectedUnit.getTeam()) {
       map.setState(new StateUnitSelected(map, unit));
     } else {
       Tile tile = map.getTile(unit.getRow(), unit.getColumn());
       if (tile.isSelectionVisible()) {
-        map.setState(new ActionUnitCombat(map, map.getSelectedUnit(), unit));
+        map.setState(new ActionUnitCombat(map, selectedUnit, unit));
       }
     }
   }
 
   @Override
   public void onBuildingClicked (Building building, int row, int column) {
-    if (building.getTeam() == map.getSelectedUnit().getTeam()) {
+    if (building.getTeam() == selectedUnit.getTeam()) {
       map.setState(new StateIdle(map));
     } else {
-      map.setState(new ActionBuildingCombat(map, map.getSelectedUnit(), building));
+      map.setState(new ActionBuildingCombat(map, selectedUnit, building));
     }
   }
 
