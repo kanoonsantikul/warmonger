@@ -16,9 +16,8 @@ public class Unit extends TileObject {
   private TextureRegion textureFront;
   private TextureRegion textureBack;
 
-  public Unit (Team team, int row, int column) {
-    super(row, column);
-    setTeam(team);
+  public Unit () {
+    super(-1, -1);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -100,10 +99,6 @@ public class Unit extends TileObject {
   public void setTextures (TextureRegion front, TextureRegion back) {
     this.textureFront = front;
     this.textureBack = back;
-  }
-
-  public Unit clone () {
-    return new Unit(null, 0, 0);
   }
 
   public interface UnitListener {
