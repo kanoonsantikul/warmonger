@@ -5,10 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Unit extends TileObject {
-  private static final float MANUAL_OFFSET_X = 6f;
-  private static final float MANUAL_OFFSET_Y = 15.0f;
   private static final float MOVE_SPEED = 5f;
-  private static final int HEALTH_POINT = 4;
 
   private UnitListener listener;
 
@@ -19,11 +16,8 @@ public class Unit extends TileObject {
   private TextureRegion textureFront;
   private TextureRegion textureBack;
 
-  public Unit (Team team, int row, int column) {
-    super(row, column);
-    setTeam(team);
-
-    setOffsetY(MANUAL_OFFSET_Y);
+  public Unit () {
+    super(-1, -1);
 
     addListener(new ClickListener () {
       public void clicked (InputEvent event, float x, float y) {
@@ -32,11 +26,9 @@ public class Unit extends TileObject {
         }
       }
     });
-
-    setHealthPoint(HEALTH_POINT);
   }
 
-  public void addListener (UnitListener listener) {
+  public void setListener (UnitListener listener) {
       this.listener = listener;
   }
 
@@ -98,10 +90,8 @@ public class Unit extends TileObject {
     super.setTeam(team);
 
     if (team == Team.BLUE) {
-      setOffsetX(MANUAL_OFFSET_X);
       setTexture(textureBack);
     } else if (team == Team.RED){
-      setOffsetX(-MANUAL_OFFSET_X);
       setTexture(textureFront);
     }
   }

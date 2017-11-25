@@ -37,6 +37,10 @@ public class Assets {
   public static AtlasRegion resourceCountBlue;
   public static AtlasRegion resourceCountRed;
 
+  public static AtlasRegion cardPikeman;
+  public static AtlasRegion cardCavalry;
+  public static AtlasRegion cardArcher;
+
   public static BitmapFont worldFont;
   public static BitmapFont hudFont;
 
@@ -78,6 +82,10 @@ public class Assets {
 
     castleBlue = loadTexture("castle-blue");
     castleRed = loadTexture("castle-red");
+
+    cardPikeman = loadTexture("card-pikeman");
+    cardCavalry = loadTexture("card-cavalry");
+    cardArcher = loadTexture("card-archer");
 
     corn = loadTexture("corn");
     hearth = loadTexture("hearth");

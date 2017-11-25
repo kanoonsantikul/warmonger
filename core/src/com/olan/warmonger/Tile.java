@@ -70,7 +70,7 @@ public class Tile extends GameObject {
     resourceText.setCenter(getCenterX() + 8, getCenterY() - 12);
   }
 
-  public void addListener (TileListener listerner) {
+  public void setListener (TileListener listerner) {
       this.listener = listerner;
   }
 
