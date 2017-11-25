@@ -31,7 +31,7 @@ public class Building extends TileObject {
     setHealthPoint(HEALTH_POINT);
   }
 
-  public void addListener (BuildingListener listerner) {
+  public void setListener (BuildingListener listerner) {
       this.listener = listerner;
   }
 

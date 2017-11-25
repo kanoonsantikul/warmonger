@@ -29,7 +29,7 @@ public class Unit extends TileObject {
     });
   }
 
-  public void addListener (UnitListener listener) {
+  public void setListener (UnitListener listener) {
       this.listener = listener;
   }
 
@@ -100,6 +100,10 @@ public class Unit extends TileObject {
   public void setTextures (TextureRegion front, TextureRegion back) {
     this.textureFront = front;
     this.textureBack = back;
+  }
+
+  public Unit clone () {
+    return new Unit(null, 0, 0);
   }
 
   public interface UnitListener {

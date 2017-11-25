@@ -1,53 +1,40 @@
 package com.olan.warmonger;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
-public class UnitFactory extends GameObject {
-  private Class unitClass;
+public class UnitFactory extends Group implements Card.CardListener {
   UnitFactoryListener listener;
 
-  public UnitFactory (Class unitClass, float x, float y) {
-    this.unitClass = unitClass;
+  public UnitFactory () {
+    Card card;
 
-    if (unitClass == PikeMan.class) {
-      setTexture(Assets.pikemanFront);
-    } else if (unitClass == Cavalry.class) {
-      setTexture(Assets.cavalryFront);
-    } else if (unitClass == Archer.class) {
-      setTexture(Assets.archerFront);
+    card = new Card(Assets.cardPikeman, new PikeMan(null, 0, 0));
+    card.setCenter(900, 500);
+    card.setListener(this);
+    addActor(card);
+
+    card = new Card(Assets.cardCavalry, new Cavalry(null, 0, 0));
+    card.setCenter(1000, 500);
+    card.setListener(this);
+    addActor(card);
+
+    card = new Card(Assets.cardArcher, new Archer(null, 0, 0));
+    card.setCenter(1100, 500);
+    card.setListener(this);
+    addActor(card);
+  }
+
+  @Override
+  public void onCardClicked (Unit unit) {
+    if (listener != null) {
+      listener.onUnitFactoryClicked(unit);
     }
-
-    setPosition(x, y);
-
-    addListener(new ClickListener () {
-      public void clicked (InputEvent event, float x, float y) {
-        if (listener != null) {
-          Unit unit = null;
-          if (getOuter().getUnitClass() == PikeMan.class) {
-            unit = new PikeMan(Team.RED, 0, 0);
-          } else if (getOuter().getUnitClass() == Cavalry.class) {
-            unit = new Cavalry(Team.RED, 0, 0);
-          } else if (getOuter().getUnitClass() == Archer.class) {
-            unit = new Archer(Team.RED, 0, 0);
-          }
-
-          listener.onUnitFactoryClicked(unit);
-        }
-      }
-    });
   }
 
-  public void addListener (UnitFactoryListener listener) {
+  public void setListener (UnitFactoryListener listener) {
     this.listener = listener;
-  }
-
-  public UnitFactory getOuter() {
-    return UnitFactory.this;
-  }
-
-  public Class getUnitClass () {
-    return this.unitClass;
   }
 
   public interface UnitFactoryListener {
