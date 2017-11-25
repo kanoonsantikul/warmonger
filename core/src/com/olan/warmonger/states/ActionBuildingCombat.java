@@ -13,8 +13,6 @@ public class ActionBuildingCombat implements GameDriven.Action {
   }
 
   public void enter () {
-    map.selectUnit(actor);
-
     if (actor.getTeam() == Team.BLUE) {
       targetTile = map.getTile(target.getRow() - 1, target.getColumn());
     } else {
@@ -30,7 +28,6 @@ public class ActionBuildingCombat implements GameDriven.Action {
     } else {
       target.setHealthPoint(remainHealth);
     }
-    map.selectUnit(null);
   }
 
   public void run () {
