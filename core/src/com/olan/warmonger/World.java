@@ -13,9 +13,10 @@ public class World extends Stage {
 	private static World world;
 	private Viewport viewport;
 
-	GameObject background;
-	Map map;
-	Hud hud;
+	private GameObject background;
+  private UnitFactory unitFactory;
+	private Map map;
+	private Hud hud;
 
 	public World (Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -27,6 +28,10 @@ public class World extends Stage {
 
 		map = new MapBuilder().build();
 		addActor(map);
+
+		unitFactory = new UnitFactory();
+    unitFactory.setListener(map);
+		addActor(unitFactory);
 
 		hud = new Hud();
 		addActor(hud);

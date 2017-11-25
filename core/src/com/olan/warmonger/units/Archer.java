@@ -1,7 +1,7 @@
 package com.olan.warmonger;
 
 public class Archer extends Unit {
-  private static final float MANUAL_OFFSET_X = -7f;
+  private static final float MANUAL_OFFSET_X = -6f;
   private static final float MANUAL_OFFSET_Y = 15.0f;
 
   private static final int HEALTH_POINT = 3;

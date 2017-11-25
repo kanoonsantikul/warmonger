@@ -34,8 +34,9 @@ public class StateUnitCreating implements GameDriven.State {
     }
 
     if (tileEmpty) {
-      map.addActor(createdUnit);
+      createdUnit.setTeam(map.getCurrentTeam());
       createdUnit.setTouchable(Touchable.disabled);
+      map.addActor(createdUnit);
     } else {
       map.setState(new StateIdle(map));
     }

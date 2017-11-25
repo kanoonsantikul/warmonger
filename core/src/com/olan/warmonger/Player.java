@@ -13,30 +13,28 @@ public class Player extends GameObject {
   public Player (Team team) {
     this.team = team;
 
-    resourceText = new Text(Assets.hudFont);
+    setX(270);
     if (team == Team.BLUE) {
       resourceTexture = Assets.resourceCountBlue;
-      resourceText.setCenter(
-          resourceTexture.getRegionWidth() / 2 + 20,
-          World.HEIGHT - resourceTexture.getRegionHeight() / 2 - 20);
+      setY(resourceTexture.getRegionHeight());
     } else {
       resourceTexture = Assets.resourceCountRed;
-      resourceText.setCenter(
-          World.WIDTH - resourceTexture.getRegionWidth() / 2,
-          World.HEIGHT - resourceTexture.getRegionHeight() / 2 - 20);
+      setY(World.HEIGHT - resourceTexture.getRegionHeight() * 3 / 2);
     }
+
+    resourceText = new Text(Assets.hudFont);
+    resourceText.setCenter(
+        getX() + resourceTexture.getRegionWidth() / 2,
+        getY() + resourceTexture.getRegionHeight() / 2);
     setResources(resources);
   }
 
   @Override
   public void draw (Batch batch, float parentAlpha) {
     if (team == Team.BLUE) {
-      batch.draw(resourceTexture, 10,
-          World.HEIGHT - resourceTexture.getRegionHeight() - 20);
+      batch.draw(resourceTexture, getX(), getY());
     } else {
-      batch.draw(resourceTexture,
-          World.WIDTH - resourceTexture.getRegionWidth() - 10,
-          World.HEIGHT - resourceTexture.getRegionHeight() - 20);
+      batch.draw(resourceTexture, getX(), getY());
     }
     resourceText.draw(batch);
   }
