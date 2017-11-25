@@ -16,18 +16,15 @@ public class Card extends GameObject {
       public void clicked (InputEvent event, float x, float y) {
         if (listener != null) {
           Unit unit = null;
-          Class[] cArg = new Class[3];
-          cArg[0] = Team.class;
-          cArg[1] = int.class;
-          cArg[2] = int.class;
-
           try {
-            unit = (Unit)Card.this.unitClass.getDeclaredConstructor(cArg).newInstance(null, 0, 0);
+            unit = (Unit)Card.this.unitClass.getDeclaredConstructor().newInstance();
           } catch (Exception e) {
             System.out.println(e.toString());
           }
 
-          listener.onCardClicked(unit);
+          if (unit != null) {
+            listener.onCardClicked(unit);
+          }
         }
       }
     });

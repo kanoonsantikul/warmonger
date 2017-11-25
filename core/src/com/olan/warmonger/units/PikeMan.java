@@ -5,10 +5,8 @@ public class PikeMan extends Unit {
   private static final float MANUAL_OFFSET_Y = 15.0f;
   private static final int HEALTH_POINT = 4;
 
-  public PikeMan (Team team, int row, int column) {
-    super(team, row, column);
+  public PikeMan () {
     setTextures(Assets.pikemanFront, Assets.pikemanBack);
-    setTeam(team);
     setOffsetY(MANUAL_OFFSET_Y);
     setHealthPoint(HEALTH_POINT);
   }

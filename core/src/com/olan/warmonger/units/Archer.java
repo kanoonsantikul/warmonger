@@ -5,10 +5,8 @@ public class Archer extends Unit {
   private static final float MANUAL_OFFSET_Y = 15.0f;
   private static final int HEALTH_POINT = 2;
 
-  public Archer (Team team, int row, int column) {
-    super(team, row, column);
+  public Archer () {
     setTextures(Assets.archerFront, Assets.archerBack);
-    setTeam(team);
     setOffsetY(MANUAL_OFFSET_Y);
     setHealthPoint(HEALTH_POINT);
   }
