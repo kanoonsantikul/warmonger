@@ -1,7 +1,7 @@
 package com.olan.warmonger;
 
 public class Cavalry extends Unit {
-  private static final float MANUAL_OFFSET_X = -7f;
+  private static final float MANUAL_OFFSET_X = -3f;
   private static final float MANUAL_OFFSET_Y = 15.0f;
 
   private static final int HEALTH_POINT = 2;

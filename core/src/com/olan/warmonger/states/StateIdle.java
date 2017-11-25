@@ -38,7 +38,6 @@ public class StateIdle implements GameDriven.State {
 
   @Override
   public void onUnitFactoryClicked (Unit unit) {
-    unit.setTeam(map.getCurrentTeam());
     map.setState(new StateUnitCreating(map, unit));
   }
 }
