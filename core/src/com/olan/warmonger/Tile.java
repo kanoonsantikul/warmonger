@@ -39,16 +39,16 @@ public class Tile extends GameObject {
 
   @Override
   public void draw (Batch batch, float parentAlpha) {
-    if (lootMarkVisible) {
-      batch.draw(Assets.lootMark,
-          getCenterX() - Assets.lootMark.getRegionWidth() / 2,
-          getCenterY() - Assets.lootMark.getRegionHeight() / 2);
-    }
-
     if (markVisible) {
       batch.draw(Assets.tileMark,
           getCenterX() - Assets.tileMark.getRegionWidth() / 2,
           getCenterY() - Assets.tileMark.getRegionHeight() / 2);
+    }
+
+    if (lootMarkVisible) {
+      batch.draw(Assets.lootMark,
+          getCenterX() - Assets.lootMark.getRegionWidth() / 2,
+          getCenterY() - Assets.lootMark.getRegionHeight() / 2);
     }
 
     if (selectionVisible) {
