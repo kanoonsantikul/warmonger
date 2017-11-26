@@ -9,9 +9,10 @@ public class Unit extends TileObject {
 
   private UnitListener listener;
 
-  private int moveRange = 2;
-  private int attackRange = 1;
-  private int attackPoint = 2;
+  private int moveRange;
+  private int attackRange;
+  private int attackPoint;
+  private int cost;
 
   private TextureRegion textureFront;
   private TextureRegion textureBack;
@@ -26,6 +27,22 @@ public class Unit extends TileObject {
         }
       }
     });
+  }
+
+  @Override
+  public void setTeam (Team team) {
+    super.setTeam(team);
+
+    if (team == Team.BLUE) {
+      setTexture(textureBack);
+    } else if (team == Team.RED){
+      setTexture(textureFront);
+    }
+  }
+
+  public void setTextures (TextureRegion front, TextureRegion back) {
+    this.textureFront = front;
+    this.textureBack = back;
   }
 
   public void setListener (UnitListener listener) {
@@ -56,6 +73,14 @@ public class Unit extends TileObject {
     this.attackPoint = attackPoint;
   }
 
+  public int getCost () {
+    return this.cost;
+  }
+
+  public void setCost (int cost) {
+    this.cost = cost;
+  }
+
   public boolean canMoveTo (Tile tile) {
     if (getTeam() == Team.RED) {
       return (tile.getRow() < getRow())
@@ -83,22 +108,6 @@ public class Unit extends TileObject {
     setOnTile(tile);
 
     return false;
-  }
-
-  @Override
-  public void setTeam (Team team) {
-    super.setTeam(team);
-
-    if (team == Team.BLUE) {
-      setTexture(textureBack);
-    } else if (team == Team.RED){
-      setTexture(textureFront);
-    }
-  }
-
-  public void setTextures (TextureRegion front, TextureRegion back) {
-    this.textureFront = front;
-    this.textureBack = back;
   }
 
   public interface UnitListener {

@@ -8,6 +8,7 @@ public class Cavalry extends Unit {
   private static final int ATTACK_POINT = 3;
   private static final int ATTACK_RANGE = 2;
   private static final int MOVE_RANGE = 2;
+  private static final int COST = 5;
 
   public Cavalry () {
     setTextures(Assets.cavalryFront, Assets.cavalryBack);
@@ -16,6 +17,7 @@ public class Cavalry extends Unit {
     setAttackPoint(ATTACK_POINT);
     setAttackRange(ATTACK_RANGE);
     setMoveRange(MOVE_RANGE);
+    setCost(COST);
   }
 
   @Override
