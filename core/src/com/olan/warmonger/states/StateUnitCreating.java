@@ -7,6 +7,7 @@ public class StateUnitCreating implements GameDriven.State {
   private Map map;
   private Unit createdUnit;
   private Tile tile;
+  Player currentPlayer;
 
   public StateUnitCreating (Map map, Unit unit) {
     this.map = map;
@@ -33,7 +34,10 @@ public class StateUnitCreating implements GameDriven.State {
       }
     }
 
-    if (tileEmpty) {
+    currentPlayer =
+        map.getCurrentTeam() == Team.BLUE ? map.getBluePlayer() : map.getRedPlayer();
+
+    if (tileEmpty && currentPlayer.getResources() >= createdUnit.getCost()) {
       createdUnit.setTeam(map.getCurrentTeam());
       createdUnit.setTouchable(Touchable.disabled);
       map.addActor(createdUnit);
@@ -63,8 +67,9 @@ public class StateUnitCreating implements GameDriven.State {
   public void onTileClicked (Tile tile, int row, int column) {
     if (tile.isSelectionVisible()) {
       createdUnit.setOnTile(tile);
-      map.addUnit(createdUnit);
       createdUnit.setTouchable(Touchable.enabled);
+      currentPlayer.setResources(currentPlayer.getResources() - createdUnit.getCost());
+      map.addUnit(createdUnit);
 
       map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
     }

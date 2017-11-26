@@ -8,6 +8,7 @@ public class Archer extends Unit {
   private static final int ATTACK_POINT = 2;
   private static final int ATTACK_RANGE = 2;
   private static final int MOVE_RANGE = 1;
+  private static final int COST = 4;
 
   public Archer () {
     setTextures(Assets.archerFront, Assets.archerBack);
@@ -16,6 +17,7 @@ public class Archer extends Unit {
     setAttackPoint(ATTACK_POINT);
     setAttackRange(ATTACK_RANGE);
     setMoveRange(MOVE_RANGE);
+    setCost(COST);
   }
 
   @Override
