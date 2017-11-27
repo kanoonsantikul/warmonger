@@ -20,7 +20,7 @@ archer-front
   index: -1
 card-archer
   rotate: false
-  xy: 248, 152
+  xy: 167, 152
   size: 79, 94
   orig: 79, 94
   offset: 0, 0
@@ -34,7 +34,7 @@ card-cavalry
   index: -1
 card-pikeman
   rotate: false
-  xy: 167, 152
+  xy: 248, 152
   size: 79, 94
   orig: 79, 94
   offset: 0, 0
@@ -55,14 +55,14 @@ castle-red
   index: -1
 cavalry-back
   rotate: false
-  xy: 398, 169
+  xy: 212, 73
   size: 62, 77
   orig: 62, 77
   offset: 0, 0
   index: -1
 cavalry-front
   rotate: false
-  xy: 212, 73
+  xy: 398, 169
   size: 62, 77
   orig: 62, 77
   offset: 0, 0
@@ -79,6 +79,13 @@ corn-collected
   xy: 462, 177
   size: 27, 27
   orig: 27, 27
+  offset: 0, 0
+  index: -1
+cost
+  rotate: false
+  xy: 2, 18
+  size: 55, 32
+  orig: 55, 32
   offset: 0, 0
   index: -1
 hearth
@@ -123,23 +130,16 @@ resource-count-red
   orig: 163, 48
   offset: 0, 0
   index: -1
-resource-spend
-  rotate: false
-  xy: 2, 18
-  size: 55, 32
-  orig: 55, 32
-  offset: 0, 0
-  index: -1
 selection-combat
   rotate: false
-  xy: 217, 10
+  xy: 336, 46
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 selection-normal
   rotate: false
-  xy: 336, 46
+  xy: 336, 108
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
@@ -153,7 +153,7 @@ tile
   index: -1
 tile-mark
   rotate: false
-  xy: 336, 108
+  xy: 217, 10
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

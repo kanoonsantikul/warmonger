@@ -1,7 +1,7 @@
 package com.olan.warmonger;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
@@ -16,7 +16,7 @@ public class Tile extends GameObject {
   private boolean markVisible = false;
   private boolean lootMarkVisible = false;
   private boolean selectionVisible = false;
-  private AtlasRegion selectionTexture;
+  private TextureRegion selectionTexture;
 
   private int resource;
   private Text resourceText;
