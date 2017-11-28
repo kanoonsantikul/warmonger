@@ -20,6 +20,7 @@ public class World extends Stage implements Unit.UnitListener,
   private UnitFactory unitFactory;
 	private Map map;
 	private Hud hud;
+	private boolean end;
 
   private GameDriven gameDriven;
   private Team currentTeam;
@@ -52,6 +53,14 @@ public class World extends Stage implements Unit.UnitListener,
 
 		gameDriven = new GameDriven();
 		setState(new StateIdle((map)));
+	}
+
+	public void setEnd (boolean end) {
+		this.end = end;
+	}
+
+	public boolean isEnd () {
+		return this.end;
 	}
 
 	public static World instance () {
