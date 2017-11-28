@@ -53,10 +53,6 @@ public class Card extends GameObject {
   public void draw (Batch batch, float parentAlpha) {
     super.draw(batch, parentAlpha);
 
-    batch.draw(Assets.cost,
-        getCenterX() - Assets.cost.getRegionWidth() / 2,
-        getY() - Assets.cost.getRegionHeight() + 10);
-
     healthText.draw(batch);
     attackPointText.draw(batch);
     attackRangeText.draw(batch);
@@ -66,8 +62,8 @@ public class Card extends GameObject {
 
   @Override
   protected void	positionChanged () {
-    float x = getX() + getWidth() + 10;
-    float y = getY() + getHeight() - 25;
+    float x = getCenterX() - 22;
+    float y = getY() + getHeight() - 35;
     healthText.setPosition(x, y);
     y = y - attackPointText.getHeight() - 8;
     attackPointText.setPosition(x, y);
@@ -76,9 +72,7 @@ public class Card extends GameObject {
     y = y - moveRangeText.getHeight() - 8;
     moveRangeText.setPosition(x, y);
 
-    costText.setCenter(
-        getCenterX() + 10,
-        getY() - Assets.cost.getRegionHeight() / 2 + 10);
+    costText.setCenter(getX() + 55, getY() + 24);
   }
 
   public void setListener (CardListener listener) {
