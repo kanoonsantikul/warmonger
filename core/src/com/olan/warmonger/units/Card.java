@@ -79,6 +79,10 @@ public class Card extends GameObject {
     this.listener = listener;
   }
 
+  public Unit getPrototype () {
+    return this.prototype;
+  }
+
   public interface CardListener {
     public void onCardClicked (Unit unit);
   }
