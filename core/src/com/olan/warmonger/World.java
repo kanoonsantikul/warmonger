@@ -128,4 +128,8 @@ public class World extends Stage implements Unit.UnitListener,
   public Hud getHud () {
     return this.hud;
   }
+
+  public UnitFactory getUnitFactory () {
+    return this.unitFactory;
+  }
 }

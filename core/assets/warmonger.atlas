@@ -1,152 +1,180 @@
 
 warmonger.png
-size: 1024,256
+size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 archer-back
   rotate: false
-  xy: 71, 7
+  xy: 484, 37
   size: 67, 62
   orig: 67, 62
   offset: 0, 0
   index: -1
 archer-front
   rotate: false
-  xy: 167, 57
+  xy: 553, 37
   size: 66, 62
   orig: 66, 62
   offset: 0, 0
   index: -1
 card-archer
   rotate: false
-  xy: 452, 121
+  xy: 908, 103
   size: 223, 131
   orig: 223, 131
+  offset: 0, 0
+  index: -1
+card-archer-bw
+  rotate: false
+  xy: 456, 101
+  size: 225, 133
+  orig: 225, 133
   offset: 0, 0
   index: -1
 card-cavalry
   rotate: false
-  xy: 227, 121
+  xy: 1133, 103
   size: 223, 131
   orig: 223, 131
+  offset: 0, 0
+  index: -1
+card-cavalry-bw
+  rotate: false
+  xy: 2, 101
+  size: 225, 133
+  orig: 225, 133
   offset: 0, 0
   index: -1
 card-pikeman
   rotate: false
-  xy: 2, 121
+  xy: 683, 103
   size: 223, 131
   orig: 223, 131
   offset: 0, 0
   index: -1
+card-pikeman-bw
+  rotate: false
+  xy: 229, 101
+  size: 225, 133
+  orig: 225, 133
+  offset: 0, 0
+  index: -1
 castle-blue
   rotate: false
-  xy: 677, 125
+  xy: 167, 22
   size: 67, 77
   orig: 67, 77
   offset: 0, 0
   index: -1
 castle-red
   rotate: false
-  xy: 746, 126
+  xy: 1358, 108
   size: 67, 76
   orig: 67, 76
   offset: 0, 0
   index: -1
 cavalry-back
   rotate: false
-  xy: 301, 42
+  xy: 236, 22
   size: 62, 77
   orig: 62, 77
   offset: 0, 0
   index: -1
 cavalry-front
   rotate: false
-  xy: 365, 42
+  xy: 300, 22
   size: 62, 77
   orig: 62, 77
   offset: 0, 0
   index: -1
 corn
   rotate: false
-  xy: 904, 212
+  xy: 1523, 194
   size: 37, 40
   orig: 37, 40
   offset: 0, 0
   index: -1
-hearth
+health
   rotate: false
-  xy: 981, 228
-  size: 27, 24
-  orig: 27, 24
+  xy: 873, 80
+  size: 37, 21
+  orig: 37, 21
   offset: 0, 0
   index: -1
 loot
   rotate: false
-  xy: 943, 231
+  xy: 1562, 213
   size: 36, 21
   orig: 36, 21
   offset: 0, 0
   index: -1
 loot-mark
   rotate: false
-  xy: 235, 55
+  xy: 621, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pikeman-back
   rotate: false
-  xy: 489, 41
+  xy: 364, 21
   size: 58, 78
   orig: 58, 78
   offset: 0, 0
   index: -1
 pikeman-front
   rotate: false
-  xy: 429, 41
+  xy: 424, 21
   size: 58, 78
   orig: 58, 78
   offset: 0, 0
   index: -1
+resource-count-bg
+  rotate: false
+  xy: 2, 2
+  size: 163, 47
+  orig: 163, 47
+  offset: 0, 0
+  index: -1
 resource-count-blue
   rotate: false
-  xy: 677, 204
+  xy: 1358, 186
   size: 163, 48
   orig: 163, 48
   offset: 0, 0
   index: -1
 resource-count-red
   rotate: false
-  xy: 2, 71
+  xy: 2, 51
   size: 163, 48
   orig: 163, 48
   offset: 0, 0
   index: -1
 selection-combat
   rotate: false
-  xy: 549, 59
+  xy: 811, 41
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 selection-normal
   rotate: false
-  xy: 842, 192
+  xy: 749, 41
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 tile
   rotate: false
-  xy: 2, 2
+  xy: 1427, 117
   size: 67, 67
   orig: 67, 67
   offset: 0, 0
   index: -1
 tile-mark
   rotate: false
-  xy: 611, 59
+  xy: 687, 41
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

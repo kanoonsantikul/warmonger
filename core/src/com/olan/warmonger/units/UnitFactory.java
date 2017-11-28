@@ -6,24 +6,26 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class UnitFactory extends Group implements Card.CardListener {
   UnitFactoryListener listener;
+  Card cardPikeman;
+  Card cardCavalry;
+  Card cardArcher;
 
   public UnitFactory () {
-    Card card;
 
-    card = new Card(Assets.cardPikeman, new PikeMan());
-    card.setCenter(980, 580);
-    card.setListener(this);
-    addActor(card);
+    cardPikeman = new Card(Assets.cardPikeman, new PikeMan());
+    cardPikeman.setCenter(980, 580);
+    cardPikeman.setListener(this);
+    addActor(cardPikeman);
 
-    card = new Card(Assets.cardCavalry, new Cavalry());
-    card.setCenter(980, 440);
-    card.setListener(this);
-    addActor(card);
+    cardCavalry = new Card(Assets.cardCavalry, new Cavalry());
+    cardCavalry.setCenter(980, 440);
+    cardCavalry.setListener(this);
+    addActor(cardCavalry);
 
-    card = new Card(Assets.cardArcher, new Archer());
-    card.setCenter(980, 300);
-    card.setListener(this);
-    addActor(card);
+    cardArcher = new Card(Assets.cardArcher, new Archer());
+    cardArcher.setCenter(980, 300);
+    cardArcher.setListener(this);
+    addActor(cardArcher);
   }
 
   @Override
