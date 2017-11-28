@@ -37,6 +37,7 @@ public class Assets {
   public static AtlasRegion hearth;
   public static AtlasRegion resourceCountBlue;
   public static AtlasRegion resourceCountRed;
+  public static AtlasRegion resourceCountGray;
 
   public static AtlasRegion cardPikeman;
   public static AtlasRegion cardCavalry;
@@ -101,6 +102,7 @@ public class Assets {
     hearth = loadTexture("hearth");
     resourceCountBlue = loadTexture("resource-count-blue");
     resourceCountRed = loadTexture("resource-count-red");
+    resourceCountGray = loadTexture("resource-count-bg");
   }
 
   public static void loadFont () {
