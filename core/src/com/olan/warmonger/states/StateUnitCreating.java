@@ -72,17 +72,19 @@ public class StateUnitCreating implements GameDriven.State {
       map.addUnit(creatingUnit);
 
       World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
+    } else {
+      World.instance().setState(new StateIdle(map));
     }
   }
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-
+    World.instance().setState(new StateIdle(map));
   }
 
   @Override
   public void onBuildingClicked (Building building, int row, int column) {
-
+    World.instance().setState(new StateIdle(map));
   }
 
   @Override

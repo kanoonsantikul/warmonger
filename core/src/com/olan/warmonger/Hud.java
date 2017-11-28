@@ -24,7 +24,10 @@ public class Hud extends Group {
   public void setCreatingUnit (Unit unit) {
     removeActor(creatingUnit);
     this.creatingUnit = unit;
-    addActor(creatingUnit);
+
+    if (unit != null) {
+      addActor(creatingUnit);
+    }
   }
 
   public void renderLoots (Tile[][] tiles) {

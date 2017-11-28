@@ -8,7 +8,7 @@ public class StateIdle implements GameDriven.State {
   }
 
   public void enter () {
-
+    World.instance().getHud().setCreatingUnit(null);
   }
 
   public void exit () {
