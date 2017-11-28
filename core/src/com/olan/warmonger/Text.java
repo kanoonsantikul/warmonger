@@ -48,6 +48,10 @@ public class Text {
     calculatePosition();
   }
 
+  public void setPosition (float x, float y) {
+    position.set(x, y + textLayout.height);
+  }
+
   public void calculatePosition () {
     position.set(anchorPoint.x - textLayout.width / 2,
         anchorPoint.y + textLayout.height / 2);

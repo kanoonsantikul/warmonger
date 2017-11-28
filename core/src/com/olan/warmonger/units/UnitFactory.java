@@ -11,17 +11,17 @@ public class UnitFactory extends Group implements Card.CardListener {
     Card card;
 
     card = new Card(Assets.cardPikeman, new PikeMan());
-    card.setCenter(900, 500);
+    card.setCenter(900, 650);
     card.setListener(this);
     addActor(card);
 
     card = new Card(Assets.cardCavalry, new Cavalry());
-    card.setCenter(1000, 500);
+    card.setCenter(900, 520);
     card.setListener(this);
     addActor(card);
 
     card = new Card(Assets.cardArcher, new Archer());
-    card.setCenter(1100, 500);
+    card.setCenter(900, 390);
     card.setListener(this);
     addActor(card);
   }
