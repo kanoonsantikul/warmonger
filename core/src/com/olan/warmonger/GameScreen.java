@@ -13,20 +13,27 @@ public class GameScreen extends ScreenAdapter {
 
 	private FitViewport worldViewport;
 	private World world;
+	private InputMultiplexer plexInput;
 
 	public GameScreen (SpriteBatch batch) {
 		this.batch = batch;
 
 		Assets.load();
 
-		InputMultiplexer plexInput = new InputMultiplexer();
+		plexInput = new InputMultiplexer();
 		Gdx.input.setInputProcessor(plexInput);
 
 		worldViewport = new FitViewport(World.WIDTH, World.HEIGHT);
-		world = new World(worldViewport, batch);
-		plexInput.addProcessor(world);
-
+		initWorld();
 		GLProfiler.enable();
+	}
+
+	public void initWorld () {
+		if (world != null) {
+			this.plexInput.removeProcessor(world);
+		}
+		world = new World(worldViewport, batch);
+		this.plexInput.addProcessor(world);
 	}
 
 	@Override
@@ -35,6 +42,10 @@ public class GameScreen extends ScreenAdapter {
 
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		if (world.isEnd()) {
+			initWorld();
+		}
 
 		world.act();
 		world.draw();
