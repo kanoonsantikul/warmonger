@@ -44,7 +44,11 @@ public class ActionUnitCombat implements GameDriven.Action {
   }
 
   public void run () {
-    if (!actor.isMovingTo(targetTile)) {
+    if (actor.getAttackType() == Unit.AttackType.MELEE) {
+      if (!actor.isMovingTo(targetTile)) {
+        World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
+      }
+    } else {
       World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
     }
   }

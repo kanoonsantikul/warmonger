@@ -13,6 +13,7 @@ public class Unit extends TileObject {
   private int attackRange;
   private int attackPoint;
   private int cost;
+  private AttackType attackType;
 
   private TextureRegion textureFront;
   private TextureRegion textureBack;
@@ -110,7 +111,20 @@ public class Unit extends TileObject {
     return false;
   }
 
+  public void setAttackType (AttackType attackType) {
+    this.attackType = attackType;
+  }
+
+  public AttackType getAttackType () {
+    return this.attackType;
+  }
+
   public interface UnitListener {
     public void onUnitClicked (Unit unit, int row, int column);
+  }
+
+  public enum AttackType {
+    MELEE,
+    RANGE
   }
 }
