@@ -31,10 +31,10 @@ public class TileObject extends GameObject {
   public void draw (Batch batch, float parentAlpha) {
     super.draw(batch, parentAlpha);
 
-    batch.draw(Assets.hearth,
-        getX() + getWidth() - Assets.hearth.getRegionWidth() / 2,
-        getY() - Assets.hearth.getRegionHeight() / 2);
-    healthText.draw(batch);
+    // batch.draw(Assets.hearth,
+    //     getX() + getWidth() - Assets.hearth.getRegionWidth() / 2,
+    //     getY() - Assets.hearth.getRegionHeight() / 2);
+    // healthText.draw(batch);
   }
 
   @Override

@@ -20,14 +20,14 @@ archer-front
   index: -1
 card-archer
   rotate: false
-  xy: 227, 121
+  xy: 452, 121
   size: 223, 131
   orig: 223, 131
   offset: 0, 0
   index: -1
 card-cavalry
   rotate: false
-  xy: 452, 121
+  xy: 227, 121
   size: 223, 131
   orig: 223, 131
   offset: 0, 0
@@ -74,18 +74,18 @@ corn
   orig: 37, 40
   offset: 0, 0
   index: -1
-corn-collected
-  rotate: false
-  xy: 943, 225
-  size: 27, 27
-  orig: 27, 27
-  offset: 0, 0
-  index: -1
 hearth
   rotate: false
-  xy: 972, 228
+  xy: 981, 228
   size: 27, 24
   orig: 27, 24
+  offset: 0, 0
+  index: -1
+loot
+  rotate: false
+  xy: 943, 231
+  size: 36, 21
+  orig: 36, 21
   offset: 0, 0
   index: -1
 loot-mark
@@ -111,28 +111,28 @@ pikeman-front
   index: -1
 resource-count-blue
   rotate: false
-  xy: 2, 71
+  xy: 677, 204
   size: 163, 48
   orig: 163, 48
   offset: 0, 0
   index: -1
 resource-count-red
   rotate: false
-  xy: 677, 204
+  xy: 2, 71
   size: 163, 48
   orig: 163, 48
   offset: 0, 0
   index: -1
 selection-combat
   rotate: false
-  xy: 842, 192
+  xy: 549, 59
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 selection-normal
   rotate: false
-  xy: 611, 59
+  xy: 842, 192
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
@@ -146,7 +146,7 @@ tile
   index: -1
 tile-mark
   rotate: false
-  xy: 549, 59
+  xy: 611, 59
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

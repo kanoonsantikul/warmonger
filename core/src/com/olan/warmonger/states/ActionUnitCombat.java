@@ -16,6 +16,7 @@ public class ActionUnitCombat implements GameDriven.Action {
     Tile previousTile = map.getTile(actor.getRow(), actor.getColumn());
     if (previousTile.isLootMarkVisible()) {
       previousTile.lootMarkVisible(false);
+      World.instance().getHud().renderLoots(map.getTiles());
     }
 
     if (actor.getTeam() == Team.BLUE) {
@@ -28,6 +29,7 @@ public class ActionUnitCombat implements GameDriven.Action {
   public void exit () {
     if (targetTile.getResource() != 0){
       targetTile.lootMarkVisible(true);
+      World.instance().getHud().renderLoots(map.getTiles());
     }
 
     int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
@@ -35,6 +37,7 @@ public class ActionUnitCombat implements GameDriven.Action {
       map.getUnits().remove(target);
       target.remove();
       map.getTile(target.getRow(), target.getColumn()).lootMarkVisible(false);
+      World.instance().getHud().renderLoots(map.getTiles());
     } else {
       target.setHealthPoint(remainHealth);
     }
