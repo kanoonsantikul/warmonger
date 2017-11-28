@@ -1,16 +1,14 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Castle extends TileObject {
   private static final float MANUAL_OFFSET_Y = 15.0f;
 
-  private CastleListener listener;
+  private static final int HEALTH_POINT = 2;
 
-  private int healthPoint = 10;
-  private Text healthText;
+  private CastleListener listener;
 
   public Castle (Team team, int row, int column) {
     super(row, column);
@@ -31,36 +29,12 @@ public class Castle extends TileObject {
       }
     });
 
-    healthText = new Text(Assets.worldFont);
-    setHealthPoint(healthPoint);
-  }
 
-  @Override
-  public void draw (Batch batch, float parentAlpha) {
-    super.draw(batch, parentAlpha);
-
-    batch.draw(Assets.hearth,
-        getX() + getWidth() - Assets.hearth.getRegionWidth() / 2,
-        getY() - Assets.hearth.getRegionHeight() / 2);
-    healthText.draw(batch);
-  }
-
-  @Override
-  protected void	positionChanged () {
-    healthText.setCenter(getX() + getWidth(), getY());
+    setHealthPoint(HEALTH_POINT);
   }
 
   public void addListener (CastleListener listener) {
       this.listener = listener;
-  }
-
-  public int getHealthPoint () {
-    return this.healthPoint;
-  }
-
-  public void setHealthPoint (int healthPoint) {
-    this.healthPoint = healthPoint;
-    healthText.setText(healthPoint + "");
   }
 
   public interface CastleListener {
