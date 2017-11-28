@@ -42,16 +42,20 @@ public class StateUnitSelected implements GameDriven.State {
         other = map.getBuilding(row, column);
       }
 
-      if (other == null
-          && Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getMoveRange()) {
-        tile.selectionVisible(true);
-      } else if (other != null
-          && Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getAttackRange()) {
-        if (selectedUnit.getTeam() != other.getTeam() && !foundEnemy) {
-          tile.selectionCombatVisible(true);
-          if (selectedUnit.getClass() == Cavalry.class) {
-            foundEnemy = true;
+      if (other != null) {
+        if (selectedUnit.getTeam() != other.getTeam()) {
+          if (Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getAttackRange()) {
+            if (!foundEnemy) {
+              tile.selectionCombatVisible(true);
+            }
+            if (selectedUnit.getAttackType() == Unit.AttackType.MELEE) {
+              foundEnemy = true;
+            }
           }
+        }
+      } else if (Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getMoveRange()) {
+        if (!foundEnemy) {
+          tile.selectionVisible(true);
         }
       }
     }
