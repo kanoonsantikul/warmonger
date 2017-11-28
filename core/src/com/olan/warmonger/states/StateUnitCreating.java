@@ -5,13 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 public class StateUnitCreating implements GameDriven.State {
   private Map map;
-  private Unit createdUnit;
+  private Unit creatingUnit;
   private Tile tile;
   Player currentPlayer;
 
   public StateUnitCreating (Map map, Unit unit) {
     this.map = map;
-    this.createdUnit = unit;
+    this.creatingUnit = unit;
   }
 
   public void enter () {
@@ -23,10 +23,10 @@ public class StateUnitCreating implements GameDriven.State {
         tile.markVisible(true);
 
         if (map.getUnit(i, j) == null) {
-          if ((map.getCurrentTeam() == Team.RED) && (i == Map.ROW - 2)) {
+          if ((World.instance().getCurrentTeam() == Team.RED) && (i == Map.ROW - 2)) {
             tile.selectionVisible(true);
             tileEmpty = true;
-          } else if ((map.getCurrentTeam() == Team.BLUE) && (i == 1)) {
+          } else if ((World.instance().getCurrentTeam() == Team.BLUE) && (i == 1)) {
             tile.selectionVisible(true);
             tileEmpty = true;
           }
@@ -34,15 +34,15 @@ public class StateUnitCreating implements GameDriven.State {
       }
     }
 
-    currentPlayer =
-        map.getCurrentTeam() == Team.BLUE ? map.getBluePlayer() : map.getRedPlayer();
+    currentPlayer = World.instance().getCurrentTeam() == Team.BLUE ?
+        World.instance().getBluePlayer() : World.instance().getRedPlayer();
 
-    if (tileEmpty && currentPlayer.getResources() >= createdUnit.getCost()) {
-      createdUnit.setTeam(map.getCurrentTeam());
-      createdUnit.setTouchable(Touchable.disabled);
-      map.addActor(createdUnit);
+    if (tileEmpty && currentPlayer.getResources() >= creatingUnit.getCost()) {
+      creatingUnit.setTeam(currentPlayer.getTeam());
+      creatingUnit.setTouchable(Touchable.disabled);
+      World.instance().getHud().setCreatingUnit(creatingUnit);
     } else {
-      map.setState(new StateIdle(map));
+      World.instance().setState(new StateIdle(map));
     }
   }
 
@@ -58,7 +58,7 @@ public class StateUnitCreating implements GameDriven.State {
   }
 
   public void run () {
-    createdUnit.setCenter(
+    creatingUnit.setCenter(
         Gdx.input.getX(),
         Gdx.graphics.getHeight() - Gdx.input.getY());
   }
@@ -66,12 +66,12 @@ public class StateUnitCreating implements GameDriven.State {
   @Override
   public void onTileClicked (Tile tile, int row, int column) {
     if (tile.isSelectionVisible()) {
-      createdUnit.setOnTile(tile);
-      createdUnit.setTouchable(Touchable.enabled);
-      currentPlayer.setResources(currentPlayer.getResources() - createdUnit.getCost());
-      map.addUnit(createdUnit);
+      creatingUnit.setOnTile(tile);
+      creatingUnit.setTouchable(Touchable.enabled);
+      currentPlayer.setResources(currentPlayer.getResources() - creatingUnit.getCost());
+      map.addUnit(creatingUnit);
 
-      map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
+      World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
     }
   }
 
@@ -87,9 +87,9 @@ public class StateUnitCreating implements GameDriven.State {
 
   @Override
   public void onUnitFactoryClicked (Unit unit) {
-    if (createdUnit.getClass() != unit.getClass()) {
-      map.removeActor(createdUnit);
-      map.setState(new StateUnitCreating(map, unit));
+    if (creatingUnit.getClass() != unit.getClass()) {
+      map.removeActor(creatingUnit);
+      World.instance().setState(new StateUnitCreating(map, unit));
     }
   }
 }

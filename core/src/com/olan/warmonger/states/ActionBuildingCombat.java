@@ -32,7 +32,7 @@ public class ActionBuildingCombat implements GameDriven.Action {
 
   public void run () {
     if (!actor.isMovingTo(targetTile)) {
-      map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
+      World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
     }
   }
 }
