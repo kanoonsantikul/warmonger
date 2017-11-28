@@ -19,17 +19,19 @@ public class StateUnitSelected implements GameDriven.State {
     }
 
     boolean foundEnemy = false;
-    int row;
+    int row = selectedUnit.getRow();
     int column = selectedUnit.getColumn();
+    int direction;
     TileObject other;
 
-    for (int i = 0; i <= selectedUnit.getMoveRange(); i++) {
-      row = selectedUnit.getRow();
-      if (selectedUnit.getTeam() == Team.BLUE) {
-        row += i;
-      } else {
-        row -= i;
-      }
+    if (selectedUnit.getTeam() == Team.BLUE) {
+      direction = 1;
+    } else {
+      direction = -1;
+    }
+
+    for (int i = 0; i <= Map.ROW; i++) {
+      row += direction;
       if (row >= Map.ROW || row < 0) {
         continue;
       }
@@ -40,13 +42,17 @@ public class StateUnitSelected implements GameDriven.State {
         other = map.getBuilding(row, column);
       }
 
-      if (other != null) {
-        if (selectedUnit.getTeam() != other.getTeam()) {
-          tile.selectionCombatVisible(true);
-          foundEnemy = true;
-        }
-      } else if (!foundEnemy) {
+      if (other == null
+          && Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getMoveRange()) {
         tile.selectionVisible(true);
+      } else if (other != null
+          && Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getAttackRange()) {
+        if (selectedUnit.getTeam() != other.getTeam() && !foundEnemy) {
+          tile.selectionCombatVisible(true);
+          if (selectedUnit.getClass() == Cavalry.class) {
+            foundEnemy = true;
+          }
+        }
       }
     }
   }

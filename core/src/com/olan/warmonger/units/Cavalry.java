@@ -18,6 +18,7 @@ public class Cavalry extends Unit {
     setAttackRange(ATTACK_RANGE);
     setMoveRange(MOVE_RANGE);
     setCost(COST);
+    setAttackType(Unit.AttackType.MELEE);
   }
 
   @Override
