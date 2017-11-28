@@ -54,4 +54,8 @@ public class Player extends GameObject {
     this.resources = resources;
     resourceText.setText(resources + "");
   }
+
+  public void setResourceTexture (TextureRegion texture) {
+    this.resourceTexture = texture;
+  }
 }

@@ -22,15 +22,45 @@ public class ActionEndTurn implements GameDriven.Action {
 
   public void endTurn () {
     int resourceRate = calculateResourceRate();
+    Player previousPlayer;
     Player currentPlayer;
+    World world = World.instance();
+    UnitFactory unitFactory = world.getUnitFactory();
+    Card cardPikeman = unitFactory.cardPikeman;
+    Card cardCavalry = unitFactory.cardCavalry;
+    Card cardArcher = unitFactory.cardArcher;
+
     if (currentTeam == Team.RED) {
-      currentPlayer = World.instance().getRedPlayer();
-      World.instance().setCurrentTeam(Team.BLUE);
+      previousPlayer = world.getRedPlayer();
+      world.setCurrentTeam(Team.BLUE);
+      currentPlayer = world.getBluePlayer();
+      world.getBluePlayer().setResourceTexture(Assets.resourceCountBlue);
     } else {
-      currentPlayer = World.instance().getBluePlayer();
-      World.instance().setCurrentTeam(Team.RED);
+      previousPlayer = world.getBluePlayer();
+      world.setCurrentTeam(Team.RED);
+      currentPlayer = world.getRedPlayer();
+      world.getRedPlayer().setResourceTexture(Assets.resourceCountRed);
     }
-    currentPlayer.setResources(currentPlayer.getResources() + resourceRate);
+    previousPlayer.setResourceTexture(Assets.resourceCountGray);
+    previousPlayer.setResources(previousPlayer.getResources() + resourceRate);
+
+    if (cardPikeman.getPrototype().getCost() > currentPlayer.getResources()) {
+      cardPikeman.setTexture(Assets.cardPikemanGray);
+    } else {
+      cardPikeman.setTexture(Assets.cardPikeman);
+    }
+
+    if (cardCavalry.getPrototype().getCost() > currentPlayer.getResources()) {
+      cardCavalry.setTexture(Assets.cardCavalryGray);
+    } else {
+      cardCavalry.setTexture(Assets.cardCavalry);
+    }
+
+    if (cardArcher.getPrototype().getCost() > currentPlayer.getResources()) {
+      cardArcher.setTexture(Assets.cardArcherGray);
+    } else {
+      cardArcher.setTexture(Assets.cardArcher);
+    }
   }
 
   public int calculateResourceRate () {
