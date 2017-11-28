@@ -26,8 +26,8 @@ public class StateIdle implements GameDriven.State {
 
   @Override
   public void onUnitClicked (Unit unit, int row, int column) {
-    if (unit.getTeam() == map.getCurrentTeam()) {
-      map.setState(new StateUnitSelected(map, unit));
+    if (unit.getTeam() == World.instance().getCurrentTeam()) {
+      World.instance().setState(new StateUnitSelected(map, unit));
     }
   }
 
@@ -38,6 +38,6 @@ public class StateIdle implements GameDriven.State {
 
   @Override
   public void onUnitFactoryClicked (Unit unit) {
-    map.setState(new StateUnitCreating(map, unit));
+    World.instance().setState(new StateUnitCreating(map, unit));
   }
 }

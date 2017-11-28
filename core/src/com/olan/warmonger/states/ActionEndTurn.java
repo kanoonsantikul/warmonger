@@ -17,18 +17,18 @@ public class ActionEndTurn implements GameDriven.Action {
   }
 
   public void run () {
-    map.setState(new StateIdle(map));
+    World.instance().setState(new StateIdle(map));
   }
 
   public void endTurn () {
     int resourceRate = calculateResourceRate();
     Player currentPlayer;
     if (currentTeam == Team.RED) {
-      currentPlayer = map.getRedPlayer();
-      map.setCurrentTeam(Team.BLUE);
+      currentPlayer = World.instance().getRedPlayer();
+      World.instance().setCurrentTeam(Team.BLUE);
     } else {
-      currentPlayer = map.getBluePlayer();
-      map.setCurrentTeam(Team.RED);
+      currentPlayer = World.instance().getBluePlayer();
+      World.instance().setCurrentTeam(Team.RED);
     }
     currentPlayer.setResources(currentPlayer.getResources() + resourceRate);
   }

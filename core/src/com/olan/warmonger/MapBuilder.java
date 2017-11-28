@@ -26,7 +26,7 @@ public class MapBuilder {
     for (int i = 0; i < Map.ROW; i++) {
       for (int j = 0; j < Map.COLUMN; j++) {
         tile = new Tile(i, j);
-        tile.setListener(map);
+        tile.setListener(World.instance());
         tile.setPosition(
             offsetX + Tile.WIDTH * j,
             offsetY + Tile.HEIGHT * i);
@@ -67,13 +67,13 @@ public class MapBuilder {
     Building building;
     for (int column = 0; column < Map.COLUMN; column++) {
       building = new Building(Team.BLUE, 0, column);
-      building.setListener(map);
+      building.setListener(World.instance());
       building.setOnTile(tiles[0][column]);
       buildings.add(building);
       map.addActor(building);
 
       building = new Building(Team.RED, Map.ROW - 1, column);
-      building.setListener(map);
+      building.setListener(World.instance());
       building.setOnTile(tiles[Map.ROW - 1][column]);
       buildings.add(building);
       map.addActor(building);
