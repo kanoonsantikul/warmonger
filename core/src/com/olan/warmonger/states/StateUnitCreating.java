@@ -87,6 +87,9 @@ public class StateUnitCreating implements GameDriven.State {
 
   @Override
   public void onUnitFactoryClicked (Unit unit) {
-
+    if (createdUnit.getClass() != unit.getClass()) {
+      map.removeActor(createdUnit);
+      map.setState(new StateUnitCreating(map, unit));
+    }
   }
 }
