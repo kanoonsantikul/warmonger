@@ -9,6 +9,10 @@ public class Card extends GameObject {
   private CardListener listener;
 
   private Unit prototype;
+  private Text healthText;
+  private Text attackPointText;
+  private Text attackRangeText;
+  private Text moveRangeText;
   private Text costText;
 
   public Card (TextureRegion cardTexture , Unit prototype) {
@@ -32,7 +36,16 @@ public class Card extends GameObject {
       }
     });
 
+    healthText = new Text(Assets.worldFont);
+    attackPointText = new Text(Assets.worldFont);
+    attackRangeText = new Text(Assets.worldFont);
+    moveRangeText = new Text(Assets.worldFont);
     costText = new Text(Assets.worldFont);
+
+    healthText.setText("Health: " + prototype.getHealthPoint());
+    attackPointText.setText("Attack: " + prototype.getAttackPoint());
+    attackRangeText.setText("Attack Range: " + prototype.getAttackRange());
+    moveRangeText.setText("Move Range: " + prototype.getMoveRange());
     costText.setText(prototype.getCost() + "");
   }
 
@@ -43,12 +56,29 @@ public class Card extends GameObject {
     batch.draw(Assets.cost,
         getCenterX() - Assets.cost.getRegionWidth() / 2,
         getY() - Assets.cost.getRegionHeight() + 10);
+
+    healthText.draw(batch);
+    attackPointText.draw(batch);
+    attackRangeText.draw(batch);
+    moveRangeText.draw(batch);
     costText.draw(batch);
   }
 
   @Override
   protected void	positionChanged () {
-    costText.setCenter(getCenterX() + 10, getY() - Assets.cost.getRegionHeight() / 2 + 10);
+    float x = getX() + getWidth() + 10;
+    float y = getY() + getHeight() - 25;
+    healthText.setPosition(x, y);
+    y = y - attackPointText.getHeight() - 8;
+    attackPointText.setPosition(x, y);
+    y = y - attackRangeText.getHeight() - 8;
+    attackRangeText.setPosition(x, y);
+    y = y - moveRangeText.getHeight() - 8;
+    moveRangeText.setPosition(x, y);
+
+    costText.setCenter(
+        getCenterX() + 10,
+        getY() - Assets.cost.getRegionHeight() / 2 + 10);
   }
 
   public void setListener (CardListener listener) {
