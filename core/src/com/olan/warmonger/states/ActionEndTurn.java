@@ -34,11 +34,14 @@ public class ActionEndTurn implements GameDriven.Action {
       previousPlayer = world.getRedPlayer();
       world.setCurrentTeam(Team.BLUE);
       currentPlayer = world.getBluePlayer();
+      world.getBluePlayer().setResourceTexture(Assets.resourceCountBlue);
     } else {
       previousPlayer = world.getBluePlayer();
       world.setCurrentTeam(Team.RED);
       currentPlayer = world.getRedPlayer();
+      world.getRedPlayer().setResourceTexture(Assets.resourceCountRed);
     }
+    previousPlayer.setResourceTexture(Assets.resourceCountGray);
     previousPlayer.setResources(previousPlayer.getResources() + resourceRate);
 
     if (cardPikeman.getPrototype().getCost() > currentPlayer.getResources()) {

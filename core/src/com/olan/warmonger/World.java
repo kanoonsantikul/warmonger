@@ -47,6 +47,7 @@ public class World extends Stage implements Unit.UnitListener,
 		addActor(hud);
 
 		currentTeam = Team.BLUE;
+    redPlayer.setResourceTexture(Assets.resourceCountGray);
 
 		addActor(redPlayer);
 		addActor(bluePlayer);
