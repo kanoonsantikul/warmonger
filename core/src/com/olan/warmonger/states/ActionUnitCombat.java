@@ -40,10 +40,12 @@ public class ActionUnitCombat implements GameDriven.Action {
       World.instance().getHud().renderLoots(map.getTiles());
     } else {
       target.setHealthPoint(remainHealth);
+      World.instance().getHud().renderUnitHealths(map.getUnits());
     }
   }
 
   public void run () {
+    World.instance().getHud().renderUnitHealths(map.getUnits());
     if (actor.getAttackType() == Unit.AttackType.MELEE) {
       if (!actor.isMovingTo(targetTile)) {
         World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));

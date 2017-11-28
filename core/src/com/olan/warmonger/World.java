@@ -43,6 +43,8 @@ public class World extends Stage implements Unit.UnitListener,
 		addActor(unitFactory);
 
 		hud = new Hud();
+    hud.renderBuildingHealths(map.getBuildings());
+    hud.renderUnitHealths(map.getUnits());
 		addActor(hud);
 
 		currentTeam = Team.BLUE;

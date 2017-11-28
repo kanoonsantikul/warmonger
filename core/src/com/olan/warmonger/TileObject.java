@@ -1,6 +1,5 @@
 package com.olan.warmonger;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TileObject extends GameObject {
@@ -12,8 +11,7 @@ public class TileObject extends GameObject {
 
   private Team team;
 
-  private int healthPoint = 4;
-  private Text healthText;
+  private int healthPoint;
 
   public TileObject (int row, int column) {
     this(null, row, column);
@@ -24,22 +22,6 @@ public class TileObject extends GameObject {
 
     setRow(row);
     setColumn(column);
-    healthText = new Text(Assets.worldFont);
-  }
-
-  @Override
-  public void draw (Batch batch, float parentAlpha) {
-    super.draw(batch, parentAlpha);
-
-    // batch.draw(Assets.hearth,
-    //     getX() + getWidth() - Assets.hearth.getRegionWidth() / 2,
-    //     getY() - Assets.hearth.getRegionHeight() / 2);
-    // healthText.draw(batch);
-  }
-
-  @Override
-  protected void	positionChanged () {
-    healthText.setCenter(getX() + getWidth(), getY());
   }
 
   public int getRow () {
@@ -96,6 +78,5 @@ public class TileObject extends GameObject {
 
   public void setHealthPoint (int healthPoint) {
     this.healthPoint = healthPoint;
-    healthText.setText(healthPoint + "");
   }
 }

@@ -70,6 +70,7 @@ public class StateUnitCreating implements GameDriven.State {
       creatingUnit.setTouchable(Touchable.enabled);
       currentPlayer.setResources(currentPlayer.getResources() - creatingUnit.getCost());
       map.addUnit(creatingUnit);
+      World.instance().getHud().renderUnitHealths(map.getUnits());
 
       World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
     } else {

@@ -32,6 +32,7 @@ public class ActionBuildingCombat implements GameDriven.Action {
       target.remove();
     } else {
       target.setHealthPoint(remainHealth);
+      World.instance().getHud().renderBuildingHealths(map.getBuildings());
     }
   }
 

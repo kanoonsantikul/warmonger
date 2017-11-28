@@ -34,7 +34,7 @@ public class Assets {
 
   public static AtlasRegion corn;
   public static AtlasRegion loot;
-  public static AtlasRegion hearth;
+  public static AtlasRegion health;
   public static AtlasRegion resourceCountBlue;
   public static AtlasRegion resourceCountRed;
 
@@ -90,7 +90,7 @@ public class Assets {
 
     corn = loadTexture("corn");
     loot = loadTexture("loot");
-    hearth = loadTexture("hearth");
+    health = loadTexture("health");
     resourceCountBlue = loadTexture("resource-count-blue");
     resourceCountRed = loadTexture("resource-count-red");
   }

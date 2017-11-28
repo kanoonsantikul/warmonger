@@ -27,6 +27,7 @@ public class ActionUnitMove implements GameDriven.Action {
   }
 
   public void run () {
+    World.instance().getHud().renderUnitHealths(map.getUnits());
     if (!unit.isMovingTo(tile)) {
       World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
     }

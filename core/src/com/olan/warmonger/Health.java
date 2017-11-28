@@ -2,12 +2,12 @@ package com.olan.warmonger;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
-public class Loot extends GameObject {
+public class Health extends GameObject {
   private int amount;
   private Text amountText;
 
-  public Loot (int amount) {
-    super(Assets.loot);
+  public Health (int amount) {
+    super(Assets.health);
     amountText = new Text(Assets.worldFont);
     setAmount(amount);
   }
