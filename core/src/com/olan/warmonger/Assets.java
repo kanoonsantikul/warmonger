@@ -33,6 +33,7 @@ public class Assets {
   public static AtlasRegion castleRed;
 
   public static AtlasRegion corn;
+  public static AtlasRegion loot;
   public static AtlasRegion hearth;
   public static AtlasRegion resourceCountBlue;
   public static AtlasRegion resourceCountRed;
@@ -88,6 +89,7 @@ public class Assets {
     cardArcher = loadTexture("card-archer");
 
     corn = loadTexture("corn");
+    loot = loadTexture("loot");
     hearth = loadTexture("hearth");
     resourceCountBlue = loadTexture("resource-count-blue");
     resourceCountRed = loadTexture("resource-count-red");
