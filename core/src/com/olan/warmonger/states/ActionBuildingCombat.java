@@ -13,6 +13,11 @@ public class ActionBuildingCombat implements GameDriven.Action {
   }
 
   public void enter () {
+    Tile previousTile = map.getTile(actor.getRow(), actor.getColumn());
+    if (previousTile.isLootMarkVisible()) {
+      previousTile.lootMarkVisible(false);
+    }
+
     if (actor.getTeam() == Team.BLUE) {
       targetTile = map.getTile(target.getRow() - 1, target.getColumn());
     } else {
@@ -31,7 +36,11 @@ public class ActionBuildingCombat implements GameDriven.Action {
   }
 
   public void run () {
-    if (!actor.isMovingTo(targetTile)) {
+    if (actor.getAttackType() == Unit.AttackType.MELEE) {
+      if (!actor.isMovingTo(targetTile)) {
+        map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
+      }
+    } else {
       map.setState(new ActionEndTurn(map, map.getCurrentTeam()));
     }
   }
