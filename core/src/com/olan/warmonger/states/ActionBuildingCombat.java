@@ -27,12 +27,26 @@ public class ActionBuildingCombat implements GameDriven.Action {
 
   public void exit () {
     int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
+    int redBuilding = 0;
+    int blueBuilding = 0;
     if (remainHealth <= 0) {
       map.getBuildings().remove(target);
       target.remove();
     } else {
       target.setHealthPoint(remainHealth);
       World.instance().getHud().renderBuildingHealths(map.getBuildings());
+    }
+
+    for (TileObject building : map.getBuildings()) {
+      if (building.getTeam() == Team.RED) {
+        redBuilding++;
+      } else if (building.getTeam() == Team.BLUE) {
+        blueBuilding++;
+      }
+    }
+
+    if (redBuilding == 0 || blueBuilding == 0) {
+      World.instance().setEnd(true);
     }
   }
 
