@@ -5,10 +5,10 @@ public class PikeMan extends Unit {
   private static final float MANUAL_OFFSET_Y = 15.0f;
 
   private static final int HEALTH_POINT = 4;
-  private static final int ATTACK_POINT = 2;
+  private static final int ATTACK_POINT = 4;
   private static final int ATTACK_RANGE = 1;
   private static final int MOVE_RANGE = 1;
-  private static final int COST = 3;
+  private static final int COST = 5;
 
   public PikeMan () {
     setTextures(Assets.pikemanFront, Assets.pikemanBack);
