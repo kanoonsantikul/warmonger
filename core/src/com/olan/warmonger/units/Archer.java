@@ -8,7 +8,7 @@ public class Archer extends Unit {
   private static final int ATTACK_POINT = 2;
   private static final int ATTACK_RANGE = 2;
   private static final int MOVE_RANGE = 1;
-  private static final int COST = 4;
+  private static final int COST = 6;
 
   public Archer () {
     setTextures(Assets.archerFront, Assets.archerBack);

@@ -19,10 +19,14 @@ public class ActionUnitCombat implements GameDriven.Action {
       World.instance().getHud().renderLoots(map.getTiles());
     }
 
-    if (actor.getTeam() == Team.BLUE) {
-      targetTile = map.getTile(target.getRow() - 1, target.getColumn());
+    if (actor.getAttackType() == Unit.AttackType.MELEE) {
+      if (actor.getTeam() == Team.BLUE) {
+        targetTile = map.getTile(target.getRow() - 1, target.getColumn());
+      } else {
+        targetTile = map.getTile(target.getRow() + 1, target.getColumn());
+      }
     } else {
-      targetTile = map.getTile(target.getRow() + 1, target.getColumn());
+      targetTile = map.getTile(actor.getRow(), actor.getColumn());
     }
   }
 
@@ -34,23 +38,19 @@ public class ActionUnitCombat implements GameDriven.Action {
 
     int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
     if (remainHealth <= 0) {
+      map.getTile(target.getRow(), target.getColumn()).lootMarkVisible(false);
       map.getUnits().remove(target);
       target.remove();
-      map.getTile(target.getRow(), target.getColumn()).lootMarkVisible(false);
       World.instance().getHud().renderLoots(map.getTiles());
     } else {
       target.setHealthPoint(remainHealth);
-      World.instance().getHud().renderUnitHealths(map.getUnits());
     }
+    World.instance().getHud().renderUnitHealths(map.getUnits());
   }
 
   public void run () {
     World.instance().getHud().renderUnitHealths(map.getUnits());
-    if (actor.getAttackType() == Unit.AttackType.MELEE) {
-      if (!actor.isMovingTo(targetTile)) {
-        World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
-      }
-    } else {
+    if (!actor.isMovingTo(targetTile)) {
       World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
     }
   }

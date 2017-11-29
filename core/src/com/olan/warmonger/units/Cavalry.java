@@ -4,11 +4,11 @@ public class Cavalry extends Unit {
   private static final float MANUAL_OFFSET_X = -3f;
   private static final float MANUAL_OFFSET_Y = 15.0f;
 
-  private static final int HEALTH_POINT = 2;
+  private static final int HEALTH_POINT = 3;
   private static final int ATTACK_POINT = 3;
   private static final int ATTACK_RANGE = 2;
   private static final int MOVE_RANGE = 2;
-  private static final int COST = 5;
+  private static final int COST = 8;
 
   public Cavalry () {
     setTextures(Assets.cavalryFront, Assets.cavalryBack);
