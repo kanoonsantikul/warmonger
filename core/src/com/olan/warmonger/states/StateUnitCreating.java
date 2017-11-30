@@ -20,8 +20,7 @@ public class StateUnitCreating implements GameDriven.State {
     for (int i = 0; i < Map.ROW; i++) {
       for (int j = 0; j < Map.COLUMN; j++) {
         tile = map.getTile(i, j);
-        tile.markVisible(true);
-
+        
         if (map.getUnit(i, j) == null) {
           if ((World.instance().getCurrentTeam() == Team.RED) && (i == Map.ROW - 2)) {
             tile.selectionVisible(true);
@@ -51,7 +50,6 @@ public class StateUnitCreating implements GameDriven.State {
     for (int i = 0; i < Map.ROW; i++) {
       for (int j = 0; j < Map.COLUMN; j++) {
         tile = map.getTile(i, j);
-        tile.markVisible(false);
         tile.selectionVisible(false);
       }
     }

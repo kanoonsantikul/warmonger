@@ -13,7 +13,6 @@ public class Tile extends GameObject {
   private int column;
   private TileListener listener;
 
-  private boolean markVisible = false;
   private boolean lootMarkVisible = false;
   private boolean selectionVisible = false;
   private TextureRegion selectionTexture;
@@ -39,11 +38,9 @@ public class Tile extends GameObject {
 
   @Override
   public void draw (Batch batch, float parentAlpha) {
-    if (markVisible) {
-      batch.draw(Assets.tileMark,
-          getCenterX() - Assets.tileMark.getRegionWidth() / 2,
-          getCenterY() - Assets.tileMark.getRegionHeight() / 2);
-    }
+    batch.draw(Assets.tileMark,
+        getCenterX() - Assets.tileMark.getRegionWidth() / 2,
+        getCenterY() - Assets.tileMark.getRegionHeight() / 2);
 
     if (lootMarkVisible) {
       batch.draw(Assets.lootMark,
@@ -97,10 +94,6 @@ public class Tile extends GameObject {
   public void setResource (int resource) {
     this.resource = resource;
     resourceText.setText(resource + "");
-  }
-
-  public void markVisible (boolean visible) {
-    this.markVisible = visible;
   }
 
   public void lootMarkVisible (boolean visible) {

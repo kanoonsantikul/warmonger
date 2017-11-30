@@ -11,13 +11,6 @@ public class StateUnitSelected implements GameDriven.State {
 
   public void enter () {
     Tile tile;
-    for (int i = 0; i < Map.ROW; i++) {
-      for (int j = 0; j < Map.COLUMN; j++) {
-        tile = map.getTile(i, j);
-        tile.markVisible(true);
-      }
-    }
-
     boolean foundEnemy = false;
     int row = selectedUnit.getRow();
     int column = selectedUnit.getColumn();
@@ -66,7 +59,6 @@ public class StateUnitSelected implements GameDriven.State {
     for (int i = 0; i < Map.ROW; i++) {
       for (int j = 0; j < Map.COLUMN; j++) {
         tile = map.getTile(i, j);
-        tile.markVisible(false);
         tile.selectionVisible(false);
       }
     }
