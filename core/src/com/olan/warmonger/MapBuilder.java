@@ -39,13 +39,8 @@ public class MapBuilder {
   private void initResources (Tile[][] tiles) {
     Tile tile;
 
-    // (tile = findEmptyTile(tiles)).setResource(3);
-    // tiles[Map.ROW - tile.getRow() - 1][Map.COLUMN - tile.getColumn() - 1].setResource(3);
-
-    for (int i = 0; i < 2; i++) {
-      (tile = findEmptyTile(tiles)).setResource(2);
-      tiles[Map.ROW - tile.getRow() - 1][Map.COLUMN - tile.getColumn() - 1].setResource(2);
-    }
+    (tile = findEmptyTile(tiles)).setResource(2);
+    tiles[Map.ROW - tile.getRow() - 1][Map.COLUMN - tile.getColumn() - 1].setResource(2);
 
     for (int i = 0; i < 3; i++) {
       (tile = findEmptyTile(tiles)).setResource(1);
@@ -56,7 +51,7 @@ public class MapBuilder {
   private Tile findEmptyTile (Tile[][] tiles) {
     Tile tile;
     do {
-      int row = MathUtils.random(2, (Map.ROW / 2) - 1);
+      int row = MathUtils.random(3, (Map.ROW / 2));
       int column = MathUtils.random(0, Map.COLUMN - 1);
       tile = tiles[row][column];
     } while(tile == null || tile.getResource() != 0);

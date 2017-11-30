@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import java.util.ArrayList;
 
 public class Map extends Group {
-  public static final int ROW = 10;
+  public static final int ROW = 9;
   public static final int COLUMN = 5;
 
   private float width = Tile.WIDTH * COLUMN;
