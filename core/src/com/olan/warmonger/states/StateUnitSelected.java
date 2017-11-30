@@ -11,7 +11,6 @@ public class StateUnitSelected implements GameDriven.State {
 
   public void enter () {
     Tile tile;
-    boolean foundEnemy = false;
     int row = selectedUnit.getRow();
     int column = selectedUnit.getColumn();
     int direction;
@@ -36,20 +35,16 @@ public class StateUnitSelected implements GameDriven.State {
       }
 
       if (other != null) {
-        if (selectedUnit.getTeam() != other.getTeam()) {
           if (Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getAttackRange()) {
-            if (!foundEnemy) {
+            if (other.getTeam() != selectedUnit.getTeam()) {
               tile.selectionCombatVisible(true);
             }
             if (selectedUnit.getAttackType() == Unit.AttackType.MELEE) {
-              foundEnemy = true;
+              break;
             }
           }
-        }
       } else if (Math.abs(selectedUnit.getRow() - row) <= selectedUnit.getMoveRange()) {
-        if (!foundEnemy) {
-          tile.selectionVisible(true);
-        }
+        tile.selectionVisible(true);
       }
     }
   }

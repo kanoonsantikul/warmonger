@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Player extends GameObject {
-  private static int INIT_COST = 10;
+  private static int INIT_RESOURCE = 10;
 
   private Team team;
 
@@ -14,7 +14,7 @@ public class Player extends GameObject {
 
   public Player (Team team) {
     this.team = team;
-    resources = INIT_COST;
+    resources = INIT_RESOURCE;
 
     setX(270);
     if (team == Team.BLUE) {
