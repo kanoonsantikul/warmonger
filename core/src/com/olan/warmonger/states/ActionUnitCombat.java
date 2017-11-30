@@ -31,27 +31,33 @@ public class ActionUnitCombat implements GameDriven.Action {
   }
 
   public void exit () {
-    if (targetTile.getResource() != 0){
-      targetTile.lootMarkVisible(true);
-      World.instance().getHud().renderLoots(map.getTiles());
-    }
-
-    int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
-    if (remainHealth <= 0) {
-      map.getTile(target.getRow(), target.getColumn()).lootMarkVisible(false);
-      map.getUnits().remove(target);
-      target.remove();
-      World.instance().getHud().renderLoots(map.getTiles());
-    } else {
-      target.setHealthPoint(remainHealth);
-    }
     World.instance().getHud().renderUnitHealths(map.getUnits());
+    World.instance().getHud().renderLoots(map.getTiles());
   }
 
   public void run () {
     World.instance().getHud().renderUnitHealths(map.getUnits());
     if (!actor.isMovingTo(targetTile)) {
-      World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
+      if (targetTile.getResource() != 0){
+        targetTile.lootMarkVisible(true);
+      }
+
+      int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
+      if (remainHealth <= 0) {
+        targetTile = map.getTile(target.getRow(), target.getColumn());
+        targetTile.lootMarkVisible(false);
+        map.getUnits().remove(target);
+        target.remove();
+
+        if (actor.getAttackType() == Unit.AttackType.MELEE) {
+          World.instance().setState(new ActionUnitMove(map, actor, targetTile));
+        } else {
+          World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
+        }
+      } else {
+        target.setHealthPoint(remainHealth);
+        World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
+      }
     }
   }
 }
