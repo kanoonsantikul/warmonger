@@ -32,6 +32,7 @@ public class ActionBuildingCombat implements GameDriven.Action {
 
   public void exit () {
     World.instance().getHud().renderUnitHealths(map.getUnits());
+    World.instance().getHud().renderBuildingHealths(map.getBuildings());
 
     int redBuilding = 0;
     int blueBuilding = 0;
@@ -43,7 +44,7 @@ public class ActionBuildingCombat implements GameDriven.Action {
       }
     }
 
-    if (redBuilding == 0 || blueBuilding == 0) {
+    if (redBuilding == 2 || blueBuilding == 2) {
       World.instance().setEnd(true);
     }
   }
