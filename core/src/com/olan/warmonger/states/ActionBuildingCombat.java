@@ -16,27 +16,25 @@ public class ActionBuildingCombat implements GameDriven.Action {
     Tile previousTile = map.getTile(actor.getRow(), actor.getColumn());
     if (previousTile.isLootMarkVisible()) {
       previousTile.lootMarkVisible(false);
+      World.instance().getHud().renderLoots(map.getTiles());
     }
 
-    if (actor.getTeam() == Team.BLUE) {
-      targetTile = map.getTile(target.getRow() - 1, target.getColumn());
+    if (actor.getAttackType() == Unit.AttackType.MELEE) {
+      if (actor.getTeam() == Team.BLUE) {
+        targetTile = map.getTile(target.getRow() - 1, target.getColumn());
+      } else {
+        targetTile = map.getTile(target.getRow() + 1, target.getColumn());
+      }
     } else {
-      targetTile = map.getTile(target.getRow() + 1, target.getColumn());
+      targetTile = map.getTile(actor.getRow(), actor.getColumn());
     }
   }
 
   public void exit () {
-    int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
+    World.instance().getHud().renderUnitHealths(map.getUnits());
+
     int redBuilding = 0;
     int blueBuilding = 0;
-    if (remainHealth <= 0) {
-      map.getBuildings().remove(target);
-      target.remove();
-    } else {
-      target.setHealthPoint(remainHealth);
-    }
-    World.instance().getHud().renderBuildingHealths(map.getBuildings());
-
     for (TileObject building : map.getBuildings()) {
       if (building.getTeam() == Team.RED) {
         redBuilding++;
@@ -51,12 +49,23 @@ public class ActionBuildingCombat implements GameDriven.Action {
   }
 
   public void run () {
-    if (actor.getAttackType() == Unit.AttackType.MELEE) {
-      if (!actor.isMovingTo(targetTile)) {
+    World.instance().getHud().renderUnitHealths(map.getUnits());
+    if (!actor.isMovingTo(targetTile)) {
+      int remainHealth = target.getHealthPoint() - actor.getAttackPoint();
+      if (remainHealth <= 0) {
+        targetTile = map.getTile(target.getRow(), target.getColumn());
+        map.getBuildings().remove(target);
+        target.remove();
+
+        if (actor.getAttackType() == Unit.AttackType.MELEE) {
+          World.instance().setState(new ActionUnitMove(map, actor, targetTile));
+        } else {
+          World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
+        }
+      } else {
+        target.setHealthPoint(remainHealth);
         World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
       }
-    } else {
-      World.instance().setState(new ActionEndTurn(map, World.instance().getCurrentTeam()));
     }
   }
 }

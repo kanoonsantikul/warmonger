@@ -12,6 +12,7 @@ public class Card extends GameObject {
   private Text healthText;
   private Text attackPointText;
   private Text attackRangeText;
+  private Text attackTypeText;
   private Text moveRangeText;
   private Text costText;
 
@@ -39,12 +40,14 @@ public class Card extends GameObject {
     healthText = new Text(Assets.worldFont);
     attackPointText = new Text(Assets.worldFont);
     attackRangeText = new Text(Assets.worldFont);
+    attackTypeText = new Text(Assets.worldFont);
     moveRangeText = new Text(Assets.worldFont);
     costText = new Text(Assets.worldFont);
 
     healthText.setText("Health: " + prototype.getHealthPoint());
     attackPointText.setText("Attack: " + prototype.getAttackPoint());
     attackRangeText.setText("Attack Range: " + prototype.getAttackRange());
+    attackTypeText.setText("Type: " + prototype.getAttackType().toString());
     moveRangeText.setText("Move Range: " + prototype.getMoveRange());
     costText.setText(prototype.getCost() + "");
   }
@@ -56,6 +59,7 @@ public class Card extends GameObject {
     healthText.draw(batch);
     attackPointText.draw(batch);
     attackRangeText.draw(batch);
+    attackTypeText.draw(batch);
     moveRangeText.draw(batch);
     costText.draw(batch);
   }
@@ -63,12 +67,14 @@ public class Card extends GameObject {
   @Override
   protected void	positionChanged () {
     float x = getCenterX() - 22;
-    float y = getY() + getHeight() - 35;
+    float y = getY() + getHeight() - 32;
     healthText.setPosition(x, y);
     y = y - attackPointText.getHeight() - 8;
     attackPointText.setPosition(x, y);
     y = y - attackRangeText.getHeight() - 8;
     attackRangeText.setPosition(x, y);
+    y = y - attackTypeText.getHeight() - 8;
+    attackTypeText.setPosition(x, y);
     y = y - moveRangeText.getHeight() - 8;
     moveRangeText.setPosition(x, y);
 
