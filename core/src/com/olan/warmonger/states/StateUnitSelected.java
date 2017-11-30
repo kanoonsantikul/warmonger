@@ -91,7 +91,7 @@ public class StateUnitSelected implements GameDriven.State {
       World.instance().setState(new StateUnitSelected(map, unit));
     } else {
       Tile tile = map.getTile(unit.getRow(), unit.getColumn());
-      if (tile.isSelectionVisible()) {
+      if (tile.isSelectionCombatVisible()) {
         World.instance().setState(new ActionUnitCombat(map, selectedUnit, unit));
       }
     }
@@ -99,10 +99,16 @@ public class StateUnitSelected implements GameDriven.State {
 
   @Override
   public void onBuildingClicked (Building building, int row, int column) {
+    Tile tile = map.getTile(row, column);
+
     if (building.getTeam() == selectedUnit.getTeam()) {
       World.instance().setState(new StateIdle(map));
     } else {
-      World.instance().setState(new ActionBuildingCombat(map, selectedUnit, building));
+      if (tile.isSelectionCombatVisible()) {
+        World.instance().setState(new ActionBuildingCombat(map, selectedUnit, building));
+      } else {
+        World.instance().setState(new StateIdle(map));
+      }
     }
   }
 

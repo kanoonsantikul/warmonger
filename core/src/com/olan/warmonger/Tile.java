@@ -122,7 +122,11 @@ public class Tile extends GameObject {
   }
 
   public boolean isSelectionVisible () {
-    return this.selectionVisible;
+    return this.selectionVisible && selectionTexture == Assets.selectionNormal;
+  }
+
+  public boolean isSelectionCombatVisible () {
+    return this.selectionVisible  && selectionTexture == Assets.selectionCombat;
   }
 
   public interface TileListener {
